@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+
+chat_usage.sqlite3*
+enquiries.sqlite3*
+enquiries.csv
