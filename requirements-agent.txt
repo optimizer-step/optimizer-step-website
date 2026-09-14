@@ -1,0 +1,4 @@
+# LiveKit voice worker (agent.py) only. Not installed by the Railway website service.
+livekit-agents[sarvam]~=1.8.0
+livekit-api>=1.0,<2
+python-dotenv>=1,<2

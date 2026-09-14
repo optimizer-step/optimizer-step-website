@@ -15,7 +15,8 @@ from pydantic import BaseModel, Field, field_validator
 from dotenv import dotenv_values
 
 router = APIRouter()
-DB_PATH = Path(__file__).with_name('chat_usage.sqlite3')
+# On Railway, point CHAT_USAGE_DB_PATH at a mounted volume so daily limits survive redeploys.
+DB_PATH = Path(os.getenv('CHAT_USAGE_DB_PATH') or Path(__file__).with_name('chat_usage.sqlite3'))
 SYSTEM = """You are the AI sales and discovery assistant on Optimizer AI's own
 website. Represent Optimizer AI, speaking as "we" and "our team". Your job is to
 help a prospective customer understand how OUR services could solve their business
@@ -140,8 +141,14 @@ def usage(request: Request, reserve=False):
     return {'remaining': max(0, min(cap-used, global_cap-total)), 'limit': cap, 'reset': 'midnight UTC'}
 
 
+def allowed_origins():
+    # Comma-separated exact origins, e.g. "https://optimizerstep.com,https://www.optimizerstep.com".
+    raw = os.getenv('VOICE_ALLOWED_ORIGIN', 'http://localhost:8000')
+    return {origin.strip().rstrip('/') for origin in raw.split(',') if origin.strip()}
+
+
 def check_origin(request):
-    if request.headers.get('origin') != os.getenv('VOICE_ALLOWED_ORIGIN', 'http://localhost:8000'):
+    if request.headers.get('origin') not in allowed_origins():
         raise HTTPException(403, 'This website origin is not allowed.')
 
 

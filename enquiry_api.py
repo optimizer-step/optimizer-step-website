@@ -1,17 +1,20 @@
-"""Contact form enquiries: saved to SQLite first, then emailed to the team when SMTP is configured."""
+"""Contact form enquiries: saved to PostgreSQL (DATABASE_URL) first, then emailed to the team when SMTP is configured."""
 import csv
 import logging
 import re
 import smtplib
-import sqlite3
+import ssl
 import sys
+import threading
 import time
 from collections import defaultdict, deque
-from contextlib import closing
-from datetime import datetime, timezone
+from contextlib import contextmanager
+from datetime import timezone
 from email.message import EmailMessage
 from pathlib import Path
+from urllib.parse import parse_qs, unquote, urlsplit
 
+import pg8000.dbapi
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, field_validator
@@ -20,9 +23,32 @@ from chat_api import check_origin, setting
 
 router = APIRouter()
 log = logging.getLogger('uvicorn.error')
-DB_PATH = Path(__file__).with_name('enquiries.sqlite3')
 EMAIL = re.compile(r'[^@\s]+@[^@\s]+\.[^@\s]+')
+UNAVAILABLE = 'We could not save your request right now. Please try again shortly.'
 attempts = defaultdict(deque)
+
+# Versioned, append-only schema changes: never edit an applied migration, add a new one.
+MIGRATIONS = (
+    (1, 'CREATE TABLE IF NOT EXISTS website_enquiries ('
+        'id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, '
+        'created_at TIMESTAMPTZ NOT NULL DEFAULT now(), '
+        'name TEXT NOT NULL CHECK (char_length(name) <= 100), '
+        'company TEXT NOT NULL CHECK (char_length(company) <= 120), '
+        'email TEXT NOT NULL CHECK (char_length(email) <= 200), '
+        'problem TEXT NOT NULL CHECK (char_length(problem) <= 2000), '
+        'emailed BOOLEAN NOT NULL DEFAULT FALSE)'),
+)
+# Arbitrary constant that serialises migrations when several instances start at once.
+SCHEMA_LOCK_ID = 7310442019
+_schema_ready = False
+_schema_lock = threading.Lock()
+
+
+class DatabaseNotConfigured(RuntimeError):
+    """DATABASE_URL is missing or unusable. Messages never include the URL itself."""
+
+
+DB_ERRORS = (DatabaseNotConfigured, OSError, pg8000.dbapi.Error)
 
 
 class Enquiry(BaseModel):
@@ -57,11 +83,77 @@ class Enquiry(BaseModel):
 
 
 def connect():
-    db = sqlite3.connect(DB_PATH, timeout=5)
-    db.execute('CREATE TABLE IF NOT EXISTS enquiries (id INTEGER PRIMARY KEY, created_at TEXT NOT NULL, '
-               'name TEXT NOT NULL, company TEXT NOT NULL, email TEXT NOT NULL, problem TEXT NOT NULL, '
-               'emailed INTEGER NOT NULL DEFAULT 0)')
-    return db
+    url = setting('DATABASE_URL')
+    if not url:
+        raise DatabaseNotConfigured('DATABASE_URL is not set')
+    try:
+        parts = urlsplit(url)
+        port = parts.port or 5432
+    except ValueError:
+        raise DatabaseNotConfigured('DATABASE_URL is not a valid URL') from None
+    if parts.scheme not in ('postgres', 'postgresql') or not parts.hostname or not parts.username:
+        raise DatabaseNotConfigured('DATABASE_URL must look like postgresql://user:password@host:port/database')
+    # libpq sslmode semantics: require encrypts without certificate checks; verify-ca/verify-full check it.
+    mode = parse_qs(parts.query).get('sslmode', ['prefer'])[0]
+    if mode in ('disable', 'allow', 'prefer'):
+        context = None
+    elif mode in ('require', 'verify-ca', 'verify-full'):
+        context = ssl.create_default_context()
+        context.check_hostname = mode == 'verify-full'
+        if mode == 'require':
+            context.verify_mode = ssl.CERT_NONE
+    else:
+        raise DatabaseNotConfigured(f'Unsupported sslmode {mode!r} in DATABASE_URL')
+    return pg8000.dbapi.connect(
+        user=unquote(parts.username), password=unquote(parts.password) if parts.password is not None else None,
+        host=parts.hostname, port=port, database=unquote(parts.path.lstrip('/')) or None,
+        ssl_context=context, timeout=10, application_name='optimizer-website')
+
+
+@contextmanager
+def transaction():
+    db = connect()
+    try:
+        cursor = db.cursor()
+        yield cursor
+        db.commit()
+    finally:
+        try:
+            db.close()
+        except DB_ERRORS:
+            pass
+
+
+def ensure_schema():
+    global _schema_ready
+    if _schema_ready:
+        return
+    with _schema_lock:
+        if _schema_ready:
+            return
+        with transaction() as cursor:
+            cursor.execute('SELECT pg_advisory_xact_lock(%s)', (SCHEMA_LOCK_ID,))
+            cursor.execute('CREATE TABLE IF NOT EXISTS website_schema_migrations ('
+                           'version INTEGER PRIMARY KEY, applied_at TIMESTAMPTZ NOT NULL DEFAULT now())')
+            cursor.execute('SELECT version FROM website_schema_migrations')
+            applied = {row[0] for row in cursor.fetchall()}
+            for version, statement in MIGRATIONS:
+                if version not in applied:
+                    cursor.execute(statement)
+                    cursor.execute('INSERT INTO website_schema_migrations (version) VALUES (%s)', (version,))
+        _schema_ready = True
+
+
+def prepare_database():
+    """Apply pending migrations at startup. Never fatal: the website keeps serving and enquiries retry."""
+    if not setting('DATABASE_URL'):
+        log.warning('DATABASE_URL is not set: contact form enquiries will be refused until it is configured.')
+        return
+    try:
+        ensure_schema()
+    except DB_ERRORS as error:
+        log.error('Enquiry database is not ready (%s: %s). It will be retried on the next enquiry.',
+                  type(error).__name__, error)
 
 
 def rate_limit(request: Request):
@@ -78,10 +170,12 @@ def rate_limit(request: Request):
 
 
 def save(body: Enquiry):
-    with closing(connect()) as db, db:
-        return db.execute('INSERT INTO enquiries (created_at, name, company, email, problem) VALUES (?,?,?,?,?)',
-                          (datetime.now(timezone.utc).isoformat(timespec='seconds'),
-                           body.name, body.company, body.email, body.problem)).lastrowid
+    ensure_schema()
+    with transaction() as cursor:
+        cursor.execute('INSERT INTO website_enquiries (name, company, email, problem) '
+                       'VALUES (%s, %s, %s, %s) RETURNING id',
+                       (body.name, body.company, body.email, body.problem))
+        return cursor.fetchone()[0]
 
 
 def notify(enquiry_id: int, body: Enquiry):
@@ -109,9 +203,9 @@ def notify(enquiry_id: int, body: Enquiry):
 def deliver(enquiry_id: int, body: Enquiry):
     try:
         if notify(enquiry_id, body):
-            with closing(connect()) as db, db:
-                db.execute('UPDATE enquiries SET emailed=1 WHERE id=?', (enquiry_id,))
-    except (OSError, ValueError) as error:
+            with transaction() as cursor:
+                cursor.execute('UPDATE website_enquiries SET emailed = TRUE WHERE id = %s', (enquiry_id,))
+    except (ValueError, *DB_ERRORS) as error:
         # The enquiry is already saved, so a mail problem never loses the lead.
         log.warning('Enquiry %s was saved, but the email notification failed: %s', enquiry_id, error)
 
@@ -122,20 +216,28 @@ def enquiry(body: Enquiry, request: Request, background: BackgroundTasks):
     rate_limit(request)
     if not body.website:
         # Honeypot hits get the same response, so bots cannot tell they were discarded.
-        background.add_task(deliver, save(body), body)
+        try:
+            enquiry_id = save(body)
+        except DB_ERRORS as error:
+            log.error('Enquiry was not saved (%s: %s).', type(error).__name__, error)
+            raise HTTPException(503, UNAVAILABLE) from None
+        background.add_task(deliver, enquiry_id, body)
     return JSONResponse({'ok': True}, headers={'Cache-Control': 'no-store'})
 
 
 if __name__ == '__main__':
     # Export saved enquiries for a spreadsheet: python enquiry_api.py [enquiries.csv]
     target = Path(sys.argv[1] if len(sys.argv) > 1 else 'enquiries.csv')
-    with closing(connect()) as db:
-        rows = db.execute('SELECT id, created_at, name, company, email, problem, emailed '
-                          'FROM enquiries ORDER BY id').fetchall()
+    ensure_schema()
+    with transaction() as cursor:
+        cursor.execute('SELECT id, created_at, name, company, email, problem, emailed '
+                       'FROM website_enquiries ORDER BY id')
+        rows = cursor.fetchall()
     with open(target, 'w', newline='', encoding='utf-8-sig') as file:
         writer = csv.writer(file)
         writer.writerow(['id', 'received_utc', 'name', 'company', 'email', 'problem', 'emailed'])
-        # A leading = + - @ would run as a spreadsheet formula; visitor text must stay text.
-        writer.writerows([[f"'{v}" if isinstance(v, str) and v and v[0] in '=+-@' else v for v in row]
-                          for row in rows])
+        for id_, created_at, *fields, emailed in rows:
+            # A leading = + - @ would run as a spreadsheet formula; visitor text must stay text.
+            fields = [f"'{v}" if v and v[0] in '=+-@' else v for v in fields]
+            writer.writerow([id_, created_at.astimezone(timezone.utc).isoformat(timespec='seconds'), *fields, emailed])
     print(f'Exported {len(rows)} enquiries to {target}')
