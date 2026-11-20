@@ -1,284 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Optimizer AI helps hospitals and businesses automate repetitive workflows, deploy AI agents, and build practical machine-learning systems." />
-  <title>Optimizer AI &mdash; Less busywork. More possibility.</title>
-  <link rel="stylesheet" href="styles.css?v=20260914c" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hands-on AI and machine learning courses from Optimizer Step. Learn by building models, then experiment in the free browser playground.">
+  <meta name="theme-color" content="#080b13">
+  <title>Optimizer Step — Learn AI by building it</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css?v=2">
+  <script type="module" src="./app.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-
-  <header class="site-header" id="top">
-  <div class="container nav-wrap">
-    <a class="brand" href="#top" aria-label="Optimizer AI home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text">optimizer<span>.ai</span></span></a>
-    <nav class="desktop-nav" aria-label="Primary navigation"><a href="#services">Solutions</a><a href="#playground">AI playground</a><a href="#process">Our approach</a></nav>
-    <a class="btn btn-small btn-dark header-cta" href="#contact">Let&rsquo;s talk <span aria-hidden="true">&rarr;</span></a>
-    <button class="mobile-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
-  </div>
-  <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation" hidden><a href="#services">Solutions</a><a href="#playground">AI playground</a><a href="#process">Our approach</a><a href="#contact">Let&rsquo;s talk</a></nav>
-</header>
-
+  <div class="announcement"><span class="spark">✦</span><strong>Founding 100 launch</strong><span>First 100 seats are free</span><button type="button" class="text-button" data-enroll>Claim your seat <span aria-hidden="true">↗</span></button></div>
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="brand" href="./" data-home aria-label="Optimizer Step home"><span class="brand-glyph">◢</span><span>optimizer<span class="brand-muted">step</span><span class="brand-period">.</span></span></a>
+      <nav aria-label="Primary"><a href="#courses" data-home-link>Courses</a><a href="#approach" data-home-link>How it works</a><a href="#playground" data-playground>ML Playground</a></nav>
+      <div class="nav-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode">◐</button><button class="button button-small" type="button" data-enroll>Claim free seat</button></div>
+    </div>
+  </header>
   <main id="main">
-    <section class="hero" aria-labelledby="heroTitle">
-  <div class="container hero-grid">
-    <div class="hero-copy">
-      <div class="eyebrow"><span class="eyebrow-line"></span> AI FOR HOSPITALS AND BUSINESSES</div>
-      <h1 id="heroTitle">Less busywork.<br>More <span>possibility.</span></h1>
-      <p class="hero-lead">Give your hospital staff more time for patients. We build AI agents and intelligent workflows that take care of the repetitive front-desk and back-office work.</p>
-      <div class="hero-actions"><a class="btn btn-primary" href="#contact">Find your AI opportunity <span aria-hidden="true">&rarr;</span></a><a class="text-link" href="#playground">Try it for yourself <span aria-hidden="true">&rarr;</span></a></div>
-      <div class="hero-footnote"><span>Built around your hospital.</span><span>Connected to your existing systems.</span></div>
+    <div id="homeView">
+      <section class="hero container">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> BUILD THE SKILL. SEE THE MATH.</div>
+          <h1>Learn AI by<br><em>building it.</em></h1>
+          <p class="hero-lead">From your first regression model to production-minded RAG, learn machine learning through code, experiments, and projects you can explain.</p>
+          <div class="hero-actions"><button class="button button-primary" type="button" data-enroll>Claim Free Founding Seat</button><a class="button button-outline" href="#playground" data-playground>Play with ML Models</a></div>
+          <div class="hero-notes"><span>◇ Beginner to builder</span><span>◇ Real projects</span><span>◇ Learn at your pace</span></div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration of a model training dashboard">
+          <div class="visual-top"><span class="window-dots"><i></i><i></i><i></i></span><span>model_training.py</span><span class="visual-status">● LEARNING</span></div>
+          <div class="visual-code"><span class="code-line"><b>01</b> <span class="purple">model</span> = PolynomialRegressor(degree=<span class="orange">2</span>)</span><span class="code-line"><b>02</b> <span class="purple">model</span>.fit(X_train, y_train)</span><span class="code-line"><b>03</b> <span class="muted"># watch every optimizer step</span></span></div>
+          <div class="chart-wrap"><div class="chart-title"><span>Training loss</span><span>epoch 084 / 100</span></div><svg viewBox="0 0 500 210" role="img" aria-label="Loss falling as training progresses"><defs><linearGradient id="lossFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#875dff" stop-opacity=".3"/><stop offset="1" stop-color="#875dff" stop-opacity="0"/></linearGradient></defs><path d="M0 35 H500 M0 85 H500 M0 135 H500 M0 185 H500" stroke="#2b3146" stroke-width="1"/><path d="M12 28 C45 45 66 69 94 88 S145 132 174 145 S240 164 275 174 S355 181 390 184 S457 186 488 186 L488 205 L12 205Z" fill="url(#lossFill)"/><path d="M12 28 C45 45 66 69 94 88 S145 132 174 145 S240 164 275 174 S355 181 390 184 S457 186 488 186" fill="none" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/><circle cx="488" cy="186" r="5" fill="#c4b5fd"/></svg></div>
+          <div class="visual-bottom"><span><small>LOSS</small><strong>0.0248 <span>↓ 92%</span></strong></span><span><small>ACCURACY</small><strong>97.6%</strong></span><span><small>STATUS</small><strong class="mint">Converged</strong></span></div>
+          <div class="float-card"><span>✦</span><div><strong>Aha! moment</strong><small>Now you know why it works.</small></div></div>
+        </div>
+      </section>
+      <section class="trust-strip"><div class="container trust-inner"><p>One path from curiosity to capability.</p><div><span>01 <b>Learn the idea</b></span><span>02 <b>Change the inputs</b></span><span>03 <b>Ship a project</b></span></div></div></section>
+      <section class="section container" id="courses"><div class="section-heading"><div><span class="eyebrow">THE LEARNING PATH</span><h2>Go from “what is ML?”<br>to <em>“I built that.”</em></h2></div><p>Focused tracks, practical outcomes, and enough depth to make the concepts stick. Open any track to see what you will build.</p></div><div class="course-grid" id="courseGrid"></div></section>
+      <section class="section offer-section" id="offer"><div class="container offer-grid"><div><span class="eyebrow">THE FOUNDING 100</span><h2>Your first step<br>is on us.</h2><p>We’re opening the course platform with 100 founding seats. Explore the tracks and help shape what comes next.</p><ul class="check-list"><li>Access to all launch tracks</li><li>Project-first learning path</li><li>Founding member updates</li></ul></div><div class="offer-card"><div class="offer-top"><span class="offer-icon">✦</span><span>FOUNDING MEMBER ACCESS</span></div><div class="price"><del id="regularPrice">₹4,999</del><strong>₹0</strong><span>for the first 100</span></div><p class="offer-sub">One free founding seat per student.</p><div class="seat-row"><strong id="seatText">78 / 100 free seats claimed</strong><span id="seatRemaining">22 left</span></div><div class="progress" role="progressbar" aria-label="Founding seats claimed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="78" id="seatProgress"><span id="seatBar"></span></div><p class="demo-note" id="campaignDisclosure">Preview counter — sample activity until live enrollment is connected.</p><button class="button button-primary full" type="button" data-enroll>Claim Free Founding Seat</button><p class="offer-foot">No payment details required · Planned regular price shown above</p></div></div></section>
+      <section class="section container" id="approach"><div class="section-heading"><div><span class="eyebrow">WHY THIS WORKS</span><h2>Less passive watching.<br><em>More doing.</em></h2></div><p>Every concept becomes something you can run, tune, break, and rebuild.</p></div><div class="method-grid"><article><span class="method-icon">⌘</span><h3>See the mechanism</h3><p>Make the math tangible with live visual experiments, from loss curves to decision boundaries.</p></article><article><span class="method-icon">▣</span><h3>Build a portfolio</h3><p>Turn each track into a concrete project you can show and explain.</p></article><article><span class="method-icon">↗</span><h3>Connect the stack</h3><p>Progress from Scikit-learn basics to PyTorch, vision, NLP, and retrieval-augmented generation.</p></article></div><div class="playground-promo"><div><span class="eyebrow">TRY BEFORE YOU ENROLL</span><h3>Open the lab. Move the model.</h3><p>Four browser-only experiments turn abstract ideas into something you can touch.</p><a class="button button-outline" href="#playground" data-playground>Explore ML Playground</a></div><div class="promo-graphic" aria-hidden="true"><span class="orb orb-one"></span><span class="orb orb-two"></span><span class="orb orb-three"></span><span class="promo-line"></span></div></div></section>
+      <section class="section container credibility">
+        <div class="credibility-card">
+          <div>
+            <span class="eyebrow">MEET OPTIMIZER STEP</span>
+            <h2>Learn with the channel.<br>Practice on the platform.</h2>
+            <p>Optimizer Step brings its AI and ML teaching into an interactive course experience. Start with the free experiments, then follow a structured path through the tools developers use.</p>
+            <nav class="social-links" aria-label="Follow the channel and instructor">
+              <a class="quiet-link" href="https://www.youtube.com/@optimizerstep" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>
+              <a class="quiet-link" href="https://www.instagram.com/optimizerstep/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+              <a class="quiet-link" href="https://www.linkedin.com/in/kalluri-venkatesh-3a2046204/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+              <a class="quiet-link" href="https://x.com/optimizerstep" target="_blank" rel="noopener noreferrer">X <span aria-hidden="true">↗</span></a>
+            </nav>
+          </div>
+          <div class="video-mark" aria-hidden="true">▶</div>
+        </div>
+      </section>
+      <section class="section container faq-section" id="faq"><div><span class="eyebrow">GOOD TO KNOW</span><h2>Questions, answered.</h2></div><div class="faq-list"><details><summary>Do I need to know Python already?</summary><p>The fundamentals track starts with the core ideas and guided Python examples. Basic coding familiarity helps, but you can begin as a curious beginner.</p></details><details><summary>What do founding members get?</summary><p>Founding seats are intended to include launch track access, the project-first path, and updates as the platform grows. Exact release timing and access details will be confirmed before live enrollment opens.</p></details><details><summary>Is the ML Playground using an AI API?</summary><p>No. The labs run entirely in your browser with JavaScript math and Canvas, with no API key or backend required.</p></details><details><summary>Is the seat counter live?</summary><p>While the campaign is in preview, the counter and activity examples are sample data. We will connect verified signups and a shared counter before accepting live registrations.</p></details></div></section>
     </div>
-    <div class="workflow-preview" aria-label="Illustrative patient enquiry automation workflow">
-      <div class="workflow-heading"><span>A smarter way to work</span><span class="example-label">EXAMPLE WORKFLOW</span></div>
-      <div class="workflow-body">
-        <div class="workflow-node"><span class="workflow-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg></span><div><small>01 / RECEIVE</small><strong>A patient enquiry arrives</strong></div><span class="node-check" aria-hidden="true">&#10003;</span></div>
-        <div class="workflow-connector"></div>
-        <div class="workflow-node intelligence"><span class="workflow-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3 2.6 6.4L21 12l-6.4 2.6L12 21l-2.6-6.4L3 12l6.4-2.6Z"/></svg></span><div><small>02 / UNDERSTAND</small><strong>AI turns context into action</strong><p>Identify the department. Check availability. Draft a reply.</p></div></div>
-        <div class="workflow-connector"></div>
-        <div class="workflow-node"><span class="workflow-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h6a3 3 0 0 1 3 3v6M6 9v9h9"/></svg></span><div><small>03 / CONNECT</small><strong>Your hospital system stays up to date</strong></div><span class="node-check" aria-hidden="true">&#10003;</span></div>
-        <div class="workflow-connector"></div>
-        <div class="approval-row"><span class="approval-icon" aria-hidden="true">&#10003;</span><div><strong>Your staff approves. AI delivers.</strong><span>Human judgment, right where it matters.</span></div></div>
-      </div>
-      <div class="workflow-footer"><span>One connected workflow</span><span>People stay in control <span aria-hidden="true">&#10003;</span></span></div>
+    <div id="playgroundView" hidden>
+      <section class="container playground-header"><div><span class="eyebrow">THE ML PLAYGROUND</span><h1>Machine learning,<br><em>in your hands.</em></h1><p>Change a parameter. Move a point. Watch the model respond. All four labs run in your browser.</p></div><div class="playground-badge">100% client-side<br><span>No setup. No API keys.</span></div></section>
+      <section class="container playground-main"><div class="lab-tabs" role="tablist" aria-label="ML labs"><button type="button" role="tab" id="tab-regression" aria-controls="panel-regression" aria-selected="true" data-lab="regression">Gradient Descent</button><button type="button" role="tab" id="tab-boundary" aria-controls="panel-boundary" aria-selected="false" data-lab="boundary">Decision Boundary</button><button type="button" role="tab" id="tab-clusters" aria-controls="panel-clusters" aria-selected="false" data-lab="clusters">K-Means Clustering</button><button type="button" role="tab" id="tab-attention" aria-controls="panel-attention" aria-selected="false" data-lab="attention">Text Attention</button></div>
+        <div class="lab-panel" id="panel-regression" role="tabpanel" aria-labelledby="tab-regression"><div class="lab-intro"><div><span class="eyebrow">LAB 01 / SIGNATURE EXPERIMENT</span><h2>Optimizer Step</h2><p>Add or drag points, then watch gradient descent learn the curve one step at a time.</p></div><span class="lab-chip">REGRESSION</span></div><div class="lab-layout"><div class="lab-canvas-wrap"><canvas id="regressionCanvas" width="720" height="430" aria-label="Regression plot. Click to add a point; drag points to move them."></canvas><div class="canvas-hint">Click to add · Drag to move</div></div><div class="lab-controls"><label>Learning rate <output id="lrValue">0.08</output><input id="learningRate" type="range" min="0.005" max="1.5" step="0.005" value="0.08"></label><label>Polynomial degree <output id="degreeValue">2</output><input id="degree" type="range" min="1" max="4" step="1" value="2"></label><div class="control-buttons"><button class="button button-primary" id="regRun" type="button">Pause training</button><button class="button button-outline" id="regReset" type="button">Reset</button></div><div class="preset-row"><span>Try a preset</span><button data-reg-preset="linear" type="button">Linear</button><button data-reg-preset="curve" type="button">Curve</button><button data-reg-preset="explode" type="button">Exploding</button></div><div class="metrics"><div><span>LOSS</span><strong id="regLoss">—</strong></div><div><span>STEPS</span><strong id="regSteps">0</strong></div></div><p class="lab-insight" id="regInsight">The optimizer adjusts weights to reduce prediction error.</p></div></div></div>
+        <div class="lab-panel" id="panel-boundary" role="tabpanel" aria-labelledby="tab-boundary" hidden><div class="lab-intro"><div><span class="eyebrow">LAB 02 / CLASSIFICATION</span><h2>Decision Boundary Painter</h2><p>Paint examples of two classes and see where each classifier draws the line.</p></div><span class="lab-chip">CLASSIFICATION</span></div><div class="lab-layout"><div class="lab-canvas-wrap"><canvas id="boundaryCanvas" width="720" height="430" aria-label="Classification plane. Click to add a point from the selected class."></canvas><div class="canvas-hint">Pick a class · Click to paint</div></div><div class="lab-controls"><label>Algorithm<select id="boundaryAlgorithm"><option value="knn">K-nearest neighbors</option><option value="logistic">Logistic regression</option><option value="neural">Mini neural net</option></select></label><div class="class-picker"><span>Paint class</span><button class="class-button active" data-class="0" type="button">● Indigo</button><button class="class-button" data-class="1" type="button">● Coral</button></div><label id="boundaryParamLabel">Neighbors (K) <output id="boundaryParamValue">5</output><input id="boundaryParam" type="range" min="1" max="15" step="2" value="5"></label><div class="preset-row"><span>Try a preset</span><button data-boundary-preset="diagonal" type="button">Diagonal</button><button data-boundary-preset="xor" type="button">XOR</button><button data-boundary-preset="clear" type="button">Clear</button></div><div class="metrics"><div><span>POINTS</span><strong id="boundaryPoints">0</strong></div><div><span>TRAIN ACCURACY</span><strong id="boundaryAccuracy">—</strong></div></div><p class="lab-insight" id="boundaryInsight">KNN predicts from the closest examples.</p></div></div></div>
+        <div class="lab-panel" id="panel-clusters" role="tabpanel" aria-labelledby="tab-clusters" hidden><div class="lab-intro"><div><span class="eyebrow">LAB 03 / UNSUPERVISED LEARNING</span><h2>K-Means Sandbox</h2><p>Watch centroids move as the algorithm groups unlabeled data.</p></div><span class="lab-chip">CLUSTERING</span></div><div class="lab-layout"><div class="lab-canvas-wrap"><canvas id="clusterCanvas" width="720" height="430" aria-label="K-means plot showing data points and centroids."></canvas><div class="canvas-hint">Stars are centroids · Colors show clusters</div></div><div class="lab-controls"><label>Number of clusters (K) <output id="clusterKValue">3</output><input id="clusterK" type="range" min="2" max="6" step="1" value="3"></label><label>Dataset<select id="clusterDataset"><option value="blobs">Blobs</option><option value="rings">Rings</option><option value="random">Random</option></select></label><div class="control-buttons"><button class="button button-primary" id="clusterStep" type="button">Step once</button><button class="button button-outline" id="clusterAuto" type="button">Auto-run</button></div><button class="quiet-button" id="clusterReset" type="button">Regenerate dataset</button><div class="metrics"><div><span>ITERATION</span><strong id="clusterIteration">0</strong></div><div><span>INERTIA</span><strong id="clusterInertia">—</strong></div></div><p class="lab-insight" id="clusterInsight">Each step assigns points, then moves each centroid to the center of its group.</p></div></div></div>
+        <div class="lab-panel" id="panel-attention" role="tabpanel" aria-labelledby="tab-attention" hidden><div class="lab-intro"><div><span class="eyebrow">LAB 04 / LANGUAGE MODELS</span><h2>Text Attention Explorer</h2><p>Type a short phrase, choose a token, and inspect a simplified similarity-based attention map.</p></div><span class="lab-chip">NLP</span></div><div class="attention-layout"><div class="attention-main"><label class="phrase-label">Your phrase<input id="attentionText" type="text" value="the curious robot learns from data" maxlength="80" autocomplete="off"></label><div class="token-list" id="tokenList" aria-label="Phrase tokens"></div><div class="attention-bars" id="attentionBars"></div></div><div class="lab-controls"><label>Attention sharpness <output id="attentionSharpnessValue">3</output><input id="attentionSharpness" type="range" min="1" max="10" value="3"></label><div class="preset-row"><span>Try a preset</span><button data-attention-preset="robot" type="button">Robot</button><button data-attention-preset="animals" type="button">Animals</button><button data-attention-preset="code" type="button">Code</button></div><div class="metrics"><div><span>TOKENS</span><strong id="attentionCount">6</strong></div><div><span>TOP MATCH</span><strong id="attentionTop">—</strong></div></div><p class="lab-insight">This is a teaching model: deterministic token features and softmax, not a pretrained transformer.</p></div></div></div>
+      </section><section class="container lab-cta"><div><span class="eyebrow">READY TO GO DEEPER?</span><h2>Learn how it works in the course.</h2></div><button class="button button-primary" type="button" data-enroll>Claim Free Founding Seat</button></section>
     </div>
-  </div>
-</section>
-
-    <section class="ai-ecosystem" aria-label="AI ecosystem"><div class="container ecosystem-row"><p>Built with leading<br><strong>AI technologies</strong></p><div class="brand-logos"><img src="logo-openai.svg" alt="OpenAI" width="128" height="36"><img src="logo-nvidia.svg" alt="NVIDIA" width="128" height="36"><img class="sarvam-logo" src="logo-sarvam.png" alt="Sarvam AI" width="170" height="64"><img src="logo-claude.svg" alt="Claude" width="128" height="36"></div></div></section>
-
-    <section class="section" id="services">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">01 / WHAT WE BUILD</div>
-          <h2>Practical AI.<br>Powerful outcomes.</h2>
-          <p>Start with the work that slows you down. We&rsquo;ll build the right system around your people, your data, and your existing tools.</p>
-        </div>
-
-        <div class="cards services-grid">
-          <article class="service-card">
-            <div class="service-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h6a3 3 0 0 1 3 3v6M6 9v9h9"/></svg></div>
-            <h3>Workflow Automation</h3>
-            <p>Connect email, PDFs, Excel, hospital information systems, CRM and ERP into one AI-assisted workflow.</p>
-            <span class="service-detail">Multi-step automation &middot; Human approval gates</span>
-          </article>
-          <article class="service-card">
-            <div class="service-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3 2.6 6.4L21 12l-6.4 2.6L12 21l-2.6-6.4L3 12l6.4-2.6Z"/></svg></div>
-            <h3>AI Agents & Copilots</h3>
-            <p>Internal and customer-facing agents that can retrieve, reason, draft, act and escalate.</p>
-            <span class="service-detail">Patient helpdesk agents &middot; Staff knowledge assistants</span>
-          </article>
-          <article class="service-card">
-            <div class="service-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 3H5v18h14V8Zm0 0v5h5M8 12h8m-8 4h5"/></svg></div>
-            <h3>Document Intelligence</h3>
-            <p>Turn unstructured business documents into structured, searchable, actionable information.</p>
-            <span class="service-detail">Insurance &amp; TPA claim documents &middot; Document Q&amp;A</span>
-          </article>
-          <article class="service-card">
-            <div class="service-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 3v17h17M8 16v-4m5 4V9m5 7V5"/></svg></div>
-            <h3>Predictive Machine Learning</h3>
-            <p>Use historical data for forecasting, scoring, prioritisation and anomaly detection.</p>
-            <span class="service-detail">Bed &amp; OPD demand forecasting &middot; Appointment no-show prediction</span>
-          </article>
-          <article class="service-card">
-            <div class="service-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></div>
-            <h3>Computer Vision</h3>
-            <p>Use images and video to detect objects, defects, events and process deviations.</p>
-            <span class="service-detail">Visual inspection &middot; Detection systems</span>
-          </article>
-          <article class="service-card">
-            <div class="service-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg></div>
-            <h3>AI Voice Assistants</h3>
-            <p>Voice assistants for appointment booking, reminders, follow-up and patient support in Indian languages.</p>
-            <span class="service-detail">Inbound / outbound flows &middot; CRM hand-off</span>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="container industries" id="industries"><div class="industry-intro"><h3>Different industries. <br>Your specific workflow.</h3><p>Explore where AI can help.</p></div><div class="industry-list"><details open><summary>Hospitals &amp; Healthcare</summary><p>Patient enquiries, appointment booking and reminders, insurance and TPA claim documents, bed and OPD demand forecasting.</p></details><details><summary>Manufacturing</summary><p>RFQ automation, quality intelligence, service copilots, forecasting.</p></details><details><summary>Financial Services</summary><p>Document analysis, credit support, collections prioritisation, risk models.</p></details><details><summary>Logistics</summary><p>POD automation, customer updates, route intelligence, maintenance analytics.</p></details><details><summary>Real Estate</summary><p>Lead qualification, follow-up automation, CRM intelligence, voice agents.</p></details><details><summary>Distribution</summary><p>Order capture, quotation automation, inventory intelligence, customer service.</p></details><details><summary>Professional Services</summary><p>Knowledge assistants, document review, reporting and workflow automation.</p></details></div></div>
-
-    <section class="section demo-section" id="playground">
-      <div class="container playground-grid">
-        <div class="playground-copy">
-          <div class="eyebrow">02 / AI PLAYGROUND</div>
-          <h2>Meet your next<br>unfair advantage.</h2>
-          <p>Have a conversation about your hospital or business. See what an AI assistant can bring to the everyday.</p><div class="demo-tabs" aria-label="Choose an assistant" hidden>
-  <button class="demo-tab active" id="chatTab" type="button" aria-controls="chatPanel"><span class="tab-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11a9 9 0 0 1-9 9H3l2-5a9 9 0 1 1 16-4Z"/><path d="M8 10h8m-8 4h5"/></svg></span><span><strong>Chat with AI</strong><small>Explore an automation idea</small></span><span class="tab-arrow" aria-hidden="true">&rarr;</span></button>
-  <button class="demo-tab" id="voiceTab" type="button" aria-controls="voicePanel"><span class="tab-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8"/></svg></span><span><strong>Talk to a voice agent</strong><small>11 languages. One conversation.</small></span><span class="tab-arrow" aria-hidden="true">&rarr;</span></button>
-</div><p class="demo-disclaimer">Live AI assistants. Messages and audio are processed by our AI providers. Please do not share patient details or other sensitive information.</p>
-<details class="technology-details" id="technology"><summary>Behind the experience</summary><p>Text chat uses OpenAI. Voice combines Sarvam AI&rsquo;s speech and language models with LiveKit&rsquo;s real-time audio. Python and FastAPI connect the services; SQLite manages daily chat usage limits.</p></details>
-        </div>
-
-        <div class="demo-grid">
-          <article class="demo-shell" id="chatPanel">
-            <div class="demo-top">
-              <div>
-                <span class="demo-subtitle">Let&rsquo;s find a better way to work</span>
-                <h3>Optimizer assistant</h3>
-              </div>
-              <span class="demo-tag">TEXT AI</span>
-            </div>
-
-            <div class="chat-window" id="inlineChat" role="log" aria-label="AI chat conversation" aria-live="polite">
-              <div class="chat-msg bot">
-                <div class="avatar">AI</div>
-                <div class="bubble">Hi, I&rsquo;m your Optimizer AI assistant.<br><br>What&rsquo;s one task your team spends too much time on?</div>
-              </div>
-              <div class="quick-prompts"><span>A few places to start</span>
-                <button data-question="What can you automate in a hospital?">Automate hospital workflows <span aria-hidden="true">&rarr;</span></button>
-                <button data-question="How can AI reduce repetitive office work?">Reduce manual work <span aria-hidden="true">&rarr;</span></button>
-                <button data-question="Can you build a custom machine learning model?">Explore a custom ML model <span aria-hidden="true">&rarr;</span></button>
-              </div>
-            </div>
-            <form class="chat-input-row" id="inlineChatForm">
-              <label class="sr-only" for="inlineChatInput">Message the AI assistant</label><input required maxlength="800" id="inlineChatInput" type="text" placeholder="What would you like to automate?" autocomplete="off" />
-              <button type="submit" class="send-btn" aria-label="Send"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
-            </form>
-          </article>
-
-          <article class="demo-shell voice-demo" id="voicePanel">
-            <div class="demo-top">
-              <div>
-                <span class="demo-tag voice-tag">VOICE AI</span>
-                <h3>Optimizer voice agent</h3>
-              </div>
-              <div class="voice-state" id="voiceState" role="status" aria-live="polite"><span></span> Ready</div>
-            </div>
-
-            <div class="call-panel">
-              <div class="caller">
-                <div class="caller-avatar">AI</div>
-                <div>
-                  <strong>Optimizer Voice Agent</strong>
-                  <span>Speak naturally in your language</span>
-                </div>
-              </div>
-
-              <div class="waveform" id="waveform" aria-hidden="true">
-                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              </div>
-
-              <div class="voice-form">
-                <label>
-                  Your name
-                  <input id="callName" type="text" placeholder="Your name (optional)" maxlength="80" autocomplete="given-name" />
-                </label>
-                <label>
-                  Company
-                  <input id="callCompany" type="text" placeholder="Company (optional)" maxlength="120" autocomplete="organization" />
-                </label>
-                <label>Conversation language
-                  <select id="callLanguage"><option value="te-IN">Telugu</option><option value="hi-IN">Hindi</option><option value="ta-IN">Tamil</option><option value="kn-IN">Kannada</option><option value="ml-IN">Malayalam</option><option value="mr-IN">Marathi</option><option value="bn-IN">Bengali</option><option value="gu-IN">Gujarati</option><option value="pa-IN">Punjabi</option><option value="od-IN">Odia</option><option value="en-IN" selected>English (India)</option></select>
-                </label>
-                <label>
-                  What should the AI qualify?
-                  <select id="callGoal">
-                    <option value="automation">AI automation opportunity</option>
-                    <option value="sales">Sales lead</option>
-                    <option value="service">Service request</option>
-                  </select>
-                </label>
-              </div>
-
-              <button class="btn btn-primary full" id="startCall">Start voice conversation</button>
-              <button class="btn btn-ghost full hidden" id="endCall">End call</button>
-
-              <div class="transcript" id="transcript" role="log" aria-live="polite">
-                <div class="transcript-empty">The live transcript will appear here.</div>
-              </div>
-              <p class="microcopy">A 90-second AI conversation using your microphone. Audio is processed by our voice providers. You can interrupt or end the call anytime.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section roi-section" id="calculator">
-      <div class="container roi-grid">
-        <div>
-          <div class="eyebrow">THE BUSINESS CASE</div>
-          <h2>Small tasks.<br>Surprisingly big costs.</h2>
-          <p>Before choosing the technology, understand the opportunity. Estimate what one repetitive task costs your team each month.</p>
-        </div>
-        <div class="roi-card glass">
-          <label>Times the task happens per month <input id="roiVolume" type="range" min="20" max="2000" value="500" step="10"><span id="roiVolumeValue">500</span></label>
-          <label>Minutes per task <input id="roiMinutes" type="range" min="2" max="90" value="20"><span id="roiMinutesValue">20 min</span></label>
-          <label>Approx. employee cost per hour (₹) <input id="roiRate" type="range" min="100" max="2500" value="500" step="50"><span id="roiRateValue">₹500</span></label>
-          <div class="roi-result" aria-live="polite" aria-atomic="true">
-            <div><span>Employee hours / month</span><strong id="roiHours">167</strong></div>
-            <div><span>Approx. monthly process cost</span><strong id="roiCost">₹83,333</strong></div>
-          </div>
-          <small>Illustrative only. Actual ROI depends on automation coverage, accuracy, integration and change-management costs.</small>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="process">
-      <div class="container">
-        <div class="section-head">
-          <div class="eyebrow">03 / OUR APPROACH</div>
-          <h2>Start small.<br>Build what matters.</h2>
-        </div>
-        <div class="process-grid">
-          <div class="step"><span>01</span><h3>Discover</h3><p>Map the workflow, people, systems, data and cost of the current problem.</p></div>
-          <div class="step"><span>02</span><h3>Prototype</h3><p>Build the smallest proof that demonstrates feasibility and business value.</p></div>
-          <div class="step"><span>03</span><h3>Integrate</h3><p>Connect the solution to business systems with approvals, controls and monitoring.</p></div>
-          <div class="step"><span>04</span><h3>Measure</h3><p>Track time saved, errors reduced, response times and other agreed business KPIs.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section contact-section" id="contact">
-      <div class="container contact-grid">
-        <div>
-          <div class="eyebrow">LET&rsquo;S FIND YOUR STARTING POINT</div>
-          <h2>Your next big step<br>starts with one<br><span>better workflow.</span></h2>
-          <p>Tell us what keeps your team busy.<br>We&rsquo;ll help you see what&rsquo;s possible.</p>
-          <div class="contact-points">
-            <div><span aria-hidden="true">&#10003;</span> One real problem. A focused pilot.</div>
-            <div><span aria-hidden="true">&#10003;</span> A measurable outcome.</div>
-          </div>
-        </div>
-        <form class="contact-form" id="contactForm"><h3>Where could AI help?</h3><p class="form-intro">Share a few details and our team will get back to you.</p><label class="sr-only" aria-hidden="true">Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-          <div class="form-row">
-            <label>Name<input type="text" name="name" autocomplete="name" maxlength="100" required placeholder="Your name"></label>
-            <label>Hospital / company<input type="text" name="company" autocomplete="organization" maxlength="120" required placeholder="Hospital or company name"></label>
-          </div>
-          <label>Work email<input type="email" name="email" autocomplete="email" maxlength="200" required placeholder="you@company.com"></label>
-          <label>What process would you like to improve?<textarea name="problem" maxlength="2000" required rows="3" placeholder="We spend hours each week on..."></textarea></label>
-          <button class="btn btn-primary full" type="submit">Send your request <span aria-hidden="true">&rarr;</span></button>
-          <p class="form-note" id="formNote" role="status">We use these details only to reply to your enquiry.</p>
-        </form>
-      </div>
-    </section>
   </main>
-
-  <footer class="footer"><div class="container footer-row"><a class="brand" href="#top" aria-label="Optimizer AI home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text">optimizer<span>.ai</span></span></a><p>Practical intelligence. Meaningful progress.</p><a class="text-link" href="#top">Back to top <span aria-hidden="true">&uarr;</span></a></div><div class="container footer-bottom"><span>&copy; 2026 Optimizer AI</span><nav aria-label="Footer navigation"><a href="#industries">Industries</a><a href="#technology">Technology</a><a href="#calculator">Workflow calculator</a></nav><span>AI for hospitals &amp; businesses</span></div></footer>
-
-  <button class="floating-chat-button" id="floatingChatButton" aria-label="Open AI assistant" aria-expanded="false" aria-controls="floatingChat"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11a9 9 0 0 1-9 9H3l2-5a9 9 0 1 1 16-4Z"/><path d="M8 10h8m-8 4h5"/></svg></button>
-  <aside class="floating-chat" id="floatingChat" aria-label="Optimizer AI assistant" aria-hidden="true" hidden>
-    <div class="floating-chat-head">
+  <footer>
+    <div class="container footer-inner">
       <div>
-        <strong>Optimizer AI</strong>
-        <span><i></i> Your business AI assistant</span>
+        <a class="brand" href="./" data-home><span class="brand-glyph">◢</span><span>optimizer<span class="brand-muted">step</span><span class="brand-period">.</span></span></a>
+        <p>Make the model make sense.</p>
       </div>
-      <button id="closeFloatingChat" aria-label="Close chatbot">×</button>
-    </div>
-    <div class="floating-chat-body" id="floatingChatBody" role="log" aria-label="Assistant conversation" aria-live="polite">
-      <div class="chat-msg bot">
-        <div class="avatar">AI</div>
-        <div class="bubble">What part of your business are you thinking about automating?</div>
+      <div class="footer-links">
+        <nav class="footer-navigation" aria-label="Explore Optimizer Step">
+          <a href="#courses" data-home-link>Courses</a>
+          <a href="#playground" data-playground>ML Playground</a>
+          <a href="#faq" data-home-link>FAQ</a>
+        </nav>
+        <nav class="social-links" aria-label="Social media">
+          <a href="https://www.youtube.com/@optimizerstep" target="_blank" rel="noopener noreferrer">YouTube <span aria-hidden="true">↗</span></a>
+          <a href="https://www.instagram.com/optimizerstep/" target="_blank" rel="noopener noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/kalluri-venkatesh-3a2046204/" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+          <a href="https://x.com/optimizerstep" target="_blank" rel="noopener noreferrer">X <span aria-hidden="true">↗</span></a>
+        </nav>
       </div>
+      <small>© 2026 Optimizer Step</small>
     </div>
-    <form class="floating-chat-form" id="floatingChatForm">
-      <label class="sr-only" for="floatingChatInput">Message the AI assistant</label><input required maxlength="800" id="floatingChatInput" placeholder="Type a business problem..." autocomplete="off">
-      <button type="submit" aria-label="Send message"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
-    </form>
-  </aside>
-
-  <script src="app.js?v=20260914c" defer></script>
-  <script type="module" src="voice.js?v=20260914c"></script>
+  </footer>
+  <div id="enrollmentToast" class="enrollment-toast" role="status" aria-live="polite" hidden><span class="toast-avatar">✦</span><div><strong id="toastTitle"></strong><small id="toastMeta"></small></div><button id="toastClose" type="button" aria-label="Mute sample enrollment notifications">×</button></div>
+  <dialog id="enrollDialog" aria-labelledby="enrollTitle"><div class="dialog-inner"><button id="dialogClose" class="dialog-close" type="button" aria-label="Close enrollment form">×</button><div id="enrollFormView"><span class="eyebrow">FOUNDING 100 / EARLY ACCESS</span><h2 id="enrollTitle">Claim your free seat.</h2><p>Tell us what you want to learn. In this preview, your entry stays on this device.</p><form id="enrollForm" novalidate><label>Full name<input name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="Your name"></label><label>Email address<input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label><div class="form-row"><label>Experience level<select name="experience" required><option value="">Choose one</option><option>Just starting</option><option>Know some Python</option><option>Building ML projects</option></select></label><label>Course track<select name="track" required id="enrollTrack"><option value="">Choose a track</option></select></label></div><p class="form-error" id="formError" role="alert" hidden></p><button class="button button-primary full" type="submit">Reserve my free seat</button><small class="form-disclosure">Preview only: no data is sent to Optimizer Step yet. Enrollment activates when the backend is connected.</small></form></div><div id="enrollSuccess" hidden><span class="success-icon">✓</span><h2>You're on your way.</h2><p id="successMessage"></p><button class="button button-outline" id="successClose" type="button">Back to exploring</button></div></div></dialog>
 </body>
 </html>
