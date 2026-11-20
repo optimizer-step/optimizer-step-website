@@ -19,8 +19,7 @@ SITE = {
     "subscribers": "4,300+",
     "videos": "120+",
     "capacity": 100,
-    "planned_price": "₹4,999",
-    "planned_price_number": 4999,
+    # planned_price / price_* are filled in from PRICE_TIERS further down.
     "policy_updated": "20 November 2026",
     # Meta Business settings > Brand safety > Domains: proves to Meta that the Optimizer Step
     # business portfolio owns optimizerstep.com. Keep it in <head> on the home page.
@@ -333,7 +332,7 @@ FAQS = [
     ("What will I build?",
      "Every track ends with a project: a model that predicts a real-world outcome, a PyTorch image classifier, a text classifier you can inspect, and a grounded question-answering system built with RAG."),
     ("What happens when the 100 seats are gone?",
-     "You can still sign up. You'll join the waitlist, and we'll email you when more seats open."),
+     "You can still sign up. ML Foundations stays free for everyone, and you'll join the waitlist in case more founding seats open."),
     ("Is the seat counter real?",
      "Yes. It counts confirmed founding signups and updates as people join. The \"seat claimed\" notices are real signups too: they show the seat number, track, experience level and roughly when, never a name."),
     ("How do you use my details?",
@@ -341,6 +340,87 @@ FAQS = [
     ("Does the ML Playground use an AI API?",
      "No. The labs run entirely in your browser with JavaScript and Canvas. There's no API key, account or backend involved."),
 ]
+
+# ---------------------------------------------------------------------------
+# Price ladder (planned prices: the paid tiers open with the tracks).
+# A free entry course brings people into Optimizer Step; each paid tier then costs a little
+# more than the one below for a clearly bigger result (good / better / best), with a premium
+# Pro tier at the top as the anchor. "Pay only the difference" makes every step up small.
+# Prices come from the market research in notes/pricing-research-2026-11-20.md.
+# Founding students get All Tracks free and keep FOUNDING_DISCOUNT % off upgrades.
+# Every promise here is published on the site: keep it deliverable.
+FOUNDING_DISCOUNT = 40
+PRO_LIVE_MONTHS = 12
+PRICE_TIERS = [
+    {
+        "id": "starter",
+        "name": "Starter",
+        "price": 0,
+        "tagline": "Your way into Optimizer Step. Free, for good.",
+        "includes": [
+            "ML Foundations: the complete beginner track",
+            "Its project: predict a real-world outcome",
+            "The ML Playground and every free YouTube lesson",
+        ],
+    },
+    {
+        "id": "track",
+        "name": "Single Track",
+        "price": 999,
+        "tagline": "Go deep on the one skill you need.",
+        "includes": [
+            "Everything in Starter",
+            "One advanced track of your choice: Deep Learning & Vision, NLP & Transformers or Build with RAG",
+            "That track's project",
+            "A certificate for each track you complete",
+        ],
+    },
+    {
+        "id": "all",
+        "name": "All Tracks",
+        "price": 1999,
+        "badge": "Best value",
+        "tagline": "The whole path, from regression to RAG.",
+        "includes": [
+            "Everything in Starter",
+            "All three advanced tracks",
+            "All four projects for your portfolio",
+            "A certificate for each track you complete",
+        ],
+    },
+    {
+        "id": "pro",
+        "name": "Pro",
+        "price": 4999,
+        "tagline": "All Tracks, plus live help and feedback on your projects.",
+        "includes": [
+            "Everything in All Tracks",
+            "A live Q&A every month for 12 months",
+            "Written feedback on each of your track projects",
+            "A certificate for each track you complete",
+        ],
+    },
+]
+
+# Every price the site prints comes from PRICE_TIERS, so the pages can never disagree.
+# The founding offer gives All Tracks free, so its planned price is the All Tracks price.
+_PRICE = {t["id"]: t["price"] for t in PRICE_TIERS}
+SITE["planned_price_number"] = _PRICE["all"]
+SITE["planned_price"] = f"₹{_PRICE['all']:,}"
+SITE["price_track"] = f"₹{_PRICE['track']:,}"
+SITE["price_all"] = f"₹{_PRICE['all']:,}"
+SITE["price_pro"] = f"₹{_PRICE['pro']:,}"
+SITE["founding_discount"] = FOUNDING_DISCOUNT
+
+FAQS[0] = ("Is it really free?",
+           "Yes. The first 100 students who claim a founding seat get all four launch tracks free: the All Tracks tier, "
+           "planned at {planned_price}. You don't enter any payment details. After the founding cohort, ML Foundations "
+           "stays free for everyone and the other tracks are paid. See <a href=\"/pricing/\">pricing</a>.")
+FAQS.insert(1, ("What will the paid tracks cost?",
+                "ML Foundations is free for everyone. After that it's {price_track} for one advanced track, {price_all} for "
+                "All Tracks, or {price_pro} for Pro, which adds a monthly live Q&A and written feedback on your projects. "
+                "These are one-time prices that include all taxes, and you can upgrade any time by paying only the difference. "
+                "Founding students keep {founding_discount}% off every upgrade."))
 
 # ---------------------------------------------------------------------------
 # "What AI teams hire for" (home page). Skills named in current technical AI / machine-learning

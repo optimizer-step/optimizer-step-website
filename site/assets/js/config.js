@@ -25,7 +25,6 @@ window.OS_CONFIG = {
   enrollmentEndpoint: "https://script.google.com/macros/s/AKfycbwIJKFScnpdf3f6hOsWhtm7kzTjuc5_8yj7oHDtSJPnXf7vkKjtG61HE3I_s4SQFKFX/exec",
   capacity: 100,
   showCountsAfter: 10,
-  plannedPriceINR: 4999,
   statsRefreshSeconds: 90,
   liveNotices: { enabled: true, showAfter: 10, perPage: 3, perSession: 6 },
   todayAfter: 3,

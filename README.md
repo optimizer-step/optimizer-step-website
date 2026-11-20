@@ -12,6 +12,7 @@ Signups go to a Google Sheet through a small Google Apps Script backend.
 | Website source | [`site/`](site) | Edit here, never in `docs/`. |
 | Words, tracks, labs, videos, FAQ | [`site/content.py`](site/content.py) | Keep every claim true. |
 | "What AI teams hire for" section | `SKILL_*` in [`site/content.py`](site/content.py) | Company names (never logos) from real job posts; evidence in [`notes/skills-evidence-2026-11-20.json`](notes/skills-evidence-2026-11-20.json). |
+| Price ladder and `/pricing/` | `PRICE_TIERS`, `FOUNDING_DISCOUNT`, `PRO_LIVE_MONTHS` in [`site/content.py`](site/content.py) | Every price on the site (cards, FAQ, terms, track pages, the "planned price") is computed from these. Research: [`notes/pricing-research-2026-11-20.md`](notes/pricing-research-2026-11-20.md). |
 | Minifier | [`package.json`](package.json), [`scripts/minify.mjs`](scripts/minify.mjs) | esbuild shrinks the published CSS/JS. Run `npm ci` once. |
 | Page templates and build | [`scripts/build_pages.py`](scripts/build_pages.py) | Writes `docs/`, sitemap, robots.txt, manifest; checks every internal link. |
 | Styles | [`site/assets/css/site.css`](site/assets/css/site.css) | Dark theme by default, light theme via the toggle. |
@@ -80,7 +81,24 @@ and delete the test row from the sheet afterwards (or set its Status to `removed
 Details, limits (100 confirmation emails per day on this account) and how to redeploy are in
 [`backend/apps-script/README.md`](backend/apps-script/README.md).
 
+## Pricing
+
+- **Starter (free for good):** ML Foundations, its project, the ML Playground and the YouTube lessons. It is the way
+  into Optimizer Step.
+- **Single Track ₹999, All Tracks ₹1,999 ("Best value"), Pro ₹4,999:** one-time prices including all taxes.
+  All Tracks is only ₹1,000 more than one track for three times the tracks, and Pro adds a monthly live Q&A for
+  12 months plus written project feedback. Upgrades cost only the difference.
+- **Founding 100:** All Tracks free, the Pro upgrade for ₹1,799 (40% off the ₹3,000 step) and 40% off future paid tracks.
+- The paid tiers are **planned**: the pages say they open with the tracks. Before taking payments, add the checkout,
+  publish the refund terms (the terms page promises they appear before payment) and keep every promise in
+  `PRICE_TIERS` deliverable. To change a price, edit `PRICE_TIERS` and rebuild; nothing else needs editing.
+
 ## Ads and tracking
+
+Meta: the pixel `1131433136148670` (dataset "Optimizer Step website") belongs to the **Optimizer Step** business
+portfolio in Meta Business settings, together with the ad account. `optimizerstep.com` is verified there through the
+`facebook-domain-verification` meta tag in every page's head (`SITE["facebook_domain_verification"]`); keep the tag.
+Automatic advanced matching is on for email and name only (Events Manager → dataset → Settings).
 
 1. Paste your IDs into `site/assets/js/config.js` → `tracking` (Meta Pixel ID, GA4 measurement ID, Google Ads ID
    and sign-up conversion label, Microsoft Clarity project ID), rebuild and push. Empty IDs load nothing.

@@ -40,6 +40,10 @@ VIDEOS = content.VIDEOS
 FAQS = content.FAQS
 LAB_PANELS = content.LAB_PANELS
 LAB_EXPLAINERS = content.LAB_EXPLAINERS
+PRICE_TIERS = content.PRICE_TIERS
+TIER_BY_ID = {t["id"]: t for t in PRICE_TIERS}
+FOUNDING_DISCOUNT = content.FOUNDING_DISCOUNT
+PRO_LIVE_MONTHS = content.PRO_LIVE_MONTHS
 SKILL_DEMAND = content.SKILL_DEMAND
 SKILL_COMPANIES = content.SKILL_COMPANIES
 SKILLS_CHECKED = content.SKILLS_CHECKED
@@ -138,6 +142,96 @@ def offer_card(prefix: str, track: str = "undecided") -> str:
   {seat_meter()}
   {signup_form(prefix, track, "inline")}
 </div>"""
+
+
+# --------------------------------------------------------------------------- price ladder
+
+def inr(amount: int) -> str:
+    return "Free" if amount == 0 else f"₹{amount:,}"
+
+
+def founding_pro_upgrade() -> int:
+    """Founding students already have All Tracks free. Their Pro upgrade is the regular step from
+    All Tracks to Pro minus the founding discount, rounded down to a price ending in 99."""
+    step = TIER_BY_ID["pro"]["price"] - TIER_BY_ID["all"]["price"]
+    price = step * (100 - FOUNDING_DISCOUNT) // 100
+    return price // 100 * 100 - 1 if price >= 100 else price
+
+
+def tier_nudge(t: dict) -> str:
+    p = {key: tier["price"] for key, tier in TIER_BY_ID.items()}
+    if t["id"] == "starter":
+        return "Free for good, with no payment details."
+    if t["id"] == "track":
+        return "Pick the one skill your goal needs."
+    if t["id"] == "all":
+        return f"Only {inr(p['all'] - p['track'])} more than Single Track, for two more tracks."
+    return f"{inr(p['pro'] - p['all'])} more than All Tracks, for a year of live help."
+
+
+def tier_card(t: dict) -> str:
+    featured = bool(t.get("badge"))
+    badge = f'<span class="tier-badge">{e(t["badge"])}</span>' if featured else ""
+    items = "".join(f"<li>{e(item)}</li>" for item in t["includes"])
+    unit = "for good" if t["price"] == 0 else "one-time · taxes included"
+    button = "button button-primary button-block" if featured else "button button-outline button-block"
+    if t["id"] == "starter":
+        action = cta("Start free", "pricing-starter", "foundations", button, arrow=False)
+        perk = ""
+    elif t["id"] == "pro":
+        action = cta("Claim a founding seat", "pricing-pro", None, button, arrow=False)
+        perk = f'<p class="tier-perk">Founding students upgrade for {inr(founding_pro_upgrade())}</p>'
+    else:
+        action = cta("Get it free as a founder", f"pricing-{t['id']}", None, button, arrow=False)
+        perk = f'<p class="tier-perk">Free for the first {SITE["capacity"]} founding students</p>'
+    return f"""<article class="tier-card{' is-featured' if featured else ''}" aria-labelledby="tier-{t['id']}">
+  {badge}<h3 id="tier-{t['id']}">{e(t['name'])}</h3>
+  <p class="tier-tagline">{e(t['tagline'])}</p>
+  <p class="tier-price"><strong>{inr(t['price'])}</strong><span>{unit}</span></p>
+  <p class="tier-nudge">{e(tier_nudge(t))}</p>
+  <ul class="tier-list">{items}</ul>
+  {perk}{action}
+</article>"""
+
+
+def ladder_steps() -> str:
+    """The upgrade path as Apple-style step-ups: each step shows only what it adds."""
+    steps, previous = [], 0
+    for t in PRICE_TIERS:
+        cost = "Free" if t["price"] == 0 else "+" + inr(t["price"] - previous)
+        steps.append(f'<li><span class="step-name">{e(t["name"])}</span><span class="step-cost">{cost}</span></li>')
+        previous = t["price"]
+    return f'<ol class="ladder-steps" aria-label="Upgrade path and the extra cost of each step">{"".join(steps)}</ol>'
+
+
+def tier_table() -> str:
+    yes = '<span aria-hidden="true">✓</span><span class="visually-hidden">Included</span>'
+    no = '<span aria-hidden="true">–</span><span class="visually-hidden">Not included</span>'
+    rows = [
+        ("ML Foundations track and its project", [yes, yes, yes, yes]),
+        ("ML Playground and free YouTube lessons", [yes, yes, yes, yes]),
+        ("Advanced tracks", [no, "1 of your choice", "All 3", "All 3"]),
+        ("Projects for your portfolio", ["1", "2", "4", "4"]),
+        ("Certificate for each completed track", [no, yes, yes, yes]),
+        ("Live Q&amp;A sessions", [no, no, no, f"Monthly, {PRO_LIVE_MONTHS} months"]),
+        ("Written feedback on your projects", [no, no, no, yes]),
+        ("Price", [inr(t["price"]) for t in PRICE_TIERS]),
+    ]
+    head = "".join(f'<th scope="col">{e(t["name"])}</th>' for t in PRICE_TIERS)
+    body = "".join(f'<tr><th scope="row">{label}</th>' + "".join(f"<td>{cell}</td>" for cell in cells) + "</tr>" for label, cells in rows)
+    return f'<div class="table-scroll"><table class="tier-table"><caption class="visually-hidden">What each tier includes</caption><thead><tr><td></td>{head}</tr></thead><tbody>{body}</tbody></table></div>'
+
+
+def pricing_teaser() -> str:
+    chips = "".join(f'<li><strong>{e(t["name"])}</strong><span>{inr(t["price"])}</span></li>' for t in PRICE_TIERS)
+    return f"""<section class="section-tight container" aria-labelledby="ladder-title">
+  <div class="pricing-teaser">
+    <div><span class="eyebrow">After the Founding {SITE["capacity"]}</span><h2 id="ladder-title">Start free. <em>Step up when you're ready.</em></h2>
+    <p>ML Foundations stays free for everyone. The advanced tracks start at {inr(TIER_BY_ID['track']['price'])}, and when you upgrade you only ever pay the difference.</p>
+    <a class="text-link" href="/pricing/">See plans and pricing&nbsp;<span aria-hidden="true">→</span></a></div>
+    <ol class="teaser-ladder" aria-label="Plans and planned prices">{chips}</ol>
+  </div>
+</section>"""
 
 
 def course_card(t: dict, heading: str = "h3") -> str:
@@ -287,7 +381,7 @@ def jsonld(nodes: list[dict]) -> str:
 THEME_BOOT = ('<script>document.documentElement.classList.add("js");try{if(localStorage.getItem("optimizerstep-theme-v1")==="light")'
               'document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>')
 
-NAV = [("/courses/", "Courses", "courses"), ("/playground/", "Playground", "playground"), ("/#instructor", "Instructor", None), ("/#faq", "FAQ", None)]
+NAV = [("/courses/", "Courses", "courses"), ("/playground/", "Playground", "playground"), ("/pricing/", "Pricing", "pricing"), ("/#instructor", "Instructor", None), ("/#faq", "FAQ", None)]
 
 
 def header(section: str | None) -> str:
@@ -496,6 +590,7 @@ def page_home() -> dict:
     {offer_card("j")}
   </div>
 </section>
+{pricing_teaser()}
 <section class="section container" id="instructor" aria-labelledby="instructor-title">
   <div class="instructor-card">
     <figure class="instructor-photo">
@@ -573,6 +668,14 @@ def page_courses() -> dict:
     }
 
 
+def track_price_text(t: dict) -> str:
+    """What this track costs: ML Foundations is the free Starter course; the others are paid after the founding cohort."""
+    if t["id"] == "foundations":
+        return '<strong>Free</strong> for everyone: it is the <a class="text-link" href="/pricing/">Starter</a> course'
+    return (f'<strong>Free</strong> for the first {SITE["capacity"]} founding students. Then {inr(TIER_BY_ID["track"]["price"])} for this track, '
+            f'or {inr(TIER_BY_ID["all"]["price"])} for <a class="text-link" href="/pricing/">All Tracks</a>')
+
+
 def page_track(t: dict) -> dict:
     lab = LAB_BY_SLUG[t["lab"]]
     modules = "".join(f"<li><h3>{e(title)}</h3><p>{e(text)}</p></li>" for title, text in t["modules"])
@@ -626,7 +729,7 @@ def page_track(t: dict) -> dict:
         <div><dt>Who it's for</dt><dd>{e(t["audience"])}</dd></div>
         <div><dt>Recommended background</dt><dd>{e(t["background"])}</dd></div>
         <div><dt>Format</dt><dd>Online, project-first lessons</dd></div>
-        <div><dt>Price</dt><dd><del><span class="visually-hidden">Planned price </span>{e(SITE["planned_price"])}</del> <strong>Free</strong> for the first {SITE["capacity"]} founding students</dd></div>
+        <div><dt>Price</dt><dd>{track_price_text(t)}</dd></div>
       </dl>
       {cta("Claim my free seat", "track-sidebar", t["id"], "button button-primary button-block")}
       <p class="form-fineprint" style="margin-top:12px" data-seats-short>First {SITE["capacity"]} students join free</p>
@@ -747,6 +850,75 @@ def page_lab(lab: dict) -> dict:
     }
 
 
+def faq_list(items: list[tuple[str, str]]) -> str:
+    rows = "".join(f"<details><summary>{e(q)}</summary><div><p>{a}</p></div></details>" for q, a in items)
+    return f'<div class="faq-list">{rows}</div>'
+
+
+def page_pricing() -> dict:
+    cap = SITE["capacity"]
+    upgrade = inr(founding_pro_upgrade())
+    pro_step = inr(TIER_BY_ID["pro"]["price"] - TIER_BY_ID["all"]["price"])
+    cards = "".join(tier_card(t) for t in PRICE_TIERS)
+    faqs = [
+        ("Is Starter really free for good?", "Yes. ML Foundations, its project, the ML Playground and the YouTube lessons stay free for everyone, with no payment details."),
+        ("When can I buy a paid tier?", "The paid tiers open with the tracks, which open in stages. Founding students hear first, by email. Until then, the best deal is a free founding seat."),
+        ("Do the prices include taxes?", "Yes. The price you see is the price you pay, including all taxes. Nothing is added at checkout."),
+        ("Is it a subscription?", "No. Every tier is a one-time payment, and nothing renews automatically."),
+        ("Can I upgrade later?", "Yes, at any time. Everything you have already paid counts towards the higher tier, so you only pay the difference."),
+        ("What do founding students get?", f"All Tracks free (planned price {e(SITE['price_all'])}), a Pro upgrade for {upgrade} instead of {pro_step}, and {FOUNDING_DISCOUNT}% off any future paid track."),
+        ("How do the Pro live sessions work?", f"Pro includes a live Q&amp;A session every month for {PRO_LIVE_MONTHS} months from the date you buy it, plus written feedback on each of your track projects."),
+        ("What about refunds?", "The refund terms will be shown clearly before you pay."),
+    ]
+    faq_schema = {
+        "@type": "FAQPage",
+        "@id": URL + "/pricing/#faq",
+        "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": strip_tags(html.unescape(a))}} for q, a in faqs],
+    }
+    body = f"""
+<section class="container page-hero">
+  {breadcrumbs([("Home", "/"), ("Pricing", None)])}
+  <p class="eyebrow" style="margin-top:28px">Pricing · planned prices</p>
+  <h1>Start free. <em>Step up when you're ready.</em></h1>
+  <p class="lead">ML Foundations is free for everyone, for good. When you want more, each step up costs a little and adds a lot, and you only ever pay the difference.</p>
+  <div class="founding-callout">
+    <div><strong>Right now: the Founding {cap}</strong><p>The first {cap} students get All Tracks free (planned price {e(SITE['price_all'])}), can upgrade to Pro for {upgrade}, and keep {FOUNDING_DISCOUNT}% off every future paid track.</p><p class="dialog-seats" data-seats-text>{cap} free founding seats. First come, first served.</p></div>
+    {cta("Claim my free seat", "pricing-hero")}
+  </div>
+</section>
+<section class="container" aria-labelledby="plans-title">
+  <h2 class="visually-hidden" id="plans-title">Plans</h2>
+  <div class="tier-grid">{cards}</div>
+  <p class="tier-footnote">Planned prices in Indian rupees, including all taxes. The paid tiers open with the tracks, and founding students hear first.</p>
+</section>
+<section class="section container" aria-labelledby="path-title">
+  <div class="section-heading"><div><span class="eyebrow">How upgrading works</span><h2 id="path-title">Every step is small. <em>You only pay the difference.</em></h2></div><p>Start with Starter. Whatever you have paid counts towards the next tier, so moving up costs only what the new tier adds.</p></div>
+  {ladder_steps()}
+</section>
+<section class="section-tight container" aria-labelledby="compare-title">
+  <h2 class="subhead" id="compare-title">Compare the plans</h2>
+  {tier_table()}
+</section>
+<section class="section container faq-section" id="faq" aria-labelledby="pricing-faq-title">
+  <div class="faq-aside"><span class="eyebrow">Pricing questions</span><h2 id="pricing-faq-title">Good to know.</h2><p>Anything else? Email <a class="text-link" href="mailto:{e(SITE["email"])}">{e(SITE["email"])}</a>.</p></div>
+  {faq_list(faqs)}
+</section>
+{cta_band("Founding " + str(cap), "The best price is <em>free.</em>", f"Claim a founding seat now: All Tracks free and {FOUNDING_DISCOUNT}% off every upgrade.", "Claim my free seat", "pricing-band")}
+"""
+    p = {key: tier["price"] for key, tier in TIER_BY_ID.items()}
+    return {
+        "path": "/pricing/",
+        "out": "pricing/index.html",
+        "title": f"Pricing: Free ML Course, Advanced Tracks from {inr(p['track'])} | Optimizer Step",
+        "og_title": "Start free, step up when you're ready | Optimizer Step pricing",
+        "description": (f"ML Foundations is free for everyone. Advanced AI/ML tracks from {inr(p['track'])}, All Tracks {inr(p['all'])}, "
+                        f"Pro with monthly live Q&A {inr(p['pro'])}. One-time prices including taxes; upgrade by paying only the difference."),
+        "body": body,
+        "section": "pricing",
+        "schema": [org_schema(), faq_schema, breadcrumb_schema([("Home", "/"), ("Pricing", "/pricing/")])],
+    }
+
+
 def page_privacy() -> dict:
     email = e(SITE["email"])
     body = f"""
@@ -842,8 +1014,16 @@ def page_terms() -> dict:
   <h2>Course availability</h2>
   <p>The tracks open in stages. We will email you the start date for your track before it opens. Course content, schedules and formats may change as the platform grows. If we ever cannot deliver a launch track, we will tell founding students by email.</p>
 
-  <h2>Payments and refunds</h2>
-  <p>Founding seats are free, so there is nothing to refund. If we offer paid courses in future, the price and the refund terms will be shown clearly before you pay.</p>
+  <h2>Plans and payments</h2>
+  <ul>
+    <li>ML Foundations (the Starter plan) is free for everyone. The paid plans, Single Track ({e(SITE["price_track"])}), All Tracks ({e(SITE["price_all"])}) and Pro ({e(SITE["price_pro"])}), open with the tracks. These are planned prices in Indian rupees and include all taxes.</li>
+    <li>Every plan is a one-time payment. Nothing renews automatically.</li>
+    <li>You can upgrade at any time: what you have already paid counts towards the higher plan, so you pay only the difference.</li>
+    <li>Founding students get All Tracks free, can upgrade to Pro for {inr(founding_pro_upgrade())} and get {FOUNDING_DISCOUNT}% off any future paid track.</li>
+    <li>Pro includes a live Q&amp;A session every month for {PRO_LIVE_MONTHS} months from the date of purchase, and written feedback on each of the student's track projects.</li>
+    <li>Paid plans include a certificate for each track a student completes, including its project.</li>
+    <li>Founding seats are free, so there is nothing to refund. For paid plans, the refund terms will be shown clearly before you pay.</li>
+  </ul>
 
   <h2>Using the site and the ML Playground</h2>
   <p>The site and the ML Playground are provided for learning. The labs are simplified teaching models and are provided as they are, without any guarantee of accuracy. Please don't try to disrupt the site, scrape it in bulk or submit automated signups.</p>
@@ -998,7 +1178,7 @@ def copy_assets(stage: Path) -> None:
 
 def write_meta_files(pages: list[dict]) -> None:
     urls = [p for p in pages if not p.get("noindex")]
-    priority = {"/": "1.0", "/courses/": "0.9", "/playground/": "0.8"}
+    priority = {"/": "1.0", "/courses/": "0.9", "/pricing/": "0.8", "/playground/": "0.8"}
     entries = "".join(
         f"  <url><loc>{URL}{p['path']}</loc><lastmod>{TODAY}</lastmod><priority>{priority.get(p['path'], '0.7')}</priority></url>\n" for p in urls
     )
@@ -1054,7 +1234,7 @@ def build() -> int:
     stage = stage_assets()
     clean_output()
     copy_assets(stage)
-    pages = [page_home(), page_courses(), *[page_track(t) for t in TRACKS], page_playground(), *[page_lab(lab) for lab in LABS],
+    pages = [page_home(), page_courses(), page_pricing(), *[page_track(t) for t in TRACKS], page_playground(), *[page_lab(lab) for lab in LABS],
              page_privacy(), page_terms(), page_welcome(), page_404()]
     for page in pages:
         target = OUT / page["out"]
