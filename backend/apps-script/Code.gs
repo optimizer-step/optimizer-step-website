@@ -4,14 +4,23 @@
  * A Google Apps Script web app bound to the "Optimizer Step — Founding 100 signups"
  * spreadsheet. The static site on GitHub Pages calls it directly from the browser.
  *
- *   GET  <web app URL>?action=stats   -> { ok, claimed, capacity, remaining, open }
+ *   GET  <web app URL>?action=stats   -> { ok, claimed, capacity, remaining, open, today, recent }
+ *        today:  signups (founding + waitlist) in the last 24 hours
+ *        recent: up to 6 signups from the last 72 hours, newest first, for the site's
+ *                "seat claimed" notices: { seat, status, track, exp, ago }. No names or emails,
+ *                ever. exp is the index of the experience level, ago is whole minutes in seconds.
  *   POST <web app URL>                -> { ok, accepted, duplicate, status, seat, claimed, capacity, remaining, open }
  *        body: JSON sent as text/plain (no CORS preflight)
  *        { name, email, track, experience, company (honeypot), page, device, elapsedMs, attribution: {...} }
+ *        A duplicate email gets { duplicate: true } without its seat or status, so nobody can look
+ *        up another person's signup by typing their email address.
  *
- * Seats are handed out inside a script lock, so two people can never get the same seat.
- * The first `capacity` signups (Settings sheet) are "founding"; everyone after that is "waitlist".
+ * Seats are handed out inside a script lock, so two people can never get the same seat: each new
+ * founding signup gets the lowest free seat number from 1 to `capacity` (Settings sheet), and
+ * everyone after that joins the waitlist.
  * To exclude a row from the counts (a test or spam entry), change its Status to "removed".
+ * Flags column: "no-notice" keeps a signup out of the site's notices (for students who ask),
+ * "test" keeps it out of the notices and the 24-hour count; "fast-submit" is set automatically.
  *
  * @OnlyCurrentDoc
  */
@@ -33,6 +42,7 @@ const TRACKS = {
   'undecided': 'Not sure yet'
 };
 const EXPERIENCE = ['Just starting', 'Know some Python', 'Building ML projects'];
+const TRACK_IDS = Object.keys(TRACKS).reduce(function (map, id) { map[TRACKS[id]] = id; return map; }, {});
 
 const DEFAULT_SETTINGS = {
   capacity: 100,
@@ -54,6 +64,8 @@ const SETTING_NOTES = {
 };
 
 const STATS_CACHE_SECONDS = 30;
+const FEED_MAX_ITEMS = 6;
+const FEED_MAX_AGE_HOURS = 72;
 const SETTINGS_CACHE_SECONDS = 60;
 const FLOOD_LIMIT_PER_MINUTE = 150;
 
@@ -66,7 +78,18 @@ function doGet(e) {
   try {
     if (action === 'stats') {
       const stats = getStats_(false);
-      return json_({ ok: true, claimed: stats.claimed, capacity: stats.capacity, remaining: stats.remaining, open: stats.open });
+      const now = Date.now();
+      return json_({
+        ok: true,
+        claimed: stats.claimed,
+        capacity: stats.capacity,
+        remaining: stats.remaining,
+        open: stats.open,
+        today: stats.today || 0,
+        recent: (stats.recent || []).map(function (r) {
+          return { seat: r.seat, status: r.status, track: r.track, exp: r.exp, ago: Math.max(0, Math.floor((now - r.t) / 60000)) * 60 };
+        })
+      });
     }
     if (action === 'health') return json_({ ok: true, time: new Date().toISOString() });
     return json_({ ok: false, error: 'Unknown action.' });
@@ -113,12 +136,10 @@ function doPost(e) {
     if (existing) {
       result = { duplicate: true, status: existing.status, seat: existing.seat, row: existing.row };
     } else {
-      const counts = countStatuses_(sheet);
-      const status = counts.founding < settings.capacity ? 'founding' : 'waitlist';
-      const seat = status === 'founding' ? counts.founding + 1 : counts.waitlist + 1;
-      sheet.appendRow(rowFor_(entry, status, seat));
+      const place = allocateSeat_(sheet, settings.capacity);
+      sheet.appendRow(rowFor_(entry, place.status, place.seat));
       SpreadsheetApp.flush();
-      result = { duplicate: false, status: status, seat: seat, row: sheet.getLastRow() };
+      result = { duplicate: false, status: place.status, seat: place.seat, row: sheet.getLastRow() };
     }
   } catch (err) {
     console.error(err);
@@ -149,8 +170,9 @@ function doPost(e) {
     ok: true,
     accepted: true,
     duplicate: result.duplicate,
-    status: result.status,
-    seat: result.seat,
+    // Never reveal an existing signup's seat or status: the original confirmation email has them.
+    status: result.duplicate ? '' : result.status,
+    seat: result.duplicate ? 0 : result.seat,
     claimed: stats.claimed,
     capacity: stats.capacity,
     remaining: stats.remaining,
@@ -292,32 +314,57 @@ function signupsSheet_() {
   return sheet;
 }
 
+// One rule for reading the Status column everywhere ("Founding ", "WAITLIST" and "founding" all count).
+function statusOf_(value) {
+  return String(value == null ? '' : value).trim().toLowerCase();
+}
+
+// The first row with this email that is not "removed" (a removed earlier row must not hide a later one).
 function findByEmail_(sheet, email) {
   const last = sheet.getLastRow();
   if (last < 2) return null;
-  const hit = sheet.getRange(2, COL['Email'], last - 1, 1)
+  const hits = sheet.getRange(2, COL['Email'], last - 1, 1)
     .createTextFinder(email)
     .matchEntireCell(true)
     .matchCase(false)
-    .findNext();
-  if (!hit) return null;
-  const row = hit.getRow();
-  const values = sheet.getRange(row, 1, 1, HEADERS.length).getValues()[0];
-  const status = String(values[COL['Status'] - 1] || '').toLowerCase();
-  if (status === 'removed') return null;
-  return { row: row, status: status === 'waitlist' ? 'waitlist' : 'founding', seat: Number(values[COL['Seat'] - 1]) || 0 };
+    .findAll();
+  for (let i = 0; i < hits.length; i++) {
+    const row = hits[i].getRow();
+    const values = sheet.getRange(row, 1, 1, HEADERS.length).getValues()[0];
+    const status = statusOf_(values[COL['Status'] - 1]);
+    if (status === 'removed') continue;
+    return { row: row, status: status === 'waitlist' ? 'waitlist' : 'founding', seat: Number(values[COL['Seat'] - 1]) || 0 };
+  }
+  return null;
 }
 
-function countStatuses_(sheet) {
-  const counts = { founding: 0, waitlist: 0 };
+// Called inside the script lock. A founding signup gets the lowest seat number from 1 to capacity
+// that no active founding row holds, so numbers freed by removed rows are reused and never doubled.
+// Once capacity is reached, signups join the waitlist after its highest number.
+function allocateSeat_(sheet, capacity) {
+  const taken = {};
+  let founding = 0;
+  let waitlistMax = 0;
   const last = sheet.getLastRow();
-  if (last < 2) return counts;
-  sheet.getRange(2, COL['Status'], last - 1, 1).getValues().forEach(function (row) {
-    const status = String(row[0]).toLowerCase();
-    if (status === 'founding') counts.founding++;
-    else if (status === 'waitlist') counts.waitlist++;
-  });
-  return counts;
+  if (last >= 2) {
+    // Status and Seat are neighbouring columns.
+    sheet.getRange(2, COL['Status'], last - 1, 2).getValues().forEach(function (row) {
+      const status = statusOf_(row[0]);
+      const seat = Number(row[1]) || 0;
+      if (status === 'founding') {
+        founding++;
+        if (seat > 0) taken[seat] = true;
+      } else if (status === 'waitlist') {
+        waitlistMax = Math.max(waitlistMax, seat);
+      }
+    });
+  }
+  if (founding < capacity) {
+    for (let n = 1; n <= capacity; n++) {
+      if (!taken[n]) return { status: 'founding', seat: n };
+    }
+  }
+  return { status: 'waitlist', seat: waitlistMax + 1 };
 }
 
 function getStats_(fresh) {
@@ -327,15 +374,54 @@ function getStats_(fresh) {
     if (hit) return JSON.parse(hit);
   }
   const settings = getSettings_();
-  const counts = countStatuses_(signupsSheet_());
+  const activity = readActivity_(signupsSheet_());
   const stats = {
-    claimed: Math.min(counts.founding, settings.capacity),
+    claimed: Math.min(activity.founding, settings.capacity),
     capacity: settings.capacity,
-    remaining: Math.max(0, settings.capacity - counts.founding),
-    open: Boolean(settings.campaign_open)
+    remaining: Math.max(0, settings.capacity - activity.founding),
+    open: Boolean(settings.campaign_open),
+    today: activity.today,
+    recent: activity.recent
   };
   cache.put('stats', JSON.stringify(stats), STATS_CACHE_SECONDS);
   return stats;
+}
+
+// One read of every signup row: the status counts, how many people signed up in the last
+// 24 hours, and the newest signups for the site's "seat claimed" notices (no names or emails).
+// Rows marked "removed" are ignored. Rows flagged "fast-submit" (possible bots) or "test" are
+// left out of the 24-hour count and the notices; "no-notice" keeps a row out of the notices only.
+function readActivity_(sheet) {
+  const out = { founding: 0, waitlist: 0, today: 0, recent: [] };
+  const last = sheet.getLastRow();
+  if (last < 2) return out;
+  const rows = sheet.getRange(2, 1, last - 1, HEADERS.length).getValues();
+  const now = Date.now();
+  const dayAgo = now - 24 * 3600 * 1000;
+  const feedSince = now - FEED_MAX_AGE_HOURS * 3600 * 1000;
+  const candidates = [];
+  rows.forEach(function (row) {
+    const status = statusOf_(row[COL['Status'] - 1]);
+    if (status !== 'founding' && status !== 'waitlist') return;
+    out[status]++;
+    const stamp = row[COL['Timestamp'] - 1];
+    const t = stamp instanceof Date ? stamp.getTime() : Date.parse(String(stamp));
+    if (!Number.isFinite(t) || t > now + 60000) return;
+    const flags = String(row[COL['Flags'] - 1] || '');
+    const doubtful = /fast-submit|\btest\b/i.test(flags);
+    if (t >= dayAgo && !doubtful) out.today++;
+    if (t < feedSince || doubtful || /no-notice/i.test(flags)) return;
+    candidates.push({
+      t: t,
+      seat: Number(row[COL['Seat'] - 1]) || 0,
+      status: status,
+      track: TRACK_IDS[String(row[COL['Track'] - 1] || '').trim()] || 'undecided',
+      exp: EXPERIENCE.indexOf(String(row[COL['Experience'] - 1] || '').trim())
+    });
+  });
+  candidates.sort(function (a, b) { return b.t - a.t; });
+  out.recent = candidates.slice(0, FEED_MAX_ITEMS);
+  return out;
 }
 
 function getSettings_() {

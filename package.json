@@ -1,0 +1,8 @@
+{
+  "name": "optimizer-step-website",
+  "private": true,
+  "description": "Build tooling for www.optimizerstep.com. The site is built by `python scripts/build_pages.py`; esbuild minifies the published CSS and JS.",
+  "devDependencies": {
+    "esbuild": "0.24.2"
+  }
+}

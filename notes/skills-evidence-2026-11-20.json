@@ -1,0 +1,2528 @@
+{
+ "checked": "2026-11-20",
+ "claim": "Skills named in current technical AI / machine-learning job posts on each company's own careers site (home page section 'What AI teams hire for').",
+ "method": {
+  "public_job_feeds": "OpenAI and Sarvam AI (Ashby), Anthropic and Databricks (Greenhouse), Amazon (amazon.jobs), Hugging Face (Workable), Meesho (Lever), and others: every listed post was read; engineering/research/science roles kept; company boilerplate (sentences repeated in 25%+ of a company's posts) ignored; skills matched by keyword.",
+  "manual_research": "Google, Microsoft, Meta, Swiggy, PhonePe: posts found on the official careers sites, then a second agent re-opened every post and confirmed each quote verbatim, the post live, and the skill named.",
+  "not_listed": {
+   "Flipkart": "careers page could not be read (JavaScript-only applicant tracker)",
+   "Razorpay": "no open AI/ML roles on its public board",
+   "Zomato / Eternal": "no public job postings",
+   "Krutrim": "no public careers page",
+   "NVIDIA": "job feed rate-limited the check, so no post was verified"
+  }
+ },
+ "technical_posts_read_from_feeds": 1104,
+ "feeds_per_company": {
+  "Anthropic": {
+   "roles": 179,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 102,
+     "examples": [
+      {
+       "title": "Anthropic Fellows Program, ML Systems & Reinforcement Learning",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5183051008",
+       "location": "London, UK; Ontario, CAN; Remote-Friendly, United States; San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ronments Can implement ideas quickly and communicate clearly Candidates must be Fluent in Python programming Available to work full-time on the Fellows program Reinforcement Learning Fel"
+      },
+      {
+       "title": "Applied AI Engineer, Commercial",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5483945008",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "uation frameworks, and deployment at scale, and the ability to work in a real codebase in Python or TypeScript, not just notebooks A systems mindset and comfort with ambiguity. You'd rat"
+      },
+      {
+       "title": "Applied AI Engineer, Enterprise ",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5057647008",
+       "location": "San Francisco, CA | New York City, NY",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ript analysis, MCP, and deployment at scale Strong programming skills with proficiency in Python or TypeScript and experience building production applications Ability to navigate ambigui"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 15,
+     "examples": [
+      {
+       "title": "Research Engineer, Code RL (Reinforcement Learning)",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5254364008",
+       "location": "San Francisco, CA | New York City, NY",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": " in program analysis, testing, verification, compilers, or formal methods Experience with PyTorch and large-scale distributed training; performance profiling and optimization of ML system"
+      },
+      {
+       "title": "Research Engineer, Discovery",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/4669581008",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ve: Experience with language model training infrastructure and distributed ML frameworks (PyTorch, JAX, etc.) Background in building infrastructure for AI research labs or large-scale ML "
+      },
+      {
+       "title": "Research Engineer, Interpretability",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/4980430008",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "strategies, inference throughput optimization Working hands-on in a mainstream ML stack - PyTorch/CUDA on GPUs or JAX/XLA on TPUs Collaborating closely with researchers and building tooli"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 4,
+     "examples": [
+      {
+       "title": "Machine Learning Data Scientist, Forecasting Platform",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5467893008",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "ct candidates to lead with depth in machine learning engineering, in addition to a strong statistics background. This is a build role on a small team: you'll write production code and keep y"
+      },
+      {
+       "title": "Research Engineer, Post-Training Model Evaluations",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5198255008",
+       "location": "San Francisco, CA | Seattle, WA",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": " large language models Research experience in ML evaluation or benchmarking Background in statistics and experimental design Experience developing robust evaluation metrics for ML systems Th"
+      },
+      {
+       "title": "Research Scientist, Life Sciences (Large Molecules, Process Development) ",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5467099008",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": "lopment and manufacturing organizations, with contributions to the CMC sections of an IND Statistics or coding skills, for example design of experiments or Python for data analysis and autom"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 9,
+     "examples": [
+      {
+       "title": "Research Engineer, Interpretability",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/4980430008",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "neural networks",
+       "snippet": "the most robust way to make advanced systems safe. Think of us as doing \"neuroscience\" of neural networks using \"microscopes\" we build - or reverse-engineering neural networks like binary program"
+      },
+      {
+       "title": "Research Engineer, Pretraining",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5119713008",
+       "location": "London, UK",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "a proven track record of building complex systems Expertise in Python and experience with deep learning frameworks (PyTorch preferred) Familiarity with large-scale machine learning, particularl"
+      },
+      {
+       "title": "Research Engineer, Production Model Post-Training",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5112018008",
+       "location": "Zürich, CH",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "rs who have hands-on experience with frontier AI systems. However, proficiency in Python, deep learning frameworks, and distributed computing is required for this role. Logistics Minimum educat"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 93,
+     "examples": [
+      {
+       "title": "Anthropic Fellows Program, ML Systems & Reinforcement Learning",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5183051008",
+       "location": "London, UK; Ontario, CAN; Remote-Friendly, United States; San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "fine-tuning",
+       "snippet": "d systems and high-performance computing (e.g. in trading) Have experience with training, fine-tuning, or evaluating large language models Are adept at analyzing and debugging model training "
+      },
+      {
+       "title": "Applied AI Engineer, Beneficial Deployments (Clinical Development, Rare and Neglected Diseases)",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5445760008",
+       "location": "London, UK",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "nside secure or trusted research environments. Strong engineering skills: you can take an LLM-powered tool from prototype to production code, and write evals to measure it. Experience"
+      },
+      {
+       "title": "Applied AI Engineer, Beneficial Deployments (Lab Automation)",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5440821008",
+       "location": "London, UK",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": " software, LIMS), ideally in an automated lab. Strong engineering skills: you can take an LLM-powered tool from prototype to production code, and write evals to measure its performanc"
+      }
+     ]
+    },
+    "rag": {
+     "count": 4,
+     "examples": [
+      {
+       "title": "Research Engineer, Knowledge Team",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/4017331008",
+       "location": "Remote-Friendly (Travel-Required) | San Francisco, CA | Seattle, WA | New York City, NY",
+       "india": false,
+       "ml_title": true,
+       "match": "information retrieval",
+       "snippet": "utions Building complex agentic systems that utilize LLMs Developing scalable distributed information retrieval systems, such as search engines, knowledge graphs, RAG, indexing, ranking, query understa"
+      },
+      {
+       "title": "Staff+ Software Engineer, Databases",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5301750008",
+       "location": "San Francisco, CA | New York City, NY | Seattle, WA",
+       "india": false,
+       "ml_title": false,
+       "match": "vector databases",
+       "snippet": "r other globally distributed SQL databases in production Experience with Redis, Temporal, vector databases, or async job processing frameworks Experience with change data capture (Debezium or simi"
+      },
+      {
+       "title": "Staff+ Software Engineer, Memory & Search",
+       "url": "https://job-boards.greenhouse.io/anthropic/jobs/5456453008",
+       "location": "New York City, NY; New York City, NY | Seattle, WA; Remote-Friendly, United States; San Francisco, CA | New York City, NY | Seattle, WA",
+       "india": false,
+       "ml_title": false,
+       "match": "vector search",
+       "snippet": " and the shared infrastructure underneath it, the memory service, indexing, retrieval and vector search. Memory is one of the biggest levers on whether Claude feels like it knows you. We recent"
+      }
+     ]
+    }
+   }
+  },
+  "Databricks": {
+   "roles": 186,
+   "india_roles": 40,
+   "skills": {
+    "python": {
+     "count": 62,
+     "examples": [
+      {
+       "title": "Senior Software Engineer - Data + AI Observability",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7897431002",
+       "location": "Bengaluru, India",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "system What we look for : 6+ years of production level experience in one of: Java, Scala, Python, C++, or similar language Experience with cloud technologies, e.g. AWS, Azure, GCP, Docke"
+      },
+      {
+       "title": "AI Automation Engineer",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8829033002",
+       "location": "Costa Rica",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "erational procedures, and architectural decisions. What we are looking for Proficiency in Python or Go [3yrs]. Experience with Git-based development, automated testing, and CI/CD. Strong"
+      },
+      {
+       "title": "Data Science Intern (2027 Start)",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=6866538002",
+       "location": "Mountain View, California; San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "onomics, Operational Research or Engineering) Proven ability to work with data in SQL and Python Experience with multiple statistical data analysis and machine learning methods such as g"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 5,
+     "examples": [
+      {
+       "title": "PhD GenAI Research Scientist Intern",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7011263002",
+       "location": "San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "euroscience, physics, math, etc.). Proficient software engineering skills, including with PyTorch. Pay Range Transparency Databricks is committed to fair and equitable compensation practi"
+      },
+      {
+       "title": "Sr. Software Engineer - AI Gateway",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8379331002",
+       "location": "New York City, New York",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "atforms like SageMaker, Vertex AI, or Azure ML Contributions to OSS projects like MLflow, PyTorch, or Ray Built developer platforms or internal tools supporting AI workflows Pay Range Tra"
+      },
+      {
+       "title": "Staff Backline Engineer – ML/AI",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7872746002",
+       "location": "Bellevue, Washington; San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "erience and the ability to build, modify, and debug ML workloads using frameworks such as PyTorch, TensorFlow, or Scikit-Learn. Strong understanding of Databricks ML/AI technologies, incl"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 3,
+     "examples": [
+      {
+       "title": "Data Science Intern (2027 Start)",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=6866538002",
+       "location": "Mountain View, California; San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": " in fall 2027 or spring 2028 with a Master's or PhD degree in a quantitative field (e.g., Statistics, Math, Computer Science, Physics, Economics, Operational Research or Engineering) Proven "
+      },
+      {
+       "title": "Staff Data Scientist ",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=5507088002",
+       "location": "San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": "data processing systems like Spark, and proficiency in SQL. in quantitative fields (e.g., Statistics, Math, Computer Science, Physics, Economics, Operational Research or Engineering) Pay Ran"
+      },
+      {
+       "title": "Staff Data Scientist - Infrastructure",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7069793002",
+       "location": "Mountain View, California",
+       "india": false,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": "ing principles around testing, code reviews and deployment. in quantitative fields (e.g., Statistics, Math, Computer Science, Physics, Economics, Operational Research or Engineering) Pay Ran"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "PhD GenAI Research Scientist Intern",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=7011263002",
+       "location": "San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": " and qualities: Required: Research experience in and proficiency with the fundamentals of deep learning. Pursuing a PhD in computer science or related fields (electrical engineering, neuroscien"
+      },
+      {
+       "title": "Sr. Research Scientist - Agent Flywheel",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8940421002",
+       "location": "New York City, New York",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "measurement that keeps pace with agents that act. Keep up with the latest developments in deep learning and create new techniques that go beyond the state of the art. What we look for Expertise"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 29,
+     "examples": [
+      {
+       "title": "Sr. Software Engineer- Databricks AI",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8924868002",
+       "location": "Bengaluru, India",
+       "india": true,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "ining runs and production agents. Develop evaluation and monitoring capabilities, such as LLM judges and quality metrics, that catch regressions before they reach production. Optimize"
+      },
+      {
+       "title": "Staff Software Engineer- Databricks AI",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8926498002",
+       "location": "Bengaluru, India",
+       "india": true,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": " Strong communication skills and a passion for mentoring engineers. Experience with ML or LLM systems is a plus. About Databricks Databricks is the Data and AI company."
+      },
+      {
+       "title": "AI Automation Engineer",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8829033002",
+       "location": "Costa Rica",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "eworks, event-driven integrations, and enterprise system integrations. Shipped production LLM-powered applications or AI agents. Experience with agent patterns: tool/function calling,"
+      }
+     ]
+    },
+    "rag": {
+     "count": 12,
+     "examples": [
+      {
+       "title": "AI Automation Engineer",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8829033002",
+       "location": "Costa Rica",
+       "india": false,
+       "ml_title": true,
+       "match": "RAG",
+       "snippet": "nce with agent patterns: tool/function calling, multi-step workflows, context management, RAG, structured outputs, and plan decomposition. Understanding of LLM failure modes: hallucin"
+      },
+      {
+       "title": "Sr. Software Engineer - AI Gateway",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8379331002",
+       "location": "New York City, New York",
+       "india": false,
+       "ml_title": true,
+       "match": "vector search",
+       "snippet": "rate that powers everything from data apps, AI agents, model training, model serving, and vector search. You’ll be joining a high-agency, high-visibility team operating at the frontier of AI in"
+      },
+      {
+       "title": "Staff Machine Learning Engineer ",
+       "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8401114002",
+       "location": "San Francisco, California",
+       "india": false,
+       "ml_title": true,
+       "match": "retrieval-augmented",
+       "snippet": "ng, code reviews and deployment. Experience with LLM fine-tuning, prompt engineering, and retrieval-augmented generation (RAG) is a bonus. At Databricks, we are building state-of-the-art AI solutions"
+      }
+     ]
+    }
+   }
+  },
+  "Scale AI": {
+   "roles": 54,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 31,
+     "examples": [
+      {
+       "title": "Applied AI Engineer",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4751059005",
+       "location": "Kuwait City, Kuwait",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "hat we look for Experience building and shipping production software, with proficiency in Python and working knowledge of at least one of TypeScript, Java, or C++ Hands-on experience int"
+      },
+      {
+       "title": "Frontier Agents Engineer (Applied AI)",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4720573005",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ions 4+ years of software engineering, machine learning, or applied AI experience. Strong Python programming skills. Experience building production AI systems using LLMs. Experience with"
+      },
+      {
+       "title": "Machine Learning Engineer, Public Sector",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4631848005",
+       "location": "Denver, CO; Honolulu, HI; Washington, DC",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "algorithms, data structures, and object-oriented programming Strong programming skills in Python, experience in Tensorflow or PyTorch Nice to Haves: Experience deploying software into en"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 6,
+     "examples": [
+      {
+       "title": "Machine Learning Engineer, Public Sector",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4631848005",
+       "location": "Denver, CO; Honolulu, HI; Washington, DC",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ect-oriented programming Strong programming skills in Python, experience in Tensorflow or PyTorch Nice to Haves: Experience deploying software into environments you can't reach from your "
+      },
+      {
+       "title": "Machine Learning Fellow - Human Frontier Collective",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4660340005",
+       "location": "United States",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "els understand real-world deep learning workflows by designing, reviewing, and optimizing PyTorch models, evaluating complex ML code and AI-generated implementations for efficiency and co"
+      },
+      {
+       "title": "Machine Learning Fellow - Human Frontier Collective (Canada)",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4661650005",
+       "location": "Canada",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "els understand real-world deep learning workflows by designing, reviewing, and optimizing PyTorch models, evaluating complex ML code and AI-generated implementations for efficiency and co"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 7,
+     "examples": [
+      {
+       "title": "Software Engineering Intern (Summer 2027) ",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4730845005",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": false,
+       "match": "Statistics",
+       "snippet": "degree (or equivalent) in a relevant field (Computer Science, EECS, Computer Engineering, Statistics) Available for a Summer 2027 internship (May/June start dates) in San Francisco Product e"
+      },
+      {
+       "title": "Software Engineering Intern (Summer 2027) ",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4730834005",
+       "location": "Doha, Qatar ",
+       "india": false,
+       "ml_title": false,
+       "match": "Statistics",
+       "snippet": "degree (or equivalent) in a relevant field (Computer Science, EECS, Computer Engineering, Statistics) Available for a Summer 2027 internship (May/June start dates) Product engineering experi"
+      },
+      {
+       "title": "Software Engineering Intern (Summer 2027) ",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4730846005",
+       "location": "London, UK",
+       "india": false,
+       "ml_title": false,
+       "match": "Statistics",
+       "snippet": "degree (or equivalent) in a relevant field (Computer Science, EECS, Computer Engineering, Statistics) Available for a Summer 2027 internship (May/June start dates) Product engineering experi"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 8,
+     "examples": [
+      {
+       "title": "Machine Learning Engineer, Public Sector",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4631848005",
+       "location": "Denver, CO; Honolulu, HI; Washington, DC",
+       "india": false,
+       "ml_title": true,
+       "match": "computer vision",
+       "snippet": "hine Learning Engineer at Scale is to leverage techniques in the fields of generative AI, computer vision, reinforcement learning, and agentic AI to improve Scale's products and customer experien"
+      },
+      {
+       "title": "Machine Learning Fellow - Human Frontier Collective",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4660340005",
+       "location": "United States",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": " platform: building AI safety and policy guardrails, helping models understand real-world deep learning workflows by designing, reviewing, and optimizing PyTorch models, evaluating complex ML c"
+      },
+      {
+       "title": "Machine Learning Fellow - Human Frontier Collective (Canada)",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4661650005",
+       "location": "Canada",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": " platform: building AI safety and policy guardrails, helping models understand real-world deep learning workflows by designing, reviewing, and optimizing PyTorch models, evaluating complex ML c"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 41,
+     "examples": [
+      {
+       "title": "Applied AI Engineer",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4751059005",
+       "location": "Kuwait City, Kuwait",
+       "india": false,
+       "ml_title": true,
+       "match": "LLMs",
+       "snippet": "nce integrating models or AI/ML components into a production application, such as calling LLMs, building retrieval or agent tooling, or deploying a trained model A working understandin"
+      },
+      {
+       "title": "Frontier Agents Engineer (Applied AI)",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4720573005",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "large language models",
+       "snippet": "er AI Systems Design and deploy production AI agents that leverage the latest advances in large language models, reasoning, retrieval, memory, and tool use. Architect intelligent systems that combine L"
+      },
+      {
+       "title": "Machine Learning Engineer, Public Sector",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4631848005",
+       "location": "Denver, CO; Honolulu, HI; Washington, DC",
+       "india": false,
+       "ml_title": true,
+       "match": "large language models",
+       "snippet": "onovan and Thunderforge . Our work spans multiple modalities, with a strong focus on both large language models and computer vision. On the LLM side, we are developing agentic systems that help solve c"
+      }
+     ]
+    },
+    "rag": {
+     "count": 21,
+     "examples": [
+      {
+       "title": "Applied AI Engineer",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4751059005",
+       "location": "Kuwait City, Kuwait",
+       "india": false,
+       "ml_title": true,
+       "match": "retrieval-augmented",
+       "snippet": "erience with cloud ML platforms such as AWS, GCP, or Azure Exposure to agentic workflows, retrieval-augmented generation, or context engineering Experience handling regulated or sensitive data Where "
+      },
+      {
+       "title": "Frontier Agents Engineer (Applied AI)",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4720573005",
+       "location": "San Francisco, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "retrieval pipelines",
+       "snippet": "istic software into reliable production workflows. Engineer customer intelligence layers, retrieval pipelines, memory systems, and knowledge representations that allow agents to reason over large, he"
+      },
+      {
+       "title": "Machine Learning Engineer, Public Sector",
+       "url": "https://job-boards.greenhouse.io/scaleai/jobs/4631848005",
+       "location": "Denver, CO; Honolulu, HI; Washington, DC",
+       "india": false,
+       "ml_title": true,
+       "match": "retrieval pipelines",
+       "snippet": "r government partners. This includes building agent frameworks that integrate with custom retrieval pipelines and production APIs, as well as evaluation tools to benchmark and refine agent behavior. "
+      }
+     ]
+    }
+   }
+  },
+  "xAI": {
+   "roles": 78,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 35,
+     "examples": [
+      {
+       "title": "Data Visualization Engineer",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5265194007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "s (star schemas, semantic layers) on platforms such as BigQuery, Snowflake, or Databricks Python or JavaScript for data prep, automation, or custom visuals COMPENSATION AND BENEFITS: $10"
+      },
+      {
+       "title": "Human Data Engineer",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5204819007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ty, truthfulness, or alignment with product goals Experience in a scripting language like Python Experience in SQL or other data analysis tools ADDITIONAL REQUIREMENTS: Weekend work may "
+      },
+      {
+       "title": "Model Engineer, Mid-Training",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/4965893007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "-training checkpoints BASIC QUALIFICATIONS: Experience writing production-quality code in Python, PyTorch, JAX, Rust, or C++ PREFERRED SKILLS AND EXPERIENCE: Familiarity across all kinds"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 11,
+     "examples": [
+      {
+       "title": "Model Engineer, Mid-Training",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/4965893007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "g checkpoints BASIC QUALIFICATIONS: Experience writing production-quality code in Python, PyTorch, JAX, Rust, or C++ PREFERRED SKILLS AND EXPERIENCE: Familiarity across all kinds of scali"
+      },
+      {
+       "title": "Model Engineer, Post-Training & RL",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5114737007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "training runs BASIC QUALIFICATIONS: Experience writing production-quality code in Python, PyTorch, JAX, Rust, or C++ PREFERRED SKILLS AND EXPERIENCE: You believe truth-seeking AI is the m"
+      },
+      {
+       "title": "Model Engineer, RL Training Framework",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5186992007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": " the RL stack BASIC QUALIFICATIONS: Experience writing production-quality code in Python, PyTorch, JAX, Rust, or C++ PREFERRED SKILLS AND EXPERIENCE: Experience building, debugging, and o"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "Operations Engineer, Construction & Site Efficiency - Memphis",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5159251007",
+       "location": " Southaven, MS; Memphis, TN",
+       "india": false,
+       "ml_title": false,
+       "match": "statistics",
+       "snippet": "e infrastructure, manufacturing, supply chain, or production environment Proficiency with statistics, data analysis, data visualization, and cost benefit analysis Experience with CAD softwar"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 6,
+     "examples": [
+      {
+       "title": "Sr. Machine Learning Engineer, Recommendation Systems",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/4703144007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "UALIFICATIONS: 5+ years of industry experience in implementing recommender systems and/or deep learning applications at industrial scale PREFERRED SKILLS AND EXPERIENCE: Experience in writing C"
+      },
+      {
+       "title": "Sr. ML Infrastructure Engineer",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5193037007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "c or large-scale production environments, distributed systems, GPU infrastructure, and/or deep learning applications 5+ years experience with ML platforms, training infrastructure, or close col"
+      },
+      {
+       "title": "Sr. Model Engineer, Mid-Training",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5280957007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "neural networks",
+       "snippet": " training large models (e.g., pre-training, post-training, fine-tuning, or RL training of neural networks with 1B+ parameters) PREFERRED SKILLS AND EXPERIENCE: Familiarity across all kinds of sca"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 23,
+     "examples": [
+      {
+       "title": "Human Data Engineer",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5204819007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "large language models",
+       "snippet": " Direct experience curating, evaluating, or improving training or evaluation datasets for large language models or other AI/ML systems Experience designing, supporting, or optimizing annotation tools, "
+      },
+      {
+       "title": "Lead Engineer, Data Center - Memphis",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5214918007",
+       "location": "Memphis, TN",
+       "india": false,
+       "ml_title": true,
+       "match": "transformer",
+       "snippet": "d defend the redundancy basis; prove split-feed and cross-feed schemes against bus-fault, transformer-loss, and switchgear-loss contingencies Establish the campus electrical design standard: "
+      },
+      {
+       "title": "Model Engineer, RL Training Framework",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5186992007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": " and optimizing efficiency of large-scale distributed systems Experience with large scale LLM training infrastructure Strong knowledge of reinforcement learning techniques Experience "
+      }
+     ]
+    },
+    "rag": {
+     "count": 3,
+     "examples": [
+      {
+       "title": "Sr. Machine Learning Engineer, Search Ranking",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5125621007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": true,
+       "match": "information retrieval",
+       "snippet": "nt, fast, and intelligent search experience on the internet by combining state-of-the-art information retrieval systems with Grok’s reasoning capabilities. RESPONSIBILITIES: Build search and retrieval "
+      },
+      {
+       "title": "Sr. Backend Engineer, Enterprise",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/5006477007",
+       "location": "Japan",
+       "india": false,
+       "ml_title": false,
+       "match": "embeddings",
+       "snippet": "nse streaming, bi-directional streaming, REST mapping) Hands-on experience with LLM APIs, embeddings, or RAG patterns Track record of delivering user-facing software at scale SpaceXSI is an "
+      },
+      {
+       "title": "Sr. Software Engineer, Real-Time Storage",
+       "url": "https://job-boards.greenhouse.io/xai/jobs/4805886007",
+       "location": "Palo Alto, CA",
+       "india": false,
+       "ml_title": false,
+       "match": "vector database",
+       "snippet": "requests per second, a caching tier that serves billions of requests per second, scalable vector database that powers our recommendation systems, and a few other specialized databases serving hun"
+      }
+     ]
+    }
+   }
+  },
+  "OpenAI": {
+   "roles": 302,
+   "india_roles": 1,
+   "skills": {
+    "python": {
+     "count": 120,
+     "examples": [
+      {
+       "title": "Training: ML Framework Engineer",
+       "url": "https://jobs.ashbyhq.com/openai/d8794980-1d3f-4d82-8b48-811449b6c492",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ty and maintenance burden - Have strong software engineering skills and are proficient in Python About OpenAI OpenAI is an AI research and deployment company dedicated to ensuring that g"
+      },
+      {
+       "title": "Data Engineer",
+       "url": "https://jobs.ashbyhq.com/openai/fc5bbc77-a30c-4e7a-9acc-8a2e748545b4",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "iency in at least one programming language commonly used within Data Engineering, such as Python, Scala, or Java. - Experience with distributed processing technologies and frameworks, su"
+      },
+      {
+       "title": "Researcher, Alignment",
+       "url": "https://jobs.ashbyhq.com/openai/941bad28-7abe-43c7-b20a-2bc7e5b3c6e8",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "niques. - Can develop data visualization or data collection interfaces (e.g., TypeScript, Python). - Enjoy fast-paced, collaborative, and cutting-edge research environments. - Want to fo"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 6,
+     "examples": [
+      {
+       "title": "Researcher, Alignment",
+       "url": "https://jobs.ashbyhq.com/openai/941bad28-7abe-43c7-b20a-2bc7e5b3c6e8",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ills, particularly in designing and optimizing large-scale machine learning systems(e.g., PyTorch). - Have a deep understanding of the science behind alignment algorithms and techniques. "
+      },
+      {
+       "title": "Machine Learning Engineer, Monetization AI/ML",
+       "url": "https://jobs.ashbyhq.com/openai/80f9f564-d789-47bc-91c3-3babf5a1a33d",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ated experience in deep learning and transformers models - Proficiency in frameworks like PyTorch or Tensorflow - Strong foundation in data structures, algorithms, and software engineerin"
+      },
+      {
+       "title": "Machine Learning Engineer, API Multicloud",
+       "url": "https://jobs.ashbyhq.com/openai/5acf4854-1d42-40ca-bff8-4f6f04cdce68",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "stems, with hands-on experience in deep learning, transformer models, and frameworks like PyTorch or TensorFlow. - Hands-on experience with training and fine-tuning large language models,"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 10,
+     "examples": [
+      {
+       "title": "Research Engineer, Codex",
+       "url": "https://jobs.ashbyhq.com/openai/793964ae-d40b-45e3-9798-84f4b6da48c5",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": " - Have strong technical fundamentals in machine learning, software engineering, systems, statistics, or a related field, and can learn quickly across the parts you have not worked in before"
+      },
+      {
+       "title": "Data Scientist, Core Experimentation ",
+       "url": "https://jobs.ashbyhq.com/openai/e90a44a7-fc2e-49bf-aec4-d43b9e3d8e92",
+       "location": "Seattle",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": " or operating experimentation platforms at a large technology company - Deep expertise in statistics, causal inference, and online experimentation methodology - Strong understanding of pract"
+      },
+      {
+       "title": "Data Scientist, Real Estate & Workplace ",
+       "url": "https://jobs.ashbyhq.com/openai/3ac187b2-dd75-4acd-b285-51ae6e603dbd",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "onal, financial, workplace, or internal-tools environments. - Strong grounding in applied statistics, causal inference, forecasting, and model evaluation; fluent in SQL and Python. - Proven "
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 10,
+     "examples": [
+      {
+       "title": "Research Engineer",
+       "url": "https://jobs.ashbyhq.com/openai/240d459b-696d-43eb-8497-fab3e56ecd9b",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "rning code, and building the science behind the algorithms employed. The most outstanding deep learning results are increasingly attained at a massive scale, and these results require engineers"
+      },
+      {
+       "title": "Research Scientist",
+       "url": "https://jobs.ashbyhq.com/openai/5f0c6579-0bfb-4a06-8a43-1dd371499e10",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "mpacts of AI technology - Past experience in creating high-performance implementations of deep learning algorithms About OpenAI OpenAI is an AI research and deployment company dedicated to ensu"
+      },
+      {
+       "title": "Researcher, Training",
+       "url": "https://jobs.ashbyhq.com/openai/97d3670c-e75a-4bb2-a235-171765f5f10e",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "ce landing contributions to major LLM training runs - Can thoroughly evaluate and improve deep learning architectures in a self-directed fashion - Are motivated by safely deploying LLMs in the "
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 39,
+     "examples": [
+      {
+       "title": "Researcher, Safety Training",
+       "url": "https://jobs.ashbyhq.com/openai/2560ed50-5535-42b8-b069-9ebc28ce7493",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "fine-tuning",
+       "snippet": "oduct launches YOU MIGHT THRIVE IN THIS ROLE IF YOU: - Have hands-on experience training, fine-tuning, or post-training language models, multimodal models, or agentic systems - Have experienc"
+      },
+      {
+       "title": "Researcher, Training",
+       "url": "https://jobs.ashbyhq.com/openai/97d3670c-e75a-4bb2-a235-171765f5f10e",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "large language models",
+       "snippet": "About the Team OpenAI's Training team is responsible for producing the large language models that power our research, our products, and ultimately bring us closer to AGI. Achieving t"
+      },
+      {
+       "title": "Data Scientist, Integrity",
+       "url": "https://jobs.ashbyhq.com/openai/f6cada21-0f54-4d8a-884e-e3c64edd4789",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "plied ML evaluation is helpful. Experience evaluating detection systems, human review, or LLM-based classifiers is a plus."
+      }
+     ]
+    },
+    "rag": {
+     "count": 12,
+     "examples": [
+      {
+       "title": "Research Scientist / Research Engineer - Foundations, Search",
+       "url": "https://jobs.ashbyhq.com/openai/020b2aae-8be0-408c-ab49-20eefa8541af",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "information retrieval",
+       "snippet": "slate model intent into reliable, real-world actions. Operating at the frontier of AI and information retrieval, the team develops large-scale systems that transform and index vast corpora, enabling mo"
+      },
+      {
+       "title": "Machine Learning Engineer, Core Experimentation",
+       "url": "https://jobs.ashbyhq.com/openai/9d4d2727-27f3-4a63-857c-a96466130645",
+       "location": "Seattle",
+       "india": false,
+       "ml_title": true,
+       "match": "retrieval pipelines",
+       "snippet": " uncertainty before a full live experiment. - Create high-quality datasets and feature or retrieval pipelines from exposures, events, metrics, experiment metadata, and replay data, with strong lineag"
+      },
+      {
+       "title": "Partner Applied AI Engineer, Google Cloud ",
+       "url": "https://jobs.ashbyhq.com/openai/9a57d693-24ad-4457-a408-50617551ea5e",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "retrieval-augmented",
+       "snippet": "ex AI modules, and the documented OpenAI API or SDK for OpenAI integration paths. - Build retrieval-augmented generation and tool-using workflows, connecting approved enterprise data and services wit"
+      }
+     ]
+    }
+   }
+  },
+  "Cohere": {
+   "roles": 35,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 25,
+     "examples": [
+      {
+       "title": "Member of Technical Staff, Modeling",
+       "url": "https://jobs.ashbyhq.com/cohere/3136a5a5-06fd-4c82-8b72-a43467e6b128",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "e field. Qualifications: - Extremely strong software engineering skills. - Proficiency in Python and related ML frameworks such as Tensorflow, TF-Serving, JAX, and XLA/MLIR. - Experience"
+      },
+      {
+       "title": "Senior Member of Technical Staff, Multimodal AI",
+       "url": "https://jobs.ashbyhq.com/cohere/443368a3-6276-4b90-9671-27fed40fd6d2",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "a proven track record of building robust and scalable systems. - Have a strong command of Python and are well-versed in popular deep learning frameworks like JAX, PyTorch, and TensorFlow"
+      },
+      {
+       "title": "Member of Technical Staff, Data Analysis and Evaluation",
+       "url": "https://jobs.ashbyhq.com/cohere/61703710-4379-42fd-a508-946f2a5fb6bc",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ralisability and robustness of ML systems. - Proficiency in programming languages such as Python and ML frameworks (e.g., PyTorch, TensorFlow, JAX). - Excellent communication skills to c"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 13,
+     "examples": [
+      {
+       "title": "Member of Technical Staff, Modeling",
+       "url": "https://jobs.ashbyhq.com/cohere/3136a5a5-06fd-4c82-8b72-a43467e6b128",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "JAX",
+       "snippet": "skills. - Proficiency in Python and related ML frameworks such as Tensorflow, TF-Serving, JAX, and XLA/MLIR. - Experience writing kernels for GPUs using CUDA. - Experience using large"
+      },
+      {
+       "title": "Senior Member of Technical Staff, Multimodal AI",
+       "url": "https://jobs.ashbyhq.com/cohere/443368a3-6276-4b90-9671-27fed40fd6d2",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "JAX",
+       "snippet": "e a strong command of Python and are well-versed in popular deep learning frameworks like JAX, PyTorch, and TensorFlow, with an understanding of their multimodal capabilities. - Knowl"
+      },
+      {
+       "title": "Member of Technical Staff, Data Analysis and Evaluation",
+       "url": "https://jobs.ashbyhq.com/cohere/61703710-4379-42fd-a508-946f2a5fb6bc",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "L systems. - Proficiency in programming languages such as Python and ML frameworks (e.g., PyTorch, TensorFlow, JAX). - Excellent communication skills to collaborate effectively with cross"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Member of Technical Staff, Data Analysis and Evaluation",
+       "url": "https://jobs.ashbyhq.com/cohere/61703710-4379-42fd-a508-946f2a5fb6bc",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": " and improve the overall effectiveness of our AI systems. This role combines expertise in statistics, experimental design incl. human annotators, and machine learning to ensure that our mode"
+      },
+      {
+       "title": "Senior Research Engineer - Safety Tooling and Data",
+       "url": "https://jobs.ashbyhq.com/cohere/2d4d224f-94d4-40ce-88d5-5d340bc0da4e",
+       "location": "New York",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "ling decisions and experimentation. This role combines expertise in software engineering, statistics, and data science. If any of these topics sound interesting to you, we encourage you to a"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "Senior Member of Technical Staff, Multimodal AI",
+       "url": "https://jobs.ashbyhq.com/cohere/443368a3-6276-4b90-9671-27fed40fd6d2",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "st and scalable systems. - Have a strong command of Python and are well-versed in popular deep learning frameworks like JAX, PyTorch, and TensorFlow, with an understanding of their multimodal c"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 19,
+     "examples": [
+      {
+       "title": "Member of Technical Staff, Data Analysis and Evaluation",
+       "url": "https://jobs.ashbyhq.com/cohere/61703710-4379-42fd-a508-946f2a5fb6bc",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "large language models",
+       "snippet": "you will play a pivotal role in ensuring the quality, reliability, and performance of our large language models (LLMs). Your primary focus will be on designing and conducting data collection tasks, ass"
+      },
+      {
+       "title": "Member of Technical Staff, Pre-Training Data",
+       "url": "https://jobs.ashbyhq.com/cohere/859e2e47-02fb-4afe-bb8a-e83bf4d8c265",
+       "location": "Toronto",
+       "india": false,
+       "ml_title": true,
+       "match": "natural language processing",
+       "snippet": "nt and reliable language understanding and generation capabilities, driving innovation in natural language processing. If you are passionate about transforming data into the foundation of AI systems, this ro"
+      },
+      {
+       "title": "Member of Technical Staff, Integration/RL Team (Research Engineer)",
+       "url": "https://jobs.ashbyhq.com/cohere/e9ef9420-88e5-403b-82e8-1c36fa010d4d",
+       "location": "Paris",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "responsible for developing and scaling machine learning algorithms and infrastructure for LLM post-training, with a focus on large-scale, distributed RL methods. We strive for excelle"
+      }
+     ]
+    },
+    "rag": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Member of Technical Staff, Search",
+       "url": "https://jobs.ashbyhq.com/cohere/d5cc437c-2397-4c1a-9d12-3a2bf64d98ea",
+       "location": "United States",
+       "india": false,
+       "ml_title": false,
+       "match": "information retrieval",
+       "snippet": "w: We are looking for talented individuals to help us develop state-of-the-art models for information retrieval as part of our Search team. This group is working on a range of tasks including training "
+      },
+      {
+       "title": "Senior Full-Stack Engineer, North Admin",
+       "url": "https://jobs.ashbyhq.com/cohere/c12e3636-ed16-47e7-ba1f-82860f88d340",
+       "location": "Toronto",
+       "india": false,
+       "ml_title": false,
+       "match": "RAG",
+       "snippet": "n code base - You have built and deployed extremely performant client-side or server-side RAG/agentic applications to millions of users. - Bonus: You love art and have an eye for desi"
+      }
+     ]
+    }
+   }
+  },
+  "Perplexity": {
+   "roles": 54,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 37,
+     "examples": [
+      {
+       "title": "Member of Technical Staff (AI Inference Engineer)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8a976851-9bef-4b07-8d36-567fa9540aef",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "s of model architectures at scale with tight latency and cost budgets. Our stack is Rust, Python, CUDA, and CuTe DSL - and we need another engineer to join us. WHAT YOU WILL WORK ON Exam"
+      },
+      {
+       "title": "Member of Technical Staff (AI Researcher)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8fe61c73-0daf-4432-a47d-44714c1ef764",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "experience with large-scale LLMs and Deep Learning systems - Strong programming skills in Python/PyTorch; versatility is a plus - Experience with post-training techniques and reinforceme"
+      },
+      {
+       "title": "Member of Technical Staff (Software Engineer, Applied AI)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/3c656963-876a-458d-bca6-916a42a24c1a",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "r large-scale, user-facing or data-driven products. - Strong software engineering skills (Python, production-quality codebases, collaborative development) and experience using agentic co"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 6,
+     "examples": [
+      {
+       "title": "Member of Technical Staff (AI Inference Engineer)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8a976851-9bef-4b07-8d36-567fa9540aef",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "sn't laid out for you. GOOD IF YOU TOUCHED ANY OF - ML compilers and framework internals: PyTorch internals, torch.compile, custom operators. - Distributed GPU communication: NCCL, NVLink"
+      },
+      {
+       "title": "Member of Technical Staff (AI Researcher)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8fe61c73-0daf-4432-a47d-44714c1ef764",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "or model development - Build robust and effective training frameworks (on top of Megatron/PyTorch) for post-training LLMs - Implement necessary infrastructure and components to support cu"
+      },
+      {
+       "title": "Member of Technical Staff (AI Inference Engineer)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/e4777627-ff8f-4257-8612-3a016bb58592",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ath forward isn't laid out for you. NICE-TO-HAVE: - ML compilers and framework internals: PyTorch internals, torch.compile, custom operators. - Distributed GPU communication: NCCL, NVLink"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 4,
+     "examples": [
+      {
+       "title": "Internship - Search Machine Learning Engineer",
+       "url": "https://jobs.ashbyhq.com/Perplexity/9246cf02-26fd-4ae8-90c5-639c6e85e9e2",
+       "location": "Belgrade",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "t practices in production ML. Qualifications: - Strong foundation in machine learning and statistics, with coursework or projects related to information retrieval, ranking, or recommender sy"
+      },
+      {
+       "title": "Internship - Search Machine Learning Engineer",
+       "url": "https://jobs.ashbyhq.com/Perplexity/71168628-1998-47d3-87a9-be7bc56a430d",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "t practices in production ML. Qualifications: - Strong foundation in machine learning and statistics, with coursework or projects related to information retrieval, ranking, or recommender sy"
+      },
+      {
+       "title": "Member of Technical Staff (Perplexity Frontier Research)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/849874fd-ccb4-4d7e-8551-29c5a418e2c7",
+       "location": "New York City",
+       "india": false,
+       "ml_title": true,
+       "match": "probability",
+       "snippet": "squalification from employment at Perplexity. Strong foundations and engineering fluency: probability, optimization, linear algebra and algorithms, plus Python and a deep learning framework, "
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 5,
+     "examples": [
+      {
+       "title": "Member of Technical Staff (AI Inference Engineer)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8a976851-9bef-4b07-8d36-567fa9540aef",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "ningful work on ML inference or high-performance systems. - Familiarity with at least one deep learning framework (PyTorch, JAX, TensorFlow). - Understanding of GPU architectures (memory hierar"
+      },
+      {
+       "title": "Member of Technical Staff (AI Researcher)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8fe61c73-0daf-4432-a47d-44714c1ef764",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "Deep Learning",
+       "snippet": " model improvements Qualifications Required - Proven experience with large-scale LLMs and Deep Learning systems - Strong programming skills in Python/PyTorch; versatility is a plus - Experience"
+      },
+      {
+       "title": "Member of Technical Staff (AI Inference Engineer)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/e4777627-ff8f-4257-8612-3a016bb58592",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "ningful work on ML inference or high-performance systems. - Familiarity with at least one deep learning framework (PyTorch, JAX, TensorFlow). - Understanding of GPU architectures (memory hierar"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 26,
+     "examples": [
+      {
+       "title": "Member of Technical Staff (AI Inference Engineer)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8a976851-9bef-4b07-8d36-567fa9540aef",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "transformer",
+       "snippet": " WHAT YOU WILL WORK ON Examples of real work the team does: - New models support. Support transformer-based retrieval, text-generation, and multimodal models in our inference infrastructure, "
+      },
+      {
+       "title": "Member of Technical Staff (Machine Learning Engineer, Search)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/0190699f-010b-44f2-8399-278899fef018",
+       "location": "Belgrade",
+       "india": false,
+       "ml_title": true,
+       "match": "LLMs",
+       "snippet": " model stack - Train and evaluate retrieval, ranking and classification models, including LLMs - Deploy models - from boosting to LLMs - in a scalable and performant way - Build and op"
+      },
+      {
+       "title": "Member of Technical Staff (AI Researcher)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/8fe61c73-0daf-4432-a47d-44714c1ef764",
+       "location": "San Francisco",
+       "india": false,
+       "ml_title": true,
+       "match": "fine-tuning",
+       "snippet": "ture that benefits the entire organization. Agent Products Team (Vertical) Concentrate on fine-tuning and optimizing models for our Deep Research Agent and Labs/Canvas products. This team bri"
+      }
+     ]
+    },
+    "rag": {
+     "count": 7,
+     "examples": [
+      {
+       "title": "Member of Technical Staff (Machine Learning Engineer, Search)",
+       "url": "https://jobs.ashbyhq.com/Perplexity/0190699f-010b-44f2-8399-278899fef018",
+       "location": "Belgrade",
+       "india": false,
+       "ml_title": true,
+       "match": "RAG",
+       "snippet": "oy models - from boosting to LLMs - in a scalable and performant way - Build and optimize RAG pipelines for grounding and answer generation - Collaborate with Data, AI, Infrastructure"
+      },
+      {
+       "title": "Internship - Search Machine Learning Engineer",
+       "url": "https://jobs.ashbyhq.com/Perplexity/9246cf02-26fd-4ae8-90c5-639c6e85e9e2",
+       "location": "Belgrade",
+       "india": false,
+       "ml_title": true,
+       "match": "RAG",
+       "snippet": "f search and ranking models in a scalable and performant way. - Help build and iterate on RAG pipelines for grounding and answer generation. - Collaborate with Data, AI, Infrastructur"
+      },
+      {
+       "title": "Internship - Search Machine Learning Engineer",
+       "url": "https://jobs.ashbyhq.com/Perplexity/71168628-1998-47d3-87a9-be7bc56a430d",
+       "location": "London",
+       "india": false,
+       "ml_title": true,
+       "match": "RAG",
+       "snippet": "f search and ranking models in a scalable and performant way. - Help build and iterate on RAG pipelines for grounding and answer generation. - Collaborate with Data, AI, Infrastructur"
+      }
+     ]
+    }
+   }
+  },
+  "Sarvam AI": {
+   "roles": 18,
+   "india_roles": 18,
+   "skills": {
+    "python": {
+     "count": 13,
+     "examples": [
+      {
+       "title": "Data Scientist - Evaluations, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/7c42207a-bb56-413c-839f-9ad692df840e",
+       "location": "Bengaluru",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ameworks from scratch: custom metrics, inter-rater reliability, red-teaming methodologies Python proficiency; comfort with pandas, NumPy, HuggingFace datasets, RAGAS, EleutherAI Eval Har"
+      },
+      {
+       "title": "Embedded Data Scientist, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/dc047f4f-97be-4bb3-a9f1-cebbfc4de3e6",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ears in data science, applied machine learning, or large-scale data analysis roles Strong Python skills including pandas, NumPy, and modern NLP or LLM tooling Solid grounding in ML funda"
+      },
+      {
+       "title": "ML Ops Engineer, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/e7f783e8-6378-4158-97d5-48a397a91698",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ability using Prometheus, Grafana, or equivalent; ability to build custom eval dashboards Python fluency; familiarity with fine-tuning workflows and model evaluation frameworks Hands-on "
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "ML Engineer (Training Infra), Foundational Models",
+       "url": "https://jobs.ashbyhq.com/sarvam/e9fb1269-fc4b-4879-aa35-0b75a8c83611",
+       "location": "Bengaluru",
+       "india": true,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ture, the CUDA programming model, and standard tools for profiling GPU workloads (Nsight, PyTorch profiler, etc.). - Strong PyTorch internals knowledge. You're comfortable reading and mod"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "Data Scientist - Evaluations, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/7c42207a-bb56-413c-839f-9ad692df840e",
+       "location": "Bengaluru",
+       "india": true,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "research, or applied AI; at least 2 years working with LLMs in production contexts Strong statistics and probability fundamentals — you understand what makes an evaluation valid and what mak"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 0,
+     "examples": []
+    },
+    "llm_nlp": {
+     "count": 14,
+     "examples": [
+      {
+       "title": "Data Scientist - Evaluations, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/7c42207a-bb56-413c-839f-9ad692df840e",
+       "location": "Bengaluru",
+       "india": true,
+       "ml_title": true,
+       "match": "fine-tuning",
+       "snippet": "loyment events, versioned, and reproducible Build and manage domain-specific datasets for fine-tuning, evaluation, and benchmarking — including human annotation workflows where needed Publish"
+      },
+      {
+       "title": "Embedded Data Scientist, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/dc047f4f-97be-4bb3-a9f1-cebbfc4de3e6",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": true,
+       "match": "NLP",
+       "snippet": " large-scale data analysis roles Strong Python skills including pandas, NumPy, and modern NLP or LLM tooling Solid grounding in ML fundamentals — enough to understand model behaviour,"
+      },
+      {
+       "title": "ML Ops Engineer, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/e7f783e8-6378-4158-97d5-48a397a91698",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": " What We're Looking For 3–5 years in ML engineering or MLOps with at least one production LLM or ML system in continuous operation Deep expertise in model serving: vLLM, TGI, Triton I"
+      }
+     ]
+    },
+    "rag": {
+     "count": 4,
+     "examples": [
+      {
+       "title": "Embedded Data Scientist, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/dc047f4f-97be-4bb3-a9f1-cebbfc4de3e6",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": true,
+       "match": "retrieval pipelines",
+       "snippet": "cuments, transcripts, reports, or operational records Familiarity with LLM-based systems, retrieval pipelines, or vector search systems Experience designing or working with data schemas, metadata fra"
+      },
+      {
+       "title": "Embedded Infrastructure Engineer, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/b2201b5e-1e96-497a-962c-bca1768f75fd",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": false,
+       "match": "vector stores",
+       "snippet": "rmant physical data models and storage configurations Deploy and manage database systems, vector stores, and search infrastructure in air-gapped, on-premise, or security-constrained environment"
+      },
+      {
+       "title": "Strategic Deployment Engineer, Chanakya",
+       "url": "https://jobs.ashbyhq.com/sarvam/87d5a5af-ea7d-4b94-a0fa-81dc64e54907",
+       "location": "Delhi",
+       "india": true,
+       "ml_title": false,
+       "match": "RAG",
+       "snippet": "es Hands-on experience with LLM inference stacks — vLLM, TGI, Ollama, or equivalent — and RAG architectures and vector stores Experience deploying in constrained environments: air-gap"
+      }
+     ]
+    }
+   }
+  },
+  "ElevenLabs": {
+   "roles": 24,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 8,
+     "examples": [
+      {
+       "title": "Data Engineer",
+       "url": "https://jobs.ashbyhq.com/ElevenLabs/e53c5be6-5c1a-4870-ad85-8397a1f201de",
+       "location": "United Kingdom",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "xpert knowledge of dbt (required). - Proficiency with tools across the modern data stack (Python, SQL, BI tools). - Strong infra fundamentals (Terraform or other infrastructure as code, "
+      },
+      {
+       "title": "Data Scientist - Product Analytics",
+       "url": "https://jobs.ashbyhq.com/ElevenLabs/41b892ba-b530-44cb-9ae1-178908fc324c",
+       "location": "United Kingdom",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "mbedded with a product or growth team, ideally at a product-led company. - Strong SQL and Python, with hands-on experience in experimentation (A/B testing) and product analytics. - Abili"
+      },
+      {
+       "title": "Applied AI Engineer",
+       "url": "https://jobs.ashbyhq.com/ElevenLabs/b8a111fa-9fd5-44d0-97ed-8fd1280be4ef",
+       "location": "United Kingdom",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "yond the demo stage, or a full-stack engineer who is curious about growth. REQUIREMENTS - Python, SQL, LLM APIs and agent orchestration - You've shipped production systems that other peo"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 0,
+     "examples": []
+    },
+    "ml_math": {
+     "count": 0,
+     "examples": []
+    },
+    "deep_learning": {
+     "count": 0,
+     "examples": []
+    },
+    "llm_nlp": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Applied AI Engineer",
+       "url": "https://jobs.ashbyhq.com/ElevenLabs/b8a111fa-9fd5-44d0-97ed-8fd1280be4ef",
+       "location": "United Kingdom",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": " stage, or a full-stack engineer who is curious about growth. REQUIREMENTS - Python, SQL, LLM APIs and agent orchestration - You've shipped production systems that other people relied"
+      },
+      {
+       "title": "Full-Stack Engineer - Ads Engine",
+       "url": "https://jobs.ashbyhq.com/ElevenLabs/3abf96ca-2937-4290-9d23-5208aece08b2",
+       "location": "Remote",
+       "india": false,
+       "ml_title": false,
+       "match": "LLMs",
+       "snippet": "backend-leaning is fine) who can build a pipeline, an agent tool and the UI - Builds with LLMs and agents pragmatically: tools, retrieval and evals, not model research. - Talks to user"
+      }
+     ]
+    },
+    "rag": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "Full-Stack Engineer - ElevenMusic",
+       "url": "https://jobs.ashbyhq.com/ElevenLabs/0547cf3a-856f-4db2-8307-73db634c4096",
+       "location": "Remote",
+       "india": false,
+       "ml_title": false,
+       "match": "embeddings",
+       "snippet": "experience building music or audio products, or experience with recommendation systems or embeddings. Location This role is remote-first, so it can be executed from anywhere in Europe and th"
+      }
+     ]
+    }
+   }
+  },
+  "Meesho": {
+   "roles": 3,
+   "india_roles": 3,
+   "skills": {
+    "python": {
+     "count": 3,
+     "examples": [
+      {
+       "title": "Data Scientist III",
+       "url": "https://jobs.lever.co/meesho/489fe662-5d28-4305-953e-91ee21e8538c",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "miliarity with Neural Networks, Machine Learning etc. Familiarity with tools like SQL, R, Python, etc. Strong understanding of Statistics and Linear Algebra Strong understanding of hypot"
+      },
+      {
+       "title": "Data Scientist III (Team- Valmo)",
+       "url": "https://jobs.lever.co/meesho/9c642a77-5b07-40a2-a7f0-0c396b2b97c5",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "obi, CPLEX, OR-Tools (including CP-SAT), HiGHS, Pyomo or PuLP. Strong programming: expert Python and SQL, PySpark or similar for large datasets, and solid software engineering (object-or"
+      },
+      {
+       "title": "Principal Data Scientist",
+       "url": "https://jobs.lever.co/meesho/3d5bf582-493f-4298-b7de-e42a7d58a358",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "rence, and reinforcement learning. Expertise in PyTorch or TensorFlow, and proficiency in Python as well as big data technologies. History of mentoring junior data scientists, and comfor"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "Principal Data Scientist",
+       "url": "https://jobs.lever.co/meesho/3d5bf582-493f-4298-b7de-e42a7d58a358",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": " theory, predictive modelling, causal inference, and reinforcement learning. Expertise in PyTorch or TensorFlow, and proficiency in Python as well as big data technologies. History of men"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Data Scientist III",
+       "url": "https://jobs.lever.co/meesho/489fe662-5d28-4305-953e-91ee21e8538c",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": "ne Learning etc. Familiarity with tools like SQL, R, Python, etc. Strong understanding of Statistics and Linear Algebra Strong understanding of hypothesis/model testing and ability to identi"
+      },
+      {
+       "title": "Data Scientist III (Team- Valmo)",
+       "url": "https://jobs.lever.co/meesho/9c642a77-5b07-40a2-a7f0-0c396b2b97c5",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": "r's, Master's or PhD in Operations Research, Industrial Engineering, Applied Mathematics, Statistics, Computer Science or a related quantitative field. 5–8 years of experience (or 3+ years w"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Data Scientist III",
+       "url": "https://jobs.lever.co/meesho/489fe662-5d28-4305-953e-91ee21e8538c",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "Neural Networks",
+       "snippet": "erience as a Data Scientist in a fast-paced organization, preferably B2C Familiarity with Neural Networks, Machine Learning etc. Familiarity with tools like SQL, R, Python, etc. Strong understand"
+      },
+      {
+       "title": "Data Scientist III (Team- Valmo)",
+       "url": "https://jobs.lever.co/meesho/9c642a77-5b07-40a2-a7f0-0c396b2b97c5",
+       "location": "Bangalore, Karnataka",
+       "india": true,
+       "ml_title": true,
+       "match": "neural networks",
+       "snippet": "their output. Working knowledge of ML and DL (forecasting, regression, tree-based models, neural networks) and of how to combine them with optimisation. Experience leading a workstream and mentor"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 0,
+     "examples": []
+    },
+    "rag": {
+     "count": 0,
+     "examples": []
+    }
+   }
+  },
+  "Palantir": {
+   "roles": 48,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 35,
+     "examples": [
+      {
+       "title": "Backend Software Engineer - Data Connectors",
+       "url": "https://jobs.lever.co/palantir/9aadca04-df88-4b46-95d8-c3b2628b30b0",
+       "location": "New York, NY",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "reasonable accommodation for those living with a disability. Technologies We Use Java and Python for connectors, backend services, and developer SDKs Open-source technologies like Kafka,"
+      },
+      {
+       "title": "Software Engineer - Applied AI, Defense Applications",
+       "url": "https://jobs.lever.co/palantir/6b4b087c-4fc6-476d-9e72-e1bc6ac6c62a",
+       "location": "New York, NY",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "r problems What We Require Experience coding in programming languages, such as Java, C++, Python, JavaScript, or similar languages Strong software engineering skills and experience deliv"
+      },
+      {
+       "title": "Software Engineer - Applied AI, Defense Applications",
+       "url": "https://jobs.lever.co/palantir/ca222ecd-b659-4e3e-aee5-d85655c7bbc8",
+       "location": "Washington, D.C.",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "r problems What We Require Experience coding in programming languages, such as Java, C++, Python, JavaScript, or similar languages Strong software engineering skills and experience deliv"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 1,
+     "examples": [
+      {
+       "title": "Software Engineer - Edge AI Systems",
+       "url": "https://jobs.lever.co/palantir/67110929-adea-41c3-851a-8882e222d9e4",
+       "location": "Seattle, WA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "ems Experience building and deploying LLMs and LLM agents using modern frameworks such as PyTorch, HuggingFace Transformers, LangChain, and vLLM Strong proficiency in Rust, Python, or C++"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 0,
+     "examples": []
+    },
+    "deep_learning": {
+     "count": 0,
+     "examples": []
+    },
+    "llm_nlp": {
+     "count": 14,
+     "examples": [
+      {
+       "title": "Software Engineer - Applied AI, Defense Applications",
+       "url": "https://jobs.lever.co/palantir/6b4b087c-4fc6-476d-9e72-e1bc6ac6c62a",
+       "location": "New York, NY",
+       "india": false,
+       "ml_title": true,
+       "match": "fine-tuning",
+       "snippet": "collaborating with users to refine the UX of a particular workflow, the next you could be fine-tuning performance to enable low-latency or more accurate operational outcomes. Our Product Deve"
+      },
+      {
+       "title": "Software Engineer - Applied AI, Defense Applications",
+       "url": "https://jobs.lever.co/palantir/ca222ecd-b659-4e3e-aee5-d85655c7bbc8",
+       "location": "Washington, D.C.",
+       "india": false,
+       "ml_title": true,
+       "match": "fine-tuning",
+       "snippet": "collaborating with users to refine the UX of a particular workflow, the next you could be fine-tuning performance to enable low-latency or more accurate operational outcomes. Our Product Deve"
+      },
+      {
+       "title": "Software Engineer - Edge AI Systems",
+       "url": "https://jobs.lever.co/palantir/67110929-adea-41c3-851a-8882e222d9e4",
+       "location": "Seattle, WA",
+       "india": false,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "d AI systems to the tactical edge. This role involves training, evaluating, and deploying LLM agents to edge hardware for interfacing with sensors, effectors, and drone systems. This "
+      }
+     ]
+    },
+    "rag": {
+     "count": 0,
+     "examples": []
+    }
+   }
+  },
+  "Amazon": {
+   "roles": 114,
+   "india_roles": 55,
+   "skills": {
+    "python": {
+     "count": 46,
+     "examples": [
+      {
+       "title": "Applied Scientist II, Detail Page",
+       "url": "https://www.amazon.jobs/en/jobs/10602090/applied-scientist-ii-detail-page",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": " at top-tier peer-reviewed conferences or journals - Experience programming in Java, C++, Python or related language - Experience in any of the following areas: algorithms and data struc"
+      },
+      {
+       "title": "Data Engineer, DSP Analytics",
+       "url": "https://www.amazon.jobs/en/jobs/10607821/data-engineer-dsp-analytics",
+       "location": "Hyderabad, Telangana, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "ndently - Experience programming with at least one modern language such as C++, C#, Java, Python, Golang, PowerShell, Ruby - Experience with AWS technologies like Redshift, S3, AWS Glue,"
+      },
+      {
+       "title": "Data Scientist II, AWS - Quick",
+       "url": "https://www.amazon.jobs/en/jobs/10602065/data-scientist-ii-aws-quick",
+       "location": "Chennai, Tamil Nadu, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "st experience - 3+ years of data querying languages (e.g. SQL), scripting languages (e.g. Python) or statistical/mathematical software (e.g. R, SAS, Matlab, etc.) experience - 3+ years o"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 9,
+     "examples": [
+      {
+       "title": "Senior Delivery Consultant – (AI/ML Specialist), Telecommunications, AWS Professional Services",
+       "url": "https://www.amazon.jobs/en/jobs/10595037/senior-delivery-consultant-ai-ml-specialist-telecommunications-aws-professional-services",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "g, computer vision, human robotic interaction, algorithms implementation experience using PyTorch or TensorFlow - Experience building ML pipelines with MLOps best practices, including: da"
+      },
+      {
+       "title": "Machine Learning Performance Engineer, Annapurna Labs ",
+       "url": "https://www.amazon.jobs/en/jobs/10589075/machine-learning-performance-engineer-annapurna-labs",
+       "location": "Tel Aviv-Yafo, Tel Aviv, ISR",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "dge of computer architecture, operating systems, and parallel computing - Experience with PyTorch, TensorFlow, and/or JAX - Master's degree in Computer Science, Engineering, Mathematics, "
+      },
+      {
+       "title": "Sr. Machine Learning - Compiler Engineer III, AWS Neuron, Annapurna Labs",
+       "url": "https://www.amazon.jobs/en/jobs/10570615/sr-machine-learning-compiler-engineer-iii-aws-neuron-annapurna-labs",
+       "location": "Cupertino, California, USA",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "next generation Neuron compiler which transforms ML models written in ML frameworks (e.g, PyTorch, TensorFlow, and JAX) to be deployed AWS Inferentia and Trainium based servers in the Ama"
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 9,
+     "examples": [
+      {
+       "title": "Research Scientist III, Last Mile Science",
+       "url": "https://www.amazon.jobs/en/jobs/10586334/research-scientist-iii-last-mile-science",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "gineering, technology, computer science, machine learning, robotics, operations research, statistics, mathematics or equivalent quantitative field 5+ years of extensive relevant research exp"
+      },
+      {
+       "title": "Applied Scientist I, International Seller Services",
+       "url": "https://www.amazon.jobs/en/jobs/10595857/applied-scientist-i-international-seller-services",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "Statistics",
+       "snippet": " in developing scalable Agentic, RL or forecasting systems. Strong academic background in Statistics, Machine Learning & Deep Learning is required with Tier -1 publications being a plus. Key"
+      },
+      {
+       "title": "Machine Learning Engineer, Foundational AI (FAI)",
+       "url": "https://www.amazon.jobs/en/jobs/10571446/machine-learning-engineer-foundational-ai-fai",
+       "location": "Sunnyvale, California, USA",
+       "india": false,
+       "ml_title": true,
+       "match": "statistics",
+       "snippet": "nalysis) experience - Experience in machine learning, data mining, information retrieval, statistics or natural language processing - 5+ years of full software development life cycle, includ"
+      }
+     ]
+    },
+    "deep_learning": {
+     "count": 48,
+     "examples": [
+      {
+       "title": "Sr Applied Scientist, Amazon Shipping",
+       "url": "https://www.amazon.jobs/en/jobs/10592212/sr-applied-scientist-amazon-shipping",
+       "location": "Gurugram, Haryana, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": " Guide model and system design across a range of techniques, including tree-based models, deep learning (LSTMs, transformers), LLMs, and reinforcement learning. Ensure models are production-rea"
+      },
+      {
+       "title": "Senior Delivery Consultant – (AI/ML Specialist), Telecommunications, AWS Professional Services",
+       "url": "https://www.amazon.jobs/en/jobs/10595037/senior-delivery-consultant-ai-ml-specialist-telecommunications-aws-professional-services",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "rce frameworks like LangChain, LangGraph, LlamaIndex, and/ or similar tools - 5+ years of deep learning, computer vision, human robotic interaction, algorithms implementation experience using P"
+      },
+      {
+       "title": "Applied Scientist",
+       "url": "https://www.amazon.jobs/en/jobs/10593286/applied-scientist",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "computer vision",
+       "snippet": "g text and image embeddings - Experience with multilingual natural language processing or computer vision - Experience with SQL and large-scale data processing - Experience in patents or publicat"
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 62,
+     "examples": [
+      {
+       "title": "Applied Scientist II, Detail Page",
+       "url": "https://www.amazon.jobs/en/jobs/10602090/applied-scientist-ii-detail-page",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "natural language processing",
+       "snippet": "er science, including distributed computing, large-scale system design, machine learning, natural language processing, data compression and user interface design; the list goes on and is growing every day. W"
+      },
+      {
+       "title": "Data Scientist II, AWS - Quick",
+       "url": "https://www.amazon.jobs/en/jobs/10602065/data-scientist-ii-aws-quick",
+       "location": "Chennai, Tamil Nadu, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "LLMs",
+       "snippet": "nsive evaluation and benchmarking datasets for Quick Suite AI-powered features * Leverage LLMs for synthetic data corpora generation; data evaluation and quality assessment using LLM-a"
+      },
+      {
+       "title": "Applied Scientist I, Buyer Risk Prevention (BRP)",
+       "url": "https://www.amazon.jobs/en/jobs/10596351/applied-scientist-i-buyer-risk-prevention-brp",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "LLM",
+       "snippet": "e to next-generation risk prevention systems, including applications of Generative AI and LLM technologies. Key job responsibilities Apply machine learning and statistical techniques "
+      }
+     ]
+    },
+    "rag": {
+     "count": 11,
+     "examples": [
+      {
+       "title": "Data Scientist II, AWS - Quick",
+       "url": "https://www.amazon.jobs/en/jobs/10602065/data-scientist-ii-aws-quick",
+       "location": "Chennai, Tamil Nadu, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "Retrieval-Augmented",
+       "snippet": "he success of Amazon Quick Suite. From human evaluations and Responsible AI safeguards to Retrieval-Augmented Generation and beyond, our work ensures that Generative AI is enterprise-ready, safe, and"
+      },
+      {
+       "title": "Applied Scientist",
+       "url": "https://www.amazon.jobs/en/jobs/10593286/applied-scientist",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "retrieval-augmented",
+       "snippet": "ence building LLM-based agents or multimodal generative AI workflows, including tool use, retrieval-augmented generation, or evaluation - Experience fine-tuning or post-training models, including wit"
+      },
+      {
+       "title": "Applied Scientist",
+       "url": "https://www.amazon.jobs/en/jobs/10593555/applied-scientist",
+       "location": "Bengaluru, Karnataka, IND",
+       "india": true,
+       "ml_title": true,
+       "match": "retrieval-augmented",
+       "snippet": "ence building LLM-based agents or multimodal generative AI workflows, including tool use, retrieval-augmented generation, or evaluation - Experience fine-tuning or post-training models, including wit"
+      }
+     ]
+    }
+   }
+  },
+  "Hugging Face": {
+   "roles": 9,
+   "india_roles": 0,
+   "skills": {
+    "python": {
+     "count": 9,
+     "examples": [
+      {
+       "title": "Senior Software/Data Engineer, Bot Detection - EMEA Remote",
+       "url": "https://apply.workable.com/huggingface/j/08E488BFBA/",
+       "location": "France",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "uction: bot detection, fraud, abuse, spam, security analytics or similar You're fluent in Python and SQL, and comfortable with large-scale data tooling (Spark, ClickHouse, BigQuery, or s"
+      },
+      {
+       "title": "Senior Software/Data Engineer, Bot Detection - US Remote",
+       "url": "https://apply.workable.com/huggingface/j/D6D882F48F/",
+       "location": "New York, United States",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "uction: bot detection, fraud, abuse, spam, security analytics or similar You're fluent in Python and SQL, and comfortable with large-scale data tooling (Spark, ClickHouse, BigQuery, or s"
+      },
+      {
+       "title": "Senior Open-Source Python Engineer, ML Developer Tools - EMEA Remote",
+       "url": "https://apply.workable.com/huggingface/j/DB4D7C0EC8/",
+       "location": "France",
+       "india": false,
+       "ml_title": true,
+       "match": "Python",
+       "snippet": "iment tracking platform, FastRTC , our library for real-time audio and video streaming in Python, and Gradio itself, used by more than 1 million developers each month. These tools have m"
+      }
+     ]
+    },
+    "dl_frameworks": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Open-Source Machine Learning Engineer - US Remote",
+       "url": "https://apply.workable.com/huggingface/j/19A136F8E2/",
+       "location": "New York, United States",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "e library code Deep hands-on experience with a modern deep-learning framework, especially PyTorch (JAX or TensorFlow a plus) Practical experience with the Hugging Face open-source stack ("
+      },
+      {
+       "title": "Open-Source Machine Learning Engineer - EMEA Remote",
+       "url": "https://apply.workable.com/huggingface/j/81B46579FE/",
+       "location": "Paris, France",
+       "india": false,
+       "ml_title": true,
+       "match": "PyTorch",
+       "snippet": "e library code Deep hands-on experience with a modern deep-learning framework, especially PyTorch (JAX or TensorFlow a plus) Practical experience with the Hugging Face open-source stack ("
+      }
+     ]
+    },
+    "ml_math": {
+     "count": 0,
+     "examples": []
+    },
+    "deep_learning": {
+     "count": 2,
+     "examples": [
+      {
+       "title": "Open-Source Machine Learning Engineer - US Remote",
+       "url": "https://apply.workable.com/huggingface/j/19A136F8E2/",
+       "location": "New York, United States",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "ibraries, that we can review on GitHub Solid understanding of modern machine learning and deep learning, including transformer architectures Experience collaborating with a technical community "
+      },
+      {
+       "title": "Open-Source Machine Learning Engineer - EMEA Remote",
+       "url": "https://apply.workable.com/huggingface/j/81B46579FE/",
+       "location": "Paris, France",
+       "india": false,
+       "ml_title": true,
+       "match": "deep learning",
+       "snippet": "ibraries, that we can review on GitHub Solid understanding of modern machine learning and deep learning, including transformer architectures Experience collaborating with a technical community "
+      }
+     ]
+    },
+    "llm_nlp": {
+     "count": 3,
+     "examples": [
+      {
+       "title": "Senior Machine Learning Engineer, Voice Agents - EMEA Remote",
+       "url": "https://apply.workable.com/huggingface/j/9E2A4C02C7/",
+       "location": "Paris, France",
+       "india": false,
+       "ml_title": true,
+       "match": "LLMs",
+       "snippet": "WebSockets or WebRTC, audio or video pipelines, live inference. Practical experience with LLMs or multimodal models in production. Clear written communication and a habit of collaborat"
+      },
+      {
+       "title": "Open-Source Machine Learning Engineer - US Remote",
+       "url": "https://apply.workable.com/huggingface/j/19A136F8E2/",
+       "location": "New York, United States",
+       "india": false,
+       "ml_title": true,
+       "match": "transformer",
+       "snippet": "iew on GitHub Solid understanding of modern machine learning and deep learning, including transformer architectures Experience collaborating with a technical community in the open (GitHub iss"
+      },
+      {
+       "title": "Open-Source Machine Learning Engineer - EMEA Remote",
+       "url": "https://apply.workable.com/huggingface/j/81B46579FE/",
+       "location": "Paris, France",
+       "india": false,
+       "ml_title": true,
+       "match": "transformer",
+       "snippet": "iew on GitHub Solid understanding of modern machine learning and deep learning, including transformer architectures Experience collaborating with a technical community in the open (GitHub iss"
+      }
+     ]
+    },
+    "rag": {
+     "count": 0,
+     "examples": []
+    }
+   }
+  }
+ },
+ "verified_posts_with_quotes": {
+  "Google": {
+   "python": [
+    {
+     "title": "Post-Doctoral Researcher, PhD, DeepMind, 2026 Start (Fixed-Term Contract)",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/129129141264884422-postdoctoral-researcher-phd-deepmind-2026-start-fixedterm-contract",
+     "quote": "Experience with one or more general purpose programming languages: Python, C/C++, or Java, etc.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Software Engineer, AI/ML, GeminiApp, DeepMind",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/75356771341738694-software-engineer-aiml-geminiapp-deepmind",
+     "quote": "2 years of experience in software development and machine learning engineering using Python or C++.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Forward Deployed Engineer V, GenAI, Google Cloud",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/85646978259526342-forward-deployed-engineer-v-genai-google-cloud",
+     "quote": "2 years of experience in software engineering, data engineering, solution architecture, machine learning, or technical consulting, including coding experience in Python and SQL.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Student Researcher, 2027",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/125423735539671750-student-researcher-2027",
+     "quote": "Experience with one or more general purpose programming languages (e.g., Python, Java, JavaScript, C/C++, etc.).",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "dl_frameworks": [
+    {
+     "title": "Post-Doctoral Researcher, PhD, DeepMind, 2026 Start (Fixed-Term Contract)",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/129129141264884422-postdoctoral-researcher-phd-deepmind-2026-start-fixedterm-contract",
+     "quote": "training deep learning models in frameworks such as JAX, TensorFlow, or PyTorch.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Post-Doctoral Researcher, PhD, DeepMind, 2026 Start (Fixed-Term Contract)",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/129129141264884422-postdoctoral-researcher-phd-deepmind-2026-start-fixedterm-contract",
+     "quote": "Design and execute large-scale experiments, writing high-quality, reusable code, and contributing to a production-ready system using frameworks such as JAX.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "deep_learning": [
+    {
+     "title": "Post-Doctoral Researcher, PhD, DeepMind, 2026 Start (Fixed-Term Contract)",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/129129141264884422-postdoctoral-researcher-phd-deepmind-2026-start-fixedterm-contract",
+     "quote": "Experience with one or more general purpose programming languages: Python, C/C++, or Java, etc. and training deep learning models in frameworks such as JAX, TensorFlow, or PyTorch.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Student Researcher, 2027",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/125423735539671750-student-researcher-2027",
+     "quote": "Experience in one area of computer science (e.g., Natural Language, Human Computer Interactions, Computer Vision, Machine Learning, Deep Learning, Algorithmic Foundations of Optimization",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "llm_nlp": [
+    {
+     "title": "Software Engineer, AI/ML, GeminiApp, DeepMind",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/75356771341738694-software-engineer-aiml-geminiapp-deepmind",
+     "quote": "Experience with Generative AI, LLM fine-tuning, prompt engineering, agentic workflows, automated evaluation, or multilingual Natural Language Processing (NLP).",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Software Engineer, AI/ML, GeminiApp, DeepMind",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/75356771341738694-software-engineer-aiml-geminiapp-deepmind",
+     "quote": "Experience with Machine Learning (ML), Natural Language Processing, Large Language Models (LLMs), or ML evaluation infrastructure.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Software Engineer, AI/ML, GeminiApp, DeepMind",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/75356771341738694-software-engineer-aiml-geminiapp-deepmind",
+     "quote": "Design, implement, and launch improvements in LLM quality, multilingual fluency, grounding, and agentic workflows for the Gemini app.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Forward Deployed Engineer V, GenAI, Google Cloud",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/85646978259526342-forward-deployed-engineer-v-genai-google-cloud",
+     "quote": "Knowledge of LLM-native metrics (e.g., tokens/sec, cost-per-request) and techniques for optimizing state management and granular tracing.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "rag": [
+    {
+     "title": "Forward Deployed Engineer V, GenAI, Google Cloud",
+     "url": "https://www.google.com/about/careers/applications/jobs/results/85646978259526342-forward-deployed-engineer-v-genai-google-cloud",
+     "quote": "Experience building applications on large language models (LLM) over enterprise data (e.g., Gemini, agents, RAG, vector search) and evaluating them for quality, latency and cost.",
+     "india": true,
+     "ml_title": true
+    }
+   ]
+  },
+  "Microsoft": {
+   "python": [
+    {
+     "title": "Data Scientist 2",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557074752",
+     "quote": "Strong programming skills in Python (pandas, NumPy, scikit-learn) and SQL; familiarity with R or Scala is a plus.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied Scientist- Foundation Models, Agents & Decision Intelligence",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393556942186",
+     "quote": "Strong programming skills in Python",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied AI Engineer",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557040880",
+     "quote": "Proficiency in C# and/or Python, with demonstrated ability to design and implement production-quality services and distributed systems.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "ml_math": [
+    {
+     "title": "Data Scientist 2",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557074752",
+     "quote": "Solid foundation in statistics, probability, hypothesis testing and machine learning algorithms (regression, classification, clustering, time series).",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied Scientist- Foundation Models, Agents & Decision Intelligence",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393556942186",
+     "quote": "Strong foundation in probability, statistics, linear algebra, optimization, numerical methods, experimental design, and statistical decision theory.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "dl_frameworks": [
+    {
+     "title": "Data Scientist 2",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557074752",
+     "quote": "Experience with deep learning frameworks (PyTorch, TensorFlow) and with building LLM-based or generative AI solutions.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied Scientist- Foundation Models, Agents & Decision Intelligence",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393556942186",
+     "quote": "experience with frameworks such as PyTorch, JAX, TensorFlow, or equivalent technologies.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "deep_learning": [
+    {
+     "title": "Data Scientist 2",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557074752",
+     "quote": "Experience with deep learning frameworks (PyTorch, TensorFlow)",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "llm_nlp": [
+    {
+     "title": "Data Scientist 2",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557074752",
+     "quote": "Apply generative AI and large language models (for example, Azure OpenAI) to improve customer, partner and engineering experiences",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied AI Engineer",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557040880",
+     "quote": "Experience with applied AI systems, including LLM-based applications, prompt engineering, RAG architectures, agent frameworks, or machine learning services.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Senior Researcher - Self-Evolving Agentic Systems",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557043281",
+     "quote": "Experience with reinforcement learning and LLMs.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Senior Researcher - Self-Evolving Agentic Systems",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557043281",
+     "quote": "Are passionate about advancing the state of the art in reinforcement learning, LLM post-training, and autonomous agents.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Senior Researcher - Self-Evolving Agentic Systems",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557043281",
+     "quote": "Design and apply reinforcement learning methods for LLM-based agents, including reward modeling, learning from verifiable and AI feedback, and credit assignment over long, multi-step tasks.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "rag": [
+    {
+     "title": "Principal Applied Scientist- Foundation Models, Agents & Decision Intelligence",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393556942186",
+     "quote": "Experience with tool-using agents, retrieval, agent post-training, reward modeling, or trajectory evaluation.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied AI Engineer",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557040880",
+     "quote": "including LLM orchestration, multi-agent coordination, retrieval-augmented generation (RAG), tool integration, and evaluation systems.",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Principal Applied AI Engineer",
+     "url": "https://apply.careers.microsoft.com/careers/job/1970393557040880",
+     "quote": "Deep knowledge of RAG design, including indexing, retrieval, ranking, grounding, citation, knowledge freshness, and access control.",
+     "india": true,
+     "ml_title": true
+    }
+   ]
+  },
+  "Meta": {
+   "python": [
+    {
+     "title": "Applied AI Architect, Meta Enterprise Platform (India)",
+     "url": "https://www.metacareers.com/profile/job_details/2543470749484713/",
+     "quote": "Comfortable with Python and able to build lightweight demos, scripts, and reference implementations (not expected to write production-grade application code)",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Data Scientist, Product Analytics",
+     "url": "https://www.metacareers.com/profile/job_details/2191798685107693/",
+     "quote": "6+ years of experience with data querying languages (e.g. SQL), scripting languages (e.g. Python), and/or statistical/mathematical software (e.g. R)",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Machine Learning Engineer (Technical Leadership)",
+     "url": "https://www.metacareers.com/profile/job_details/1619290696213069/",
+     "quote": "12+ years of experience in programming languages (Python, C++, or Java) with technical background",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "rag": [
+    {
+     "title": "Applied AI Architect, Meta Enterprise Platform (India)",
+     "url": "https://www.metacareers.com/profile/job_details/2543470749484713/",
+     "quote": "Familiarity with the Generative AI ecosystem: APIs, prompt engineering, RAG architectures, vector databases, and evaluation frameworks.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "llm_nlp": [
+    {
+     "title": "Applied AI Architect, Meta Enterprise Platform (India)",
+     "url": "https://www.metacareers.com/profile/job_details/2543470749484713/",
+     "quote": "Ability to use LLM APIs to build and evaluate lightweight demos, prototypes and reference implementations",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Applied AI Architect, Meta Enterprise Platform (India)",
+     "url": "https://www.metacareers.com/profile/job_details/2543470749484713/",
+     "quote": "Guide architecture decisions around LLM selection, RAG patterns, prompt engineering strategies, agentic workflow and tool use, data pipelines, and enterprise integration points",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "AI Research Scientist, LLM Post-Training - Meta Superintelligence Labs",
+     "url": "https://www.metacareers.com/profile/job_details/899348339326560/",
+     "quote": "2+ years of industry research experience in LLM/NLP, computer vision, or related AI/ML models",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "AI Research Scientist, LLM Post-Training - Meta Superintelligence Labs",
+     "url": "https://www.metacareers.com/profile/job_details/899348339326560/",
+     "quote": "Deep, practical experience in LLM post-training",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "AI Research Scientist, LLM Post-Training - Meta Superintelligence Labs",
+     "url": "https://www.metacareers.com/profile/job_details/899348339326560/",
+     "quote": "Experience working on frontier-quality, state-of-the-art Large Language Models",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "ml_math": [
+    {
+     "title": "Data Scientist, Product Analytics",
+     "url": "https://www.metacareers.com/profile/job_details/2191798685107693/",
+     "quote": "Work with large and complex data sets to solve a wide array of challenging problems using different analytical and statistical approaches",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Data Scientist, Product Analytics",
+     "url": "https://www.metacareers.com/profile/job_details/2191798685107693/",
+     "quote": "Bachelor's degree in Mathematics, Statistics, a relevant technical field, or equivalent",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "deep_learning": [
+    {
+     "title": "Machine Learning Engineer (Technical Leadership)",
+     "url": "https://www.metacareers.com/profile/job_details/1619290696213069/",
+     "quote": "Build highly scalable classifiers and ML tools leveraging deep learning, data regression, and rules-based models",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Machine Learning Engineer (Technical Leadership)",
+     "url": "https://www.metacareers.com/profile/job_details/1619290696213069/",
+     "quote": "8+ years of experience in one or more of the following areas: machine learning, recommendation systems, pattern recognition, data mining or deep learning based methods",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "dl_frameworks": [
+    {
+     "title": "Machine Learning Engineer (Technical Leadership)",
+     "url": "https://www.metacareers.com/profile/job_details/1619290696213069/",
+     "quote": "Experience with deep learning frameworks (PyTorch, TensorFlow) and ML infrastructure tools",
+     "india": true,
+     "ml_title": true
+    }
+   ]
+  },
+  "Swiggy": {
+   "python": [
+    {
+     "title": "Senior Manager - Applied Science",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001491426-senior-manager-applied-science",
+     "quote": "Expert-level proficiency in Python and its data science libraries (e.g., Pandas, NumPy, Scikit-learn, Matplotlib).",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Assistant Manager - MarTech & AI",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001534445-assistant-manager-martech-ai",
+     "quote": "Working knowledge of APIs, data systems, SQL, and scripting or prototyping with Python, JavaScript, or similar technologies.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "dl_frameworks": [
+    {
+     "title": "Senior Manager - Applied Science",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001491426-senior-manager-applied-science",
+     "quote": "Deep, hands-on experience with modern machine learning frameworks like TensorFlow, PyTorch, or Keras.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "deep_learning": [
+    {
+     "title": "Senior Manager - Applied Science",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001491426-senior-manager-applied-science",
+     "quote": "A solid understanding of both classical ML and deep learning along with exposure to Generative AI solutions (e.g., CNNs, RNNs, Transformers).",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "llm_nlp": [
+    {
+     "title": "Senior Manager - Applied Science",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001491426-senior-manager-applied-science",
+     "quote": "exposure to Generative AI solutions (e.g., CNNs, RNNs, Transformers)",
+     "india": true,
+     "ml_title": true
+    },
+    {
+     "title": "Assistant Manager - MarTech & AI",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001534445-assistant-manager-martech-ai",
+     "quote": "Understanding of LLM-based agents, tool calling, conversation state, user context, evaluations, and latency trade-offs.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "ml_math": [
+    {
+     "title": "Senior Manager - Applied Science",
+     "url": "https://jobs.smartrecruiters.com/SWIGGY/6000000001491426-senior-manager-applied-science",
+     "quote": "Statistical Rigor: Deep understanding of statistical methods, experimental design (A/B testing), and causal inference.",
+     "india": true,
+     "ml_title": true
+    }
+   ]
+  },
+  "PhonePe": {
+   "python": [
+    {
+     "title": "Data Scientist (3-5 years)",
+     "url": "https://jobs.smartrecruiters.com/PHONEPELIMITED/1000000000003993-data-scientist-3-5-years-",
+     "quote": "Core Languages: Advanced proficiency in Python and SQL.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "ml_math": [
+    {
+     "title": "Data Scientist (3-5 years)",
+     "url": "https://jobs.smartrecruiters.com/PHONEPELIMITED/1000000000003993-data-scientist-3-5-years-",
+     "quote": "Analytical Foundations: Deep conceptual and practical understanding of traditional machine learning algorithms, statistical modeling, linear algebra, and probability theory.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "dl_frameworks": [
+    {
+     "title": "Data Scientist (3-5 years)",
+     "url": "https://jobs.smartrecruiters.com/PHONEPELIMITED/1000000000003993-data-scientist-3-5-years-",
+     "quote": "Deep Learning: Proficiency leveraging neural network frameworks such as TensorFlow or PyTorch.",
+     "india": true,
+     "ml_title": true
+    }
+   ],
+   "deep_learning": [
+    {
+     "title": "Data Scientist (3-5 years)",
+     "url": "https://jobs.smartrecruiters.com/PHONEPELIMITED/1000000000003993-data-scientist-3-5-years-",
+     "quote": "Computer Vision: Working knowledge of Computer Vision concepts and algorithms.",
+     "india": true,
+     "ml_title": true
+    }
+   ]
+  }
+ }
+}

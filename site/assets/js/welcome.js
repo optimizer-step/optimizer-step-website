@@ -28,7 +28,9 @@
       : waitlist ? "You're on the waitlist, " + name + "." : "You're in, " + name + "!";
   }
   if (badge) {
-    badge.textContent = info.pending
+    badge.textContent = info.duplicate
+      ? "Seat already reserved"
+      : info.pending
       ? "Seat request received"
       : waitlist ? "Waitlist place #" + info.seat : "Founding seat #" + info.seat;
   }
@@ -37,10 +39,31 @@
     lead.textContent = info.pending
       ? "We've received your details. Your confirmation email with your seat number will arrive shortly."
       : info.duplicate
-        ? "This email already has a seat" + trackText + ". We didn't create a second one, and your original confirmation email still applies."
+        ? "This email already has a seat. We didn't create a second one: your seat number is in your original confirmation email from admin@optimizerstep.com."
         : waitlist
           ? "All founding seats were taken, so you're on the waitlist" + trackText + ". We'll email you as soon as more seats open."
           : "Your free founding seat" + trackText + " is reserved. We've emailed your confirmation. It comes from admin@optimizerstep.com.";
+  }
+
+  // First lesson: switch to the first video of the track the student picked.
+  var lessonBox = $("[data-first-lesson]");
+  if (lessonBox && info.track && info.track !== "undecided") {
+    try {
+      var lesson = JSON.parse(lessonBox.getAttribute("data-first-lesson"))[info.track];
+      var facade = lessonBox.querySelector("[data-youtube]");
+      if (lesson && facade) {
+        var label = "Watch: " + lesson.title + (lesson.hindi ? " (in Hindi)" : "");
+        facade.setAttribute("data-youtube", lesson.id);
+        facade.setAttribute("data-title", label);
+        facade.href = "https://www.youtube.com/watch?v=" + encodeURIComponent(lesson.id);
+        var thumb = facade.querySelector("img");
+        if (thumb) thumb.src = "https://i.ytimg.com/vi/" + encodeURIComponent(lesson.id) + "/hqdefault.jpg";
+        var caption = facade.querySelector(".video-label");
+        if (caption) caption.textContent = label;
+        var text = lessonBox.querySelector("[data-lesson-text]");
+        if (text) text.textContent = "Start with this free lesson for " + trackName + " while your track gets ready.";
+      }
+    } catch (err) { /* keep the default lesson */ }
   }
 
   if (!info.tracked && !info.duplicate) {

@@ -22,3 +22,6 @@ tests/tmp*/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Build tooling (npm ci installs it)
+node_modules/

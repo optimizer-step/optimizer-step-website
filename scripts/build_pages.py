@@ -18,7 +18,9 @@ import importlib.util
 import json
 import re
 import shutil
+import subprocess
 import sys
+import tempfile
 from datetime import date
 from pathlib import Path
 
@@ -38,6 +40,10 @@ VIDEOS = content.VIDEOS
 FAQS = content.FAQS
 LAB_PANELS = content.LAB_PANELS
 LAB_EXPLAINERS = content.LAB_EXPLAINERS
+SKILL_DEMAND = content.SKILL_DEMAND
+SKILL_COMPANIES = content.SKILL_COMPANIES
+SKILLS_CHECKED = content.SKILLS_CHECKED
+SKILLS_POSTS_READ = content.SKILLS_POSTS_READ
 TRACK_BY_ID = {t["id"]: t for t in TRACKS}
 LAB_BY_SLUG = {lab["slug"]: lab for lab in LABS}
 URL = SITE["url"]
@@ -120,7 +126,8 @@ def signup_form(prefix: str, track: str = "undecided", context: str = "modal") -
 def seat_meter() -> str:
     cap = SITE["capacity"]
     return (f'<div class="seats"><div class="seat-row"><strong data-seats-text>{cap} free founding seats. First come, first served.</strong></div>'
-            f'<div class="progress" role="progressbar" aria-label="Founding seats claimed" aria-valuemin="0" aria-valuemax="{cap}" aria-valuenow="0" data-seats-meter hidden><span></span></div></div>')
+            f'<div class="progress" role="progressbar" aria-label="Founding seats claimed" aria-valuemin="0" aria-valuemax="{cap}" aria-valuenow="0" data-seats-meter hidden><span></span></div>'
+            f'<p class="seat-today" data-seats-today hidden></p></div>')
 
 
 def offer_card(prefix: str, track: str = "undecided") -> str:
@@ -167,6 +174,43 @@ def social_links(where: str) -> str:
     )
 
 
+def skills_section() -> str:
+    """Skills named in current AI job posts. Company names only, never logos: they describe public
+    job posts, and the section says plainly that Optimizer Step is not affiliated with these companies."""
+    names = "".join(f"<li>{e(name)}</li>" for name in SKILL_COMPANIES)
+    cards = []
+    for skill in SKILL_DEMAND:
+        t = TRACK_BY_ID[skill["track"]]
+        companies = " · ".join(f"<strong>{e(c)}</strong>" for c in skill["companies"])
+        cards.append(f"""<article class="skill-card">
+  <span class="skill-icon" aria-hidden="true">{t["icon"]}</span>
+  <h3>{e(skill["title"])}</h3>
+  <p>{e(skill["text"])}</p>
+  <p class="skill-seen"><span>Named in current job posts at</span>{companies}</p>
+  <a class="text-link" href="/courses/{t["slug"]}/">Learn it in {e(t["title"])}&nbsp;<span aria-hidden="true">→</span></a>
+</article>""")
+    sources = "".join(
+        f'<li><strong>{e(skill["title"])}:</strong> '
+        + "; ".join(f'<a href="{e(url)}" target="_blank" rel="noopener nofollow" data-outbound="skills-source">{e(company)}, {e(title)}</a>'
+                    for company, title, url in skill["sources"])
+        + "</li>"
+        for skill in SKILL_DEMAND
+    )
+    return f"""<section class="section container skills-section" id="skills" aria-labelledby="skills-title">
+  <div class="section-heading"><div><span class="eyebrow">What AI teams hire for</span><h2 id="skills-title">Skills from today's AI job posts, <em>taught track by track.</em></h2></div><p>We read current AI and machine-learning job posts from the companies below. These four skill sets come up across their posts, and each one has its own track.</p></div>
+  <div class="company-strip">
+    <div class="company-marquee" role="region" aria-label="Companies whose job posts we checked"><ul class="company-track">{names}</ul><ul class="company-track" aria-hidden="true">{names}</ul></div>
+    <button class="marquee-toggle" type="button" data-marquee-toggle aria-pressed="false" aria-label="Pause the scrolling company names">❚❚</button>
+  </div>
+  <div class="skill-grid">{"".join(cards)}</div>
+  <details class="skills-sources"><summary>Where this comes from</summary>
+    <p>On {e(SKILLS_CHECKED)} we scanned {e(SKILLS_POSTS_READ)} engineering, research and data-science job posts from the companies above, on their official job boards, and noted which skills each post names. One example post for each company listed:</p>
+    <ul>{sources}</ul>
+    <p>Job posts change often, so some of these links will close over time. Company names only describe their public job posts. Optimizer Step is independent and is not affiliated with, sponsored by or endorsed by any company named here. All trademarks belong to their owners.</p>
+  </details>
+</section>"""
+
+
 def faq_html() -> str:
     items = "".join(
         f"<details><summary>{e(q)}</summary><div><p>{a.format(**SITE)}</p></div></details>" for q, a in FAQS
@@ -199,6 +243,8 @@ def org_schema() -> dict:
         "@type": "EducationalOrganization",
         "@id": ORG_ID,
         "name": SITE["name"],
+        "alternateName": "OptimizerStep",
+        "description": "Hands-on AI and machine learning courses and free YouTube lessons, from Python and ML foundations to deep learning, NLP and RAG.",
         "url": URL + "/",
         "logo": URL + "/assets/img/icon-512.png",
         "email": SITE["email"],
@@ -299,6 +345,15 @@ def sticky_cta() -> str:
             f'<button class="button button-primary" type="button" data-enroll data-cta="sticky" tabindex="-1"><span data-cta-label="Claim free seat">Claim free seat</span></button></div>')
 
 
+def live_notice() -> str:
+    # Filled by site.js from real, anonymous signups (seat, track, experience, time); never names.
+    return ('<aside class="live-notice" data-live-notice hidden aria-label="Recent signups">'
+            '<span class="live-dot" aria-hidden="true"></span>'
+            '<p class="live-body"><strong data-notice-title></strong><span data-notice-meta></span></p>'
+            '<button class="live-cta" type="button" data-enroll data-cta="live-notice"><span data-cta-label="Claim yours">Claim yours</span></button>'
+            '<button class="live-close" type="button" data-notice-close aria-label="Hide signup notices">×</button></aside>')
+
+
 def layout(page: dict) -> str:
     path = page["path"]
     canonical = URL + path
@@ -353,12 +408,13 @@ def layout(page: dict) -> str:
 <a class="skip-link" href="#main">Skip to content</a>
 {announcement() if show_marketing else ""}
 {header(page.get("section"))}
-<main id="main">
+<main id="main" tabindex="-1">
 {page["body"]}
 </main>
 {footer()}
 {signup_dialog()}
 {sticky_cta() if show_marketing else ""}
+{live_notice() if show_marketing else ""}
 </body>
 </html>
 """
@@ -386,7 +442,8 @@ def page_home() -> dict:
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": strip_tags(a.format(**SITE))}} for q, a in FAQS
         ],
     }
-    website = {"@type": "WebSite", "@id": URL + "/#website", "url": URL + "/", "name": SITE["name"], "publisher": {"@id": ORG_ID}}
+    website = {"@type": "WebSite", "@id": URL + "/#website", "url": URL + "/", "name": SITE["name"],
+               "alternateName": ["OptimizerStep", "optimizerstep.com"], "inLanguage": "en-IN", "publisher": {"@id": ORG_ID}}
     body = f"""
 <section class="container hero">
   <div class="hero-copy">
@@ -394,7 +451,7 @@ def page_home() -> dict:
     <h1>Learn AI by <em>building it.</em></h1>
     <p class="hero-lead">From your first regression model to production-minded RAG: learn machine learning through code, visual experiments and projects you can explain. The first {SITE["capacity"]} students join free.</p>
     <div class="hero-actions" data-hero-cta>{cta("Claim my free seat", "hero")}<a class="button button-outline" href="/playground/">Try the ML Playground</a></div>
-    <div class="hero-trust"><img src="{asset("img/venkatesh-96.webp")}" width="48" height="48" alt=""><p>Taught by <strong>{e(SITE["instructor"])}</strong>, creator of the Optimizer Step YouTube channel: {SITE["subscribers"]} subscribers, {SITE["videos"]} videos.</p></div>
+    <div class="hero-trust"><img src="{asset("img/venkatesh-96.webp")}" width="48" height="48" alt=""><p>Taught by <strong>{e(SITE["instructor"])}</strong>, creator of the <a class="text-link" href="{e(SITE["youtube"])}" target="_blank" rel="noopener" data-outbound="hero-trust">Optimizer Step YouTube channel</a>: {SITE["subscribers"]} subscribers, {SITE["videos"]} videos.</p></div>
     <ul class="hero-points"><li>Beginner to builder</li><li>Real projects</li><li>No payment details</li></ul>
   </div>
   {HERO_VISUAL}
@@ -405,6 +462,7 @@ def page_home() -> dict:
   <div class="proof-item"><strong>4 tracks</strong><span>from regression to RAG</span></div>
   <div class="proof-item"><strong>₹0</strong><span>for the first {SITE["capacity"]} students</span></div>
 </div></section>
+{skills_section()}
 <section class="section container" id="courses" aria-labelledby="courses-title">
   <div class="section-heading"><div><span class="eyebrow">The learning path</span><h2 id="courses-title">Go from “what is ML?” <em>to “I built that.”</em></h2></div><p>Four focused tracks, each ending in a project you can show and explain. Founding students get every launch track free.</p></div>
   <div class="course-grid">{cards}</div>
@@ -717,6 +775,7 @@ def page_privacy() -> dict:
     <li>To reserve your founding seat or waitlist place and send your confirmation.</li>
     <li>To email you about the courses: start dates, access details and course updates.</li>
     <li>To understand which channels and ads bring students, and to improve the site.</li>
+    <li>To show visitors short notices about recent signups, such as "Founding seat #23 claimed: a Python learner picked NLP &amp; Transformers, 5 minutes ago". They show a seat number, the track, the experience level and roughly how long ago the seat was claimed, never your name or your email. Email us if you would like your seat left out of these notices.</li>
   </ul>
   <p>We process your signup details because you ask us to reserve a seat and agree to these uses when you sign up. You can withdraw that consent at any time (see "Your rights").</p>
 
@@ -725,7 +784,7 @@ def page_privacy() -> dict:
   <p>If we switch on analytics or advertising tools, these providers may also receive usage data from the site: Google Analytics and Google Ads (Google), the Meta Pixel (Meta, for Instagram and Facebook ads) and Microsoft Clarity (Microsoft). They process that data under their own privacy policies.</p>
 
   <h2>Cookies and local storage</h2>
-  <p>The site stores a few small items in your browser: your light/dark theme choice, the campaign that brought you (for up to 90 days) and, after you sign up, your first name and seat number so the site can recognise you. Analytics tools, if switched on, set their own cookies. You can clear all of this at any time in your browser settings.</p>
+  <p>The site stores a few small items in your browser: your light/dark theme choice, the campaign that brought you (for up to 90 days), which signup notices you have already seen or closed (for the current visit only) and, after you sign up, your first name and seat number so the site can recognise you. Analytics tools, if switched on, set their own cookies. You can clear all of this at any time in your browser settings.</p>
 
   <h2>How long we keep it</h2>
   <p>We keep your signup details while the founding cohort and the courses you signed up for are running. We delete them sooner if you ask.</p>
@@ -811,6 +870,12 @@ def page_terms() -> dict:
 
 
 def page_welcome() -> dict:
+    # A first lesson right away: welcome.js swaps in the first video of the track the student picked.
+    lessons = {t["id"]: t["videos"][0] for t in TRACKS}
+    lessons["undecided"] = "D37cTKjtXvU"
+    lesson_data = {k: {"id": v, "title": VIDEOS[v]["title"], "hindi": bool(VIDEOS[v].get("hindi"))} for k, v in lessons.items()}
+    lesson_json = e(json.dumps(lesson_data, ensure_ascii=False, separators=(",", ":")))
+    first = lessons["undecided"]
     body = f"""
 <section class="container welcome-hero" data-welcome-personal>
   <div class="success-icon" aria-hidden="true">✓</div>
@@ -823,6 +888,10 @@ def page_welcome() -> dict:
   <h1>Claim your free seat.</h1>
   <p>The first {SITE["capacity"]} students get all four launch tracks free. It takes 30 seconds and needs no payment details.</p>
   <div class="hero-actions" style="justify-content:center;margin-top:28px">{cta("Claim my free seat", "welcome-generic")}</div>
+</section>
+<section class="container first-lesson" aria-labelledby="lesson-title" data-first-lesson="{lesson_json}">
+  <div class="first-lesson-copy"><span class="eyebrow">Start now</span><h2 id="lesson-title">Your first free lesson</h2><p data-lesson-text>Watch this now while your track gets ready. It's a free lesson from the Optimizer Step YouTube channel.</p></div>
+  <div class="first-lesson-video">{video_facade(first, "Watch: " + VIDEOS[first]["title"])}</div>
 </section>
 <section class="container" aria-labelledby="next-title" style="padding-bottom:100px">
   <h2 class="visually-hidden" id="next-title">What to do next</h2>
@@ -881,13 +950,41 @@ def clean_output() -> None:
     (OUT / ".nojekyll").write_text("", encoding="utf-8")
 
 
-def copy_assets() -> None:
-    src = SRC / "assets"
+def minify_assets(folder: Path) -> None:
+    """Minify the published CSS and JS with esbuild (installed by `npm ci`). The readable source stays in site/assets."""
+    node = shutil.which("node")
+    if not node or not (ROOT / "node_modules" / "esbuild").exists():
+        print("NOTE: esbuild is not installed (run `npm ci`), so CSS and JS are published unminified.")
+        return
+    result = subprocess.run([node, str(ROOT / "scripts" / "minify.mjs"), str(folder)],
+                            capture_output=True, encoding="utf-8", errors="replace")
+    if result.returncode != 0:
+        raise SystemExit("Minifying CSS/JS failed (docs/ was left as it was):\n" + (result.stderr or "") + (result.stdout or ""))
+    print((result.stdout or "").strip())
+
+
+def stage_assets() -> Path:
+    """Copy and minify the assets in a temporary folder first, so a failure never empties docs/."""
+    stage = Path(tempfile.mkdtemp(prefix="os-assets-"))
+    shutil.copytree(SRC / "assets", stage / "assets")
+    minify_assets(stage / "assets")
+    return stage
+
+
+def compact_html(text: str) -> str:
+    # Drop indentation and blank lines. Safe because no page uses <pre> or <textarea>.
+    if "<pre" in text or "<textarea" in text:
+        return text
+    return "\n".join(line.strip() for line in text.splitlines() if line.strip()) + "\n"
+
+
+def copy_assets(stage: Path) -> None:
     dst = OUT / "assets"
-    shutil.copytree(src, dst)
-    for path in sorted(src.rglob("*")):
+    shutil.copytree(stage / "assets", dst)
+    shutil.rmtree(stage, ignore_errors=True)
+    for path in sorted(dst.rglob("*")):
         if path.is_file():
-            rel = path.relative_to(src).as_posix()
+            rel = path.relative_to(dst).as_posix()
             ASSET_HASHES[rel] = hashlib.sha256(path.read_bytes()).hexdigest()[:10]
     static = SRC / "static"
     if static.exists():
@@ -951,14 +1048,15 @@ def check_links() -> list[str]:
 
 
 def build() -> int:
+    stage = stage_assets()
     clean_output()
-    copy_assets()
+    copy_assets(stage)
     pages = [page_home(), page_courses(), *[page_track(t) for t in TRACKS], page_playground(), *[page_lab(lab) for lab in LABS],
              page_privacy(), page_terms(), page_welcome(), page_404()]
     for page in pages:
         target = OUT / page["out"]
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(layout(page), encoding="utf-8")
+        target.write_text(compact_html(layout(page)), encoding="utf-8")
     write_meta_files(pages)
     problems = check_links()
     endpoint = config_endpoint()

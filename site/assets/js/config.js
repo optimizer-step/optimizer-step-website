@@ -7,6 +7,12 @@
  *                     comes from the Settings sheet in the signups spreadsheet.
  * showCountsAfter     Hide the "N of 100 left" bar until this many seats are claimed, so a
  *                     fresh campaign shows "100 free founding seats" instead of "100 of 100 left".
+ *                     Below 25 seats left the counter says "Only N left"; below 10, "Last N seats".
+ * liveNotices         Small "Founding seat #23 claimed" notices built from REAL signups in the
+ *                     last 72 hours (never names or emails). They start once `showAfter` seats are
+ *                     claimed, show at most `perPage` per page and `perSession` per visit, and never
+ *                     to people who already signed up. Set enabled: false to switch them off.
+ * todayAfter          Show "N people joined in the last 24 hours" once at least this many did.
  *
  * Tracking IDs: paste an ID and that tool loads on every page. Leave empty to keep it off.
  *   ga4MeasurementId    "G-XXXXXXXXXX"  (Google Analytics 4)
@@ -21,6 +27,8 @@ window.OS_CONFIG = {
   showCountsAfter: 10,
   plannedPriceINR: 4999,
   statsRefreshSeconds: 90,
+  liveNotices: { enabled: true, showAfter: 10, perPage: 3, perSession: 6 },
+  todayAfter: 3,
   tracking: {
     ga4MeasurementId: "",
     metaPixelId: "",

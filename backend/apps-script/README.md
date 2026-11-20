@@ -14,7 +14,11 @@ stores every signup in a Google Sheet and emails each student a confirmation.
 
 ## What it does
 
-- `GET ?action=stats` returns `{ ok, claimed, capacity, remaining, open }` for the live seat counter (cached for 30 seconds).
+- `GET ?action=stats` returns `{ ok, claimed, capacity, remaining, open, today, recent }` for the live seat counter
+  (cached for 30 seconds). `today` counts signups in the last 24 hours. `recent` lists up to 6 signups from the last
+  72 hours for the site's anonymous "seat claimed" notices: seat number, status, track, experience level (as an index)
+  and how long ago (rounded down to whole minutes). It never includes names, emails or campaign data, and skips rows
+  flagged `fast-submit`, `test` or `no-notice` (see Flags below).
 - `POST` (JSON sent as `text/plain`, so browsers skip the CORS preflight) validates the signup, refuses duplicates
   by email (case-insensitive), hands out seat numbers inside a script lock, appends a row and sends the confirmation email.
   The first `capacity` signups are `founding`; later ones are `waitlist`.
@@ -29,6 +33,19 @@ referrer, landing page, first touch, signup page, device, whether the email was 
 (`fast-submit` = the form was submitted within 2.5 seconds, which is often a bot).
 
 To remove a test or spam entry from the counts, change its **Status** to `removed` (or delete the row).
+Each new founding signup gets the lowest free seat number from 1 to `capacity`, so a removed row's number is
+reused and no two active students ever share a seat number.
+
+The **Flags** column also controls the site's "seat claimed" notices:
+
+| Flag | Effect |
+| --- | --- |
+| `fast-submit` | Set automatically when the form was sent within 2.5 seconds (often a bot). Left out of the notices and the 24-hour count. |
+| `no-notice` | Type it in when a student asks to be left out of the notices. |
+| `test` | For your own test signups: left out of the notices and the 24-hour count (set Status to `removed` too). |
+
+When someone signs up again with an email that already has a seat, the reply says so without the seat number or
+status, so nobody can look up another person's signup by typing their email. Their original confirmation email has it.
 
 **Settings** controls the live campaign without touching code (changes apply within about a minute):
 

@@ -17,7 +17,8 @@
     attribution: "os-attr-v1",
     member: "os-member-v1",
     stats: "os-stats-v1",
-    signup: "os-signup-v1"
+    signup: "os-signup-v1",
+    notices: "os-notices-v1"
   };
   var CAMPAIGN_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "fbclid", "gbraid", "wbraid", "msclkid", "ttclid"];
   var TRACK_NAMES = {
@@ -223,7 +224,8 @@
   /* ---------------- Live seat count ---------------- */
   var currentStats = null;
 
-  function applyStats(s) {
+  // Every number here comes from the live signup sheet; nothing is invented or rounded up.
+  function applyStats(s, fetchedAt) {
     if (!s) return;
     currentStats = s;
     var capacity = Number(s.capacity) || CFG.capacity || 100;
@@ -231,16 +233,32 @@
     var remaining = typeof s.remaining === "number" ? Math.max(0, s.remaining) : Math.max(0, capacity - claimed);
     var full = remaining <= 0;
     var showCounts = full || claimed >= (Number(CFG.showCountsAfter) || 0);
+    var critical = !full && showCounts && remaining <= 10;
+    var low = !full && showCounts && remaining <= 25;
 
     root.classList.toggle("seats-full", full);
+    root.classList.toggle("seats-low", low);
+    root.classList.toggle("seats-critical", critical);
     $$("[data-seats-text]").forEach(function (el) {
       el.textContent = full
         ? "All " + capacity + " founding seats are taken. Join the waitlist."
+        : critical ? (remaining === 1 ? "Last free founding seat" : "Last " + remaining + " free founding seats")
+        : low ? "Only " + remaining + " of " + capacity + " free seats left"
         : showCounts ? remaining + " of " + capacity + " free seats left" : capacity + " free founding seats. First come, first served.";
     });
     $$("[data-seats-short]").forEach(function (el) {
-      el.textContent = full ? "Founding seats are full. Waitlist open." : showCounts ? "Only " + remaining + " free seats left" : "First " + capacity + " students join free";
+      el.textContent = full ? "Founding seats are full. Waitlist open."
+        : critical ? (remaining === 1 ? "Last free seat left" : "Last " + remaining + " free seats")
+        : low ? "Only " + remaining + " free seats left"
+        : showCounts ? remaining + " of " + capacity + " free seats left" : "First " + capacity + " students join free";
     });
+    if (typeof s.today === "number") {
+      var showToday = showCounts && !full && s.today >= (Number(CFG.todayAfter) || 3);
+      $$("[data-seats-today]").forEach(function (el) {
+        el.hidden = !showToday;
+        if (showToday) el.textContent = s.today + " people joined in the last 24 hours";
+      });
+    }
     $$("[data-seats-meter]").forEach(function (el) {
       el.hidden = !showCounts;
       el.setAttribute("aria-valuemax", String(capacity));
@@ -252,17 +270,19 @@
     $$("[data-cta-label]").forEach(function (el) {
       el.textContent = full ? "Join the waitlist" : el.getAttribute("data-cta-label");
     });
+    updateNotices(s, fetchedAt || Date.now());
   }
 
   function loadStats(force) {
     if (!CFG.enrollmentEndpoint) return;
     var cached = store.get("sessionStorage", KEYS.stats);
-    if (cached && !force && Date.now() - cached.ts < 60000) { applyStats(cached.data); return; }
+    if (cached && !force && Date.now() - cached.ts < 60000) { applyStats(cached.data, cached.ts); return; }
     fetchJSON(CFG.enrollmentEndpoint + "?action=stats", { method: "GET", cache: "no-store" }, 12000)
       .then(function (data) {
         if (data && data.ok) {
-          store.set("sessionStorage", KEYS.stats, { ts: Date.now(), data: data });
-          applyStats(data);
+          var now = Date.now();
+          store.set("sessionStorage", KEYS.stats, { ts: now, data: data });
+          applyStats(data, now);
         }
       })
       .catch(function () { /* keep the static "100 free founding seats" copy */ });
@@ -270,13 +290,190 @@
 
   function setupStats() {
     var cached = store.get("sessionStorage", KEYS.stats);
-    if (cached) applyStats(cached.data);
+    if (cached) applyStats(cached.data, cached.ts);
     loadStats(false);
     var every = Math.max(30, Number(CFG.statsRefreshSeconds) || 90) * 1000;
     setInterval(function () { if (doc.visibilityState === "visible") loadStats(true); }, every);
     doc.addEventListener("visibilitychange", function () {
       var c = store.get("sessionStorage", KEYS.stats);
       if (doc.visibilityState === "visible" && (!c || Date.now() - c.ts > 60000)) loadStats(true);
+    });
+  }
+
+  /* ---------------- "Seat claimed" notices: real signups only, never names ---------------- */
+  var NOTICES = CFG.liveNotices || {};
+  var NOTICE_MAX_AGE = 72 * 3600 * 1000;
+  var EXPERIENCE_WHO = ["A beginner", "A Python learner", "An ML builder"];
+  var notice = { el: null, items: [], timer: 0, hideTimer: 0, shownHere: 0, started: false, state: null, returnTo: null };
+  var lastFormEdit = 0;
+
+  function agoText(ms) {
+    var minutes = Math.floor(ms / 60000);
+    if (minutes < 1) return "just now";
+    if (minutes < 60) return minutes === 1 ? "1 minute ago" : minutes + " minutes ago";
+    var hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours === 1 ? "1 hour ago" : hours + " hours ago";
+    var days = Math.floor(hours / 24);
+    return days === 1 ? "1 day ago" : days + " days ago";
+  }
+
+  // Kept in memory and saved for the visit, so the per-visit limit and "closed" carry across pages.
+  function noticeState() {
+    if (!notice.state) {
+      var saved = store.get("sessionStorage", KEYS.notices);
+      notice.state = saved && Array.isArray(saved.seen) ? saved : { seen: [], count: 0, off: false };
+    }
+    return notice.state;
+  }
+
+  function saveNoticeState() { store.set("sessionStorage", KEYS.notices, noticeState()); }
+
+  // Without working session storage the per-visit limit and the close choice would reset on every
+  // page, so that visitor gets no notices at all.
+  function canKeepSessionState() {
+    try {
+      var probe = "os-probe";
+      window.sessionStorage.setItem(probe, "1");
+      var ok = window.sessionStorage.getItem(probe) === "1";
+      window.sessionStorage.removeItem(probe);
+      return ok;
+    } catch (e) { return false; }
+  }
+
+  function keyboardFocusElsewhere() {
+    var active = doc.activeElement;
+    if (!active || active === doc.body || active === doc.documentElement || (notice.el && notice.el.contains(active))) return false;
+    try { return active.matches(":focus-visible"); } catch (e) { return false; }
+  }
+
+  // Never interrupt someone who is filling in the form, submitting, or moving around by keyboard.
+  function noticeShouldWait() {
+    var active = doc.activeElement;
+    var typing = active && /^(INPUT|SELECT|TEXTAREA)$/.test(active.tagName);
+    return doc.visibilityState !== "visible" || typing || stickyState.formVisible ||
+      Date.now() - lastFormEdit < 30000 || Boolean($("form[data-signup-form][data-busy]")) ||
+      Boolean(dialog && dialog.open) || window.innerHeight < 480 || keyboardFocusElsewhere();
+  }
+
+  function updateNotices(s, fetchedAt) {
+    if (!notice.el || !s || !Array.isArray(s.recent)) return;
+    var claimed = Number(s.claimed) || 0;
+    var full = typeof s.remaining === "number" && s.remaining <= 0;
+    var after = NOTICES.showAfter != null ? Number(NOTICES.showAfter) : Number(CFG.showCountsAfter) || 0;
+    if (!full && claimed < after) { notice.items = []; return; }
+    notice.items = s.recent.filter(function (r) {
+      return r && (r.status === "founding" || r.status === "waitlist") && typeof r.ago === "number" && r.ago >= 0 && r.ago * 1000 < NOTICE_MAX_AGE;
+    }).map(function (r) {
+      return { key: r.status + ":" + r.seat, seat: Number(r.seat) || 0, status: r.status, track: r.track, exp: Number(r.exp), at: fetchedAt - r.ago * 1000 };
+    });
+    if (!notice.started && notice.items.length) {
+      notice.started = true;
+      scheduleNotice(7000);
+    }
+  }
+
+  function scheduleNotice(delay) {
+    clearTimeout(notice.timer);
+    notice.timer = setTimeout(showNotice, delay);
+  }
+
+  function showNotice() {
+    var state = noticeState();
+    if (!notice.el || state.off || state.count >= (Number(NOTICES.perSession) || 6) || notice.shownHere >= (Number(NOTICES.perPage) || 3)) return;
+    if (store.get("localStorage", KEYS.member)) return;
+    if (noticeShouldWait()) { scheduleNotice(8000); return; }
+    var item = null;
+    for (var i = 0; i < notice.items.length; i++) {
+      var candidate = notice.items[i];
+      if (state.seen.indexOf(candidate.key) < 0 && Date.now() - candidate.at < NOTICE_MAX_AGE) { item = candidate; break; }
+    }
+    if (!item) { scheduleNotice(30000); return; } // a newer signup may arrive with the next stats refresh
+
+    var trackName = item.track && item.track !== "undecided" ? TRACK_NAMES[item.track] : "";
+    var who = EXPERIENCE_WHO[item.exp] || "Someone";
+    $("[data-notice-title]", notice.el).textContent = item.status === "waitlist"
+      ? "Someone joined the waitlist"
+      : item.seat ? "Founding seat #" + item.seat + " claimed" : "A founding seat was claimed";
+    $("[data-notice-meta]", notice.el).textContent = (trackName ? who + " picked " + trackName : who + " joined") + " · " + agoText(Date.now() - item.at);
+    notice.el.hidden = false;
+    requestAnimationFrame(function () { requestAnimationFrame(function () { notice.el.classList.add("is-visible"); }); });
+
+    state.seen = state.seen.concat(item.key).slice(-60);
+    state.count += 1;
+    saveNoticeState();
+    notice.shownHere += 1;
+    clearTimeout(notice.hideTimer);
+    notice.hideTimer = setTimeout(hideNotice, 7000);
+  }
+
+  // Hide after the timer, but keep it while hovered, focused, or while the dialog it opened is up
+  // (closing the dialog returns focus to "Claim yours", so it must still be there).
+  function hideNotice() {
+    if (!notice.el || notice.el.hidden) return;
+    if ((dialog && dialog.open) || notice.el.matches(":hover") || notice.el.contains(doc.activeElement)) {
+      clearTimeout(notice.hideTimer);
+      notice.hideTimer = setTimeout(hideNotice, 2500);
+      return;
+    }
+    hideNoticeNow();
+  }
+
+  function hideNoticeNow() {
+    if (!notice.el || notice.el.hidden) return;
+    clearTimeout(notice.hideTimer);
+    notice.el.classList.remove("is-visible");
+    setTimeout(function () { if (notice.el && !notice.el.classList.contains("is-visible")) notice.el.hidden = true; }, 400);
+    scheduleNotice(24000);
+  }
+
+  function closeNotices() {
+    if (!notice.el) return;
+    noticeState().off = true;
+    saveNoticeState();
+    clearTimeout(notice.timer);
+    clearTimeout(notice.hideTimer);
+    if (notice.el.contains(doc.activeElement)) {
+      var back = notice.returnTo && doc.contains(notice.returnTo) ? notice.returnTo : $("#main");
+      if (back) back.focus({ preventScroll: true });
+    }
+    notice.el.classList.remove("is-visible");
+    notice.el.hidden = true;
+    track("notice_close", {});
+  }
+
+  function setupNotices() {
+    notice.el = $("[data-live-notice]");
+    if (!notice.el) return;
+    if (NOTICES.enabled === false || store.get("localStorage", KEYS.member) || !canKeepSessionState()) { notice.el.remove(); notice.el = null; return; }
+    $("[data-notice-close]", notice.el).addEventListener("click", closeNotices);
+    notice.el.addEventListener("focusin", function (event) {
+      if (event.relatedTarget && !notice.el.contains(event.relatedTarget)) notice.returnTo = event.relatedTarget;
+    });
+    doc.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && notice.el && !notice.el.hidden && !(dialog && dialog.open)) closeNotices();
+    });
+    // Get out of the way when someone starts on a signup form or moves focus by keyboard.
+    doc.addEventListener("focusin", function (event) {
+      if (!notice.el || notice.el.hidden || notice.el.contains(event.target)) return;
+      if ((event.target.closest && event.target.closest("form[data-signup-form]")) || keyboardFocusElsewhere()) hideNoticeNow();
+    });
+    $$("form[data-signup-form]").forEach(function (form) {
+      var edited = function () { lastFormEdit = Date.now(); };
+      form.addEventListener("input", edited);
+      form.addEventListener("change", edited);
+    });
+  }
+
+  /* ---------------- Company-name strip: a real pause button (not hover-only) ---------------- */
+  function setupMarquee() {
+    $$("[data-marquee-toggle]").forEach(function (button) {
+      var strip = button.parentNode && $(".company-marquee", button.parentNode);
+      if (!strip) return;
+      button.addEventListener("click", function () {
+        var paused = strip.classList.toggle("is-paused");
+        button.setAttribute("aria-pressed", String(paused));
+        button.textContent = paused ? "▶" : "❚❚";
+      });
     });
   }
 
@@ -425,7 +622,10 @@
       ts: Date.now()
     };
     store.set("sessionStorage", KEYS.signup, info);
-    store.set("localStorage", KEYS.member, { first: info.first, seat: info.seat, status: info.status, ts: info.ts });
+    // A duplicate answer carries no seat number (the server never reveals one), so keep any seat this browser already knows.
+    if (!(info.duplicate && !info.seat && store.get("localStorage", KEYS.member))) {
+      store.set("localStorage", KEYS.member, { first: info.first, seat: info.seat, status: info.status, ts: info.ts });
+    }
     store.remove("sessionStorage", KEYS.stats);
     location.href = "/welcome/";
   }
@@ -543,6 +743,8 @@
     if (!bar) return;
     var show = !stickyState.heroVisible && !stickyState.formVisible && !(dialog && dialog.open);
     bar.classList.toggle("is-visible", show);
+    root.classList.toggle("sticky-on", show);
+    if (stickyState.formVisible) hideNoticeNow(); // never cover the inline signup form
     bar.setAttribute("aria-hidden", String(!show));
     $$("button, a", bar).forEach(function (el) { el.tabIndex = show ? 0 : -1; });
   }
@@ -552,6 +754,10 @@
     if (!bar) return;
     if (store.get("localStorage", KEYS.member) || !("IntersectionObserver" in window)) { bar.remove(); return; }
     bar.hidden = false;
+    // The notice sits just above the bar, whatever height the bar wraps to.
+    if ("ResizeObserver" in window) {
+      new ResizeObserver(function () { root.style.setProperty("--sticky-h", bar.offsetHeight + "px"); }).observe(bar);
+    }
     var anchor = $("[data-hero-cta]") || $("h1");
     var forms = $$("[data-signup-inline]");
     stickyState.heroVisible = Boolean(anchor);
@@ -613,7 +819,9 @@
   setupTheme();
   setupDialog();
   setupForms();
+  setupNotices();
   setupStats();
+  setupMarquee();
   setupSticky();
   setupVideos();
   $$("[data-year]").forEach(function (el) { el.textContent = String(new Date().getFullYear()); });

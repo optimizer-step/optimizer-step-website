@@ -11,6 +11,8 @@ Signups go to a Google Sheet through a small Google Apps Script backend.
 | --- | --- | --- |
 | Website source | [`site/`](site) | Edit here, never in `docs/`. |
 | Words, tracks, labs, videos, FAQ | [`site/content.py`](site/content.py) | Keep every claim true. |
+| "What AI teams hire for" section | `SKILL_*` in [`site/content.py`](site/content.py) | Company names (never logos) from real job posts; evidence in [`notes/skills-evidence-2026-11-20.json`](notes/skills-evidence-2026-11-20.json). |
+| Minifier | [`package.json`](package.json), [`scripts/minify.mjs`](scripts/minify.mjs) | esbuild shrinks the published CSS/JS. Run `npm ci` once. |
 | Page templates and build | [`scripts/build_pages.py`](scripts/build_pages.py) | Writes `docs/`, sitemap, robots.txt, manifest; checks every internal link. |
 | Styles | [`site/assets/css/site.css`](site/assets/css/site.css) | Dark theme by default, light theme via the toggle. |
 | Behaviour | [`site/assets/js/`](site/assets/js) | `site.js` (forms, live seats, tracking), `hero.js`, `playground.js`, `welcome.js`. |
@@ -22,15 +24,30 @@ Signups go to a Google Sheet through a small Google Apps Script backend.
 ## Publish a change
 
 ```powershell
-python scripts/build_pages.py
-git add -A
-git commit -m "Describe the change"
-git push
+npm ci
+```
+
+(first time only: installs the minifier, esbuild). Then, for every change:
+
+```powershell
+python scripts/build_pages.py; if ($LASTEXITCODE -eq 0) { git add -A; git commit -m "Describe the change"; git push }
+```
+
+About a minute after the push, tell Bing and the other IndexNow search engines that the pages changed:
+
+```powershell
+python scripts/indexnow.py
 ```
 
 GitHub Pages updates the live site about a minute after the push. The build prints `Internal links and anchors: all OK`;
 if it lists link problems, fix them before pushing. CSS and JS URLs carry a content hash (`?v=…`), so visitors never get
 a stale file after a deploy.
+
+The published CSS and JS in `docs/` are minified (comments removed, local names shortened) and the HTML is compacted,
+so the files are smaller and hard to read. Browsers must download a site's code to run it, so no website can hide its
+front-end code completely; the readable source lives in `site/` and the signup data stays private in the Google Sheet.
+This GitHub repository is public, so the source is also readable here unless the repository is made private
+(GitHub Pages from a private repository needs a paid GitHub plan).
 
 ## Local preview
 
@@ -49,8 +66,16 @@ and delete the test row from the sheet afterwards (or set its Status to `removed
 - The first 100 are founding seats; later signups join the waitlist automatically. Change the number of seats,
   pause signups or stop emails in the sheet's **Settings** tab.
 - The counter shows "100 free founding seats" until 10 seats are claimed (`showCountsAfter` in `config.js`), then
-  "N of 100 free seats left". It never shows invented numbers.
-- After signing up, people land on `/welcome/` (confirmation, YouTube, Playground, share buttons).
+  "N of 100 free seats left", "Only N of 100 free seats left" (25 or fewer) and "Last N free founding seats" (10 or fewer).
+  Under the counter, "N people joined in the last 24 hours" appears once at least 3 did (`todayAfter`).
+  It never shows invented numbers.
+- "Founding seat #23 claimed: A Python learner picked NLP & Transformers · 5 minutes ago" notices come from the
+  real signups of the last 72 hours (seat, track, experience level and time only: never names or emails). They start
+  once 10 seats are claimed, show at most 3 per page and 6 per visit, never to people who already signed up, and a
+  visitor can close them. Settings: `liveNotices` in `config.js`. Making up signups or scarcity is illegal in India
+  (CCPA dark-pattern guidelines, 2023) and breaks Meta's and Google's ad policies, so keep these real.
+- After signing up, people land on `/welcome/` (confirmation, a first free lesson picked for their track, YouTube,
+  Playground, share buttons).
 
 Details, limits (100 confirmation emails per day on this account) and how to redeploy are in
 [`backend/apps-script/README.md`](backend/apps-script/README.md).
@@ -70,6 +95,16 @@ Details, limits (100 confirmation emails per day on this account) and how to red
    Click IDs (`fbclid`, `gclid`) are captured automatically.
 4. Add `&join=1` to open the signup form straight away, and `&track=rag` (or `foundations`, `deep-learning`, `nlp`)
    to preselect a track. Track pages such as `/courses/rag/` are good landing pages for track-specific ads.
+
+## Search engines
+
+- **Google:** the site is verified in Google Search Console (admin@optimizerstep.com) and `sitemap.xml` is submitted
+  there. Use Search Console → URL inspection → "Request indexing" after big changes.
+- **Bing, DuckDuckGo, Yahoo, Yandex:** run `python scripts/indexnow.py` after each deploy (IndexNow; the key file is
+  `site/static/<key>.txt`, published at the site root).
+- Each page has a title, description, canonical URL, Open Graph tags and structured data (organisation, website with the
+  "OptimizerStep" alternate name, instructor, FAQ, courses, breadcrumbs). Keep the YouTube channel, Instagram and X
+  profiles linking to https://www.optimizerstep.com/: those links help Google connect the brand to the site.
 
 ## Domain
 
