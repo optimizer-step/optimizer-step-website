@@ -202,7 +202,7 @@ def org_schema() -> dict:
         "url": URL + "/",
         "logo": URL + "/assets/img/icon-512.png",
         "email": SITE["email"],
-        "sameAs": [SITE["youtube"], SITE["instagram"]],
+        "sameAs": [SITE["youtube"], SITE["instagram"], SITE["x"]],
         "founder": {"@id": PERSON_ID},
     }
 
@@ -831,7 +831,7 @@ def page_welcome() -> dict:
     <li><h2>Start learning on YouTube</h2><p>Subscribe to the Optimizer Step channel for free lessons on Python, the maths behind ML, PyTorch and RAG while your track gets ready.</p><a class="button button-outline" href="{e(SITE["youtube"])}?sub_confirmation=1" target="_blank" rel="noopener" data-outbound="welcome">Subscribe on YouTube <span aria-hidden="true">↗</span></a></li>
     <li><h2>Play with a real model</h2><p>Open the free ML Playground and watch gradient descent, decision boundaries, k-means and attention work in your browser.</p><a class="button button-outline" href="/playground/">Open the ML Playground <span class="arrow" aria-hidden="true">→</span></a></li>
     <li><h2>Invite a friend</h2><p>Learning with a friend keeps you going. Founding seats are limited, so share the link while seats are left.</p>
-      <div class="share-row"><a class="button button-outline" data-share="whatsapp" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a><a class="button button-outline" data-share="x" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener">X</a><a class="button button-outline" data-share="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><button class="button button-outline" type="button" data-share="copy">Copy link</button><button class="button button-outline" type="button" data-share="native" hidden>Share</button></div>
+      <div class="share-row"><a class="button button-outline" data-share="whatsapp" href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a><a class="button button-outline" data-share="x" data-via="{e(SITE["x_handle"].lstrip("@"))}" href="https://twitter.com/intent/tweet" target="_blank" rel="noopener">X</a><a class="button button-outline" data-share="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a><button class="button button-outline" type="button" data-share="copy">Copy link</button><button class="button button-outline" type="button" data-share="native" hidden>Share</button></div>
     </li>
   </ol>
 </section>

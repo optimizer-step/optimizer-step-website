@@ -58,7 +58,10 @@
   var copy = $("[data-share='copy']");
   var native = $("[data-share='native']");
   if (wa) wa.href = "https://wa.me/?text=" + encodeURIComponent(shareText + " " + shareUrl);
-  if (x) x.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText) + "&url=" + encodeURIComponent(shareUrl);
+  if (x) {
+    var via = x.getAttribute("data-via");
+    x.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText) + "&url=" + encodeURIComponent(shareUrl) + (via ? "&via=" + encodeURIComponent(via) : "");
+  }
   if (li) li.href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(shareUrl);
   [wa, x, li].forEach(function (a) {
     if (a) a.addEventListener("click", function () { OS.track("share", { method: a.getAttribute("data-share") }); });
