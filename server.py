@@ -36,7 +36,7 @@ app.include_router(enquiry_router)
 ROOT = Path(__file__).resolve().parent
 attempts = defaultdict(deque)
 # Explicit allowlist: never expose .env, Python source, or the project directory.
-PUBLIC_FILES = frozenset({"index.html", "app.js", "voice.js", "styles.css",
+PUBLIC_FILES = frozenset({"index.html", "app.js", "playground.js", "launchCampaign.js", "voice.js", "styles.css",
                           "logo-openai.svg", "logo-nvidia.svg", "logo-sarvam.png", "logo-claude.svg"})
 
 
@@ -108,6 +108,11 @@ NO_CACHE = {"Cache-Control": "no-cache"}
 
 @app.get("/")
 async def index():
+    return FileResponse(ROOT / "index.html", headers=NO_CACHE)
+
+
+@app.get("/playground")
+async def playground():
     return FileResponse(ROOT / "index.html", headers=NO_CACHE)
 
 
