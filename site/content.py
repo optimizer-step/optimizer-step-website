@@ -414,7 +414,7 @@ SITE["founding_discount"] = FOUNDING_DISCOUNT
 
 FAQS[0] = ("Is it really free?",
            "Yes. The first 100 students who claim a founding seat get all four launch tracks free: the All Tracks tier, "
-           "planned at {planned_price}. You don't enter any payment details. After the founding cohort, ML Foundations "
+           "which costs {planned_price} after the founding cohort. You don't enter any payment details. After the founding cohort, ML Foundations "
            "stays free for everyone and the other tracks are paid. See <a href=\"/pricing/\">pricing</a>.")
 FAQS.insert(1, ("What will the paid tracks cost?",
                 "ML Foundations is free for everyone. After that it's {price_track} for one advanced track, {price_all} for "

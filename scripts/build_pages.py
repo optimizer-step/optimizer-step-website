@@ -137,8 +137,8 @@ def seat_meter() -> str:
 def offer_card(prefix: str, track: str = "undecided") -> str:
     return f"""<div class="offer-card" data-signup-inline>
   <div class="offer-top"><span class="offer-icon" aria-hidden="true">✦</span><span>Founding member access</span></div>
-  <div class="price"><del><span class="visually-hidden">Planned price </span>{e(SITE["planned_price"])}</del><strong>₹0</strong><span>for the first {SITE["capacity"]} students</span></div>
-  <p class="offer-sub">One free founding seat per student.</p>
+  <div class="price"><strong>₹0</strong><span>for the first {SITE["capacity"]} students</span></div>
+  <p class="offer-sub">After the founding {SITE["capacity"]}, All Tracks costs {e(SITE["planned_price"])}. One free seat per student.</p>
   {seat_meter()}
   {signup_form(prefix, track, "inline")}
 </div>"""
@@ -161,7 +161,7 @@ def founding_pro_upgrade() -> int:
 def tier_nudge(t: dict) -> str:
     p = {key: tier["price"] for key, tier in TIER_BY_ID.items()}
     if t["id"] == "starter":
-        return "Free for good, with no payment details."
+        return "Free for good: just a free account, no payment details."
     if t["id"] == "track":
         return "Pick the one skill your goal needs."
     if t["id"] == "all":
@@ -297,6 +297,7 @@ def skills_section() -> str:
     <button class="marquee-toggle" type="button" data-marquee-toggle aria-pressed="false" aria-label="Pause the scrolling company names">❚❚</button>
   </div>
   <div class="skill-grid">{"".join(cards)}</div>
+  <p class="skills-note">Company names describe their public job posts only. Optimizer Step is independent and is not affiliated with, sponsored by or endorsed by any company named here.</p>
   <details class="skills-sources"><summary>Where this comes from</summary>
     <p>On {e(SKILLS_CHECKED)} we scanned {e(SKILLS_POSTS_READ)} engineering, research and data-science job posts from the companies above, on their official job boards, and noted which skills each post names. One example post for each company listed:</p>
     <ul>{sources}</ul>
@@ -581,7 +582,7 @@ def page_home() -> dict:
       <h2 id="join-title">Your first step <em>is on us.</em></h2>
       <p>We're opening the Optimizer Step course platform with {SITE["capacity"]} free founding seats. Claim one now and you're in when the tracks open.</p>
       <ul class="check-list">
-        <li>All four launch tracks, free <span>(planned price {e(SITE["planned_price"])})</span></li>
+        <li>All four launch tracks, free <span>({e(SITE["planned_price"])} after the founding {SITE["capacity"]})</span></li>
         <li>Project-first lessons, from regression to RAG</li>
         <li>Your track's start date by email, before it opens</li>
         <li>The ML Playground and YouTube lessons, free while you wait</li>
@@ -655,7 +656,7 @@ def page_courses() -> dict:
   <div class="section-intro"><span class="eyebrow">Suggested path</span><h2 id="path-title">Not sure where to start?</h2><p>Start with ML Foundations unless you already train models. Pick Deep Learning or NLP next, then finish with RAG. Choose "Not sure yet" when you sign up and we'll help you pick.</p></div>
   {path}
 </section>
-{cta_band("Founding 100", "One seat. <em>Every launch track.</em>", f"Claim a free founding seat and get all four tracks free. Planned price {e(SITE['planned_price'])}.", "Claim my free seat", "courses-band")}
+{cta_band("Founding 100", "One seat. <em>Every launch track.</em>", f"Claim a free founding seat and get all four tracks free. After the founding 100, All Tracks costs {e(SITE['planned_price'])}.", "Claim my free seat", "courses-band")}
 """
     return {
         "path": "/courses/",
@@ -743,7 +744,7 @@ def page_track(t: dict) -> dict:
       <h2 id="join-title">Claim your free seat in <em>{e(t["title"])}.</em></h2>
       <p>Founding students get this track and every other launch track free, plus the start date by email before it opens.</p>
       <ul class="check-list">
-        <li>{e(t["title"])} and all other launch tracks, free <span>(planned price {e(SITE["planned_price"])})</span></li>
+        <li>{e(t["title"])} and all other launch tracks, free <span>({e(SITE["planned_price"])} after the founding {SITE["capacity"]})</span></li>
         <li>A project you can show: {e(t["project"][0].lower() + t["project"][1:])}</li>
         <li>Free YouTube lessons and the ML Playground while you wait</li>
       </ul>
@@ -861,12 +862,12 @@ def page_pricing() -> dict:
     pro_step = inr(TIER_BY_ID["pro"]["price"] - TIER_BY_ID["all"]["price"])
     cards = "".join(tier_card(t) for t in PRICE_TIERS)
     faqs = [
-        ("Is Starter really free for good?", "Yes. ML Foundations, its project, the ML Playground and the YouTube lessons stay free for everyone, with no payment details."),
+        ("Is Starter really free for good?", "Yes. ML Foundations, its project, the ML Playground and the YouTube lessons stay free for everyone. You only need a free account (your name and email), and never any payment details."),
         ("When can I buy a paid tier?", "The paid tiers open with the tracks, which open in stages. Founding students hear first, by email. Until then, the best deal is a free founding seat."),
         ("Do the prices include taxes?", "Yes. The price you see is the price you pay, including all taxes. Nothing is added at checkout."),
         ("Is it a subscription?", "No. Every tier is a one-time payment, and nothing renews automatically."),
         ("Can I upgrade later?", "Yes, at any time. Everything you have already paid counts towards the higher tier, so you only pay the difference."),
-        ("What do founding students get?", f"All Tracks free (planned price {e(SITE['price_all'])}), a Pro upgrade for {upgrade} instead of {pro_step}, and {FOUNDING_DISCOUNT}% off any future paid track."),
+        ("What do founding students get?", f"All Tracks free (it costs {e(SITE['price_all'])} after the founding cohort), a Pro upgrade for {upgrade} instead of {pro_step}, and {FOUNDING_DISCOUNT}% off any future paid track."),
         ("How do the Pro live sessions work?", f"Pro includes a live Q&amp;A session every month for {PRO_LIVE_MONTHS} months from the date you buy it, plus written feedback on each of your track projects."),
         ("What about refunds?", "The refund terms will be shown clearly before you pay."),
     ]
@@ -882,7 +883,7 @@ def page_pricing() -> dict:
   <h1>Start free. <em>Step up when you're ready.</em></h1>
   <p class="lead">ML Foundations is free for everyone, for good. When you want more, each step up costs a little and adds a lot, and you only ever pay the difference.</p>
   <div class="founding-callout">
-    <div><strong>Right now: the Founding {cap}</strong><p>The first {cap} students get All Tracks free (planned price {e(SITE['price_all'])}), can upgrade to Pro for {upgrade}, and keep {FOUNDING_DISCOUNT}% off every future paid track.</p><p class="dialog-seats" data-seats-text>{cap} free founding seats. First come, first served.</p></div>
+    <div><strong>Right now: the Founding {cap}</strong><p>The first {cap} students get All Tracks free ({e(SITE['price_all'])} after the founding cohort), can upgrade to Pro for {upgrade}, and keep {FOUNDING_DISCOUNT}% off every future paid track.</p><p class="dialog-seats" data-seats-text>{cap} free founding seats. First come, first served.</p></div>
     {cta("Claim my free seat", "pricing-hero")}
   </div>
 </section>
@@ -1005,7 +1006,7 @@ def page_terms() -> dict:
   <h2>The Founding {cap} offer</h2>
   <ul>
     <li>The first {cap} people who sign up with a valid email address get a free founding seat. A founding seat gives you free access to all of the launch tracks: ML Foundations, Deep Learning &amp; Vision, NLP &amp; Transformers and Build with RAG.</li>
-    <li>You never pay for a founding seat, and we never ask for payment details. The planned regular price ({e(SITE["planned_price"])}) is shown for reference only.</li>
+    <li>You never pay for a founding seat, and we never ask for payment details. After the founding cohort, the same All Tracks plan costs {e(SITE["planned_price"])}.</li>
     <li>One seat per person and per email address. Seats are personal and cannot be sold or transferred.</li>
     <li>Signups after the first {cap} join the waitlist. Joining the waitlist does not guarantee a seat.</li>
     <li>We may cancel seats claimed with fake details, automated signups or multiple addresses for one person.</li>
