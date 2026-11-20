@@ -1,6 +1,12 @@
 # Optimizer Step course platform
 
-A responsive AI and machine learning course site with a browser-only ML Playground. The site runs on the existing FastAPI server. The four labs use Canvas and local JavaScript math; they need no API keys.
+A responsive AI and machine learning course site with a browser-only ML Playground. The course pages and four Canvas labs run as static files on GitHub Pages and need no API keys. The existing FastAPI server remains available for the legacy API routes.
+
+## Public preview on GitHub Pages
+
+GitHub Pages publishes the `/docs` folder from `codex/ai-course-platform` at https://optimizer-step.github.io/optimizer-step-website/. The playground is available at https://optimizer-step.github.io/optimizer-step-website/#playground. To update the published files after editing the root frontend files, run `python scripts/build_pages.py`, then commit and push the changed `/docs` files. The public `www` domain still points to the offline Railway service until its GoDaddy DNS record is changed.
+
+GitHub Pages serves only static files. The Founding 100 form is still a browser-local demonstration; it does not collect real enrollments, share a seat count, or send emails. A separate enrollment service is needed before using it for a live campaign.
 
 ## Local preview
 
@@ -25,7 +31,7 @@ node --check voice.js
 .\.venv\Scripts\python -m unittest discover -s tests
 ```
 
-This is a buildless frontend, so there is no npm build or TypeScript typecheck. The Python server serves the checked HTML, CSS, and JavaScript files directly. The legacy chat, voice-token, and enquiry API routes remain in the server, but the new course frontend does not call them. Their operating notes are preserved in [the previous website README](docs/previous-website-readme.md).
+This is a buildless frontend, so there is no npm build or TypeScript typecheck. The Python server can serve the checked HTML, CSS, and JavaScript files locally. The legacy chat, voice-token, and enquiry API routes remain in the server, but the new course frontend does not call them. Their operating notes are preserved in [the previous website README](docs/previous-website-readme.md).
 The server may log that `DATABASE_URL` is unset during local checks; this is expected for the preserved enquiry endpoint and does not affect the course pages or browser labs.
 
 ## Founding 100 campaign
@@ -41,21 +47,10 @@ For real enrollment:
 
 If `mode` is live without an enrollment endpoint, the form fails closed with an error. Do not treat local-storage signups as real leads.
 
-## Deploy the website service
+## Legacy Railway service
 
-The production website is connected to `optimizer-step/optimizer-step-website` on Railway. Railway already has the website start command `python -m uvicorn server:app --host 0.0.0.0 --port $PORT` and health check `/health` in service settings. The current Railway trial is expired and the service has no active deployment. A workspace owner must restore Railway service access before deployment can succeed.
+The previous production website is connected to `optimizer-step/optimizer-step-website` on Railway. Its trial is expired and the service has no active deployment. The course frontend now runs on GitHub Pages. Restoring the legacy API routes would require renewed Railway access or another server host.
 
-After service access is restored, deploy this checkout directly:
+## Domain cutover
 
-```powershell
-npm i -g @railway/cli
-railway login
-railway link
-railway up --service optimizer-step-website --environment production
-```
-
-Choose the existing `daring-spirit` project when `railway link` asks. Alternatively, push and merge this branch to the connected repository's `main` branch; Railway is configured to deploy changes from that branch automatically. Verify `GET /health` and both public pages after the deployment becomes active.
-
-## Domain diagnosis
-
-See [the domain diagnosis](docs/domain-diagnosis.md) for the GoDaddy records and live response checks. No GoDaddy DNS change has been made. The apex already forwards permanently to `www`. The current `www` record resolves to Railway, but Railway returns a fallback 404 because the service is offline and there is no active deployment. After restoring Railway access, confirm the custom domain is attached and verified. Change the CNAME or verification TXT only if Railway displays a different required value; request approval before any GoDaddy DNS edit.
+See [the domain diagnosis](docs/domain-diagnosis.md) for the existing GoDaddy records. No GoDaddy DNS change has been made. The apex already forwards permanently to `www`. The current `www` CNAME points to the offline Railway service. To use GitHub Pages at `www.optimizerstep.com`, add that custom domain in GitHub Pages settings and replace the GoDaddy `www` CNAME target with `optimizer-step.github.io`. Ask the domain owner for approval before changing the live DNS record; then verify DNS, GitHub Pages domain status, and HTTPS.
