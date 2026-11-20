@@ -11,6 +11,7 @@ const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
 const storageKey = "optimizerstep-preview-enrollments-v1";
 const themeKey = "optimizerstep-theme-v1";
+const homePath = new URL("./", document.baseURI).pathname;
 let localEntries = [];
 let liveClaimed = null;
 let toastTimer = null;
@@ -54,7 +55,7 @@ function showView(view, push = true) {
   $$("[data-playground]").forEach((a) => a.classList.toggle("active", isPlayground));
   $$("[data-home-link]").forEach((a) => a.classList.toggle("active", !isPlayground && a.getAttribute("href") === "#courses"));
   document.title = isPlayground ? "ML Playground — Optimizer Step" : "Optimizer Step — Learn AI by building it";
-  if (push) history.pushState({view}, "", isPlayground ? "/playground" : "/");
+  if (push) history.pushState({view}, "", isPlayground ? homePath + "#playground" : homePath);
   window.scrollTo({top:0,behavior:"instant"});
   if (isPlayground) initPlayground();
 }
@@ -158,7 +159,9 @@ function setupNavigation() {
     const enrollButton = event.target.closest("[data-enroll]");
     if (enrollButton) { event.preventDefault(); openEnrollment(enrollButton.dataset.track); }
   });
-  window.addEventListener("popstate", () => showView(location.pathname === "/playground" ? "playground" : "home", false));
+  const syncView = () => showView(location.hash === "#playground" || location.pathname.endsWith("/playground") ? "playground" : "home", false);
+  window.addEventListener("popstate", syncView);
+  window.addEventListener("hashchange", syncView);
 }
 function setupDialog() {
   $("#enrollForm").addEventListener("submit", handleEnrollment);
@@ -182,4 +185,4 @@ setupNavigation();
 setupDialog();
 setupToasts();
 setupLabs();
-showView(location.pathname === "/playground" ? "playground" : "home", false);
+showView(location.hash === "#playground" || location.pathname.endsWith("/playground") ? "playground" : "home", false);
