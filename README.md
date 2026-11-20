@@ -17,6 +17,7 @@ Open http://127.0.0.1:8000/ and http://127.0.0.1:8000/playground.
 ## Checks
 
 ```powershell
+.\.venv\Scripts\python -m pip install -r requirements-test.txt
 node --check app.js
 node --check playground.js
 node --check launchCampaign.js
@@ -25,6 +26,7 @@ node --check voice.js
 ```
 
 This is a buildless frontend, so there is no npm build or TypeScript typecheck. The Python server serves the checked HTML, CSS, and JavaScript files directly. The legacy chat, voice-token, and enquiry API routes remain in the server, but the new course frontend does not call them. Their operating notes are preserved in [the previous website README](docs/previous-website-readme.md).
+The server may log that `DATABASE_URL` is unset during local checks; this is expected for the preserved enquiry endpoint and does not affect the course pages or browser labs.
 
 ## Founding 100 campaign
 

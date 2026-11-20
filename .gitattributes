@@ -1,4 +1,5 @@
 /app.js text eol=lf
+/.gitattributes text eol=lf
 /playground.js text eol=lf
 /launchCampaign.js text eol=lf
 /index.html text eol=lf
