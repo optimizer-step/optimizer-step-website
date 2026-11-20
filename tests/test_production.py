@@ -48,7 +48,7 @@ class ProductionTests(unittest.TestCase):
             response = self.client.get(path)
             self.assertEqual(response.status_code, 200)
             self.assertIn('ML Playground', response.text)
-        for path in ('/app.js', '/playground.js', '/launchCampaign.js', '/styles.css'):
+        for path in ('/app.js', '/playground.js', '/launchCampaign.js', '/styles.css', '/favicon.svg', '/favicon.ico'):
             self.assertEqual(self.client.get(path).status_code, 200, path)
 
     def test_docs_and_schema_are_not_public(self):
