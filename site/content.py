@@ -22,6 +22,9 @@ SITE = {
     "planned_price": "₹4,999",
     "planned_price_number": 4999,
     "policy_updated": "20 November 2026",
+    # Meta Business settings > Brand safety > Domains: proves to Meta that the Optimizer Step
+    # business portfolio owns optimizerstep.com. Keep it in <head> on the home page.
+    "facebook_domain_verification": "jmv9t7o5fqeidwmqgq9tad9666v746",
 }
 
 # YouTube videos from the Optimizer Step channel used on track and lab pages.

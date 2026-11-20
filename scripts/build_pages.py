@@ -377,6 +377,7 @@ def layout(page: dict) -> str:
 <title>{e(title)}</title>
 <meta name="description" content="{e(description)}">
 {robots}
+<meta name="facebook-domain-verification" content="{e(SITE["facebook_domain_verification"])}">
 <link rel="canonical" href="{e(canonical)}">
 <meta name="theme-color" content="#080b13">
 <meta property="og:type" content="website">
@@ -764,7 +765,7 @@ def page_privacy() -> dict:
     <tbody>
       <tr><td>You claim a founding seat or join the waitlist</td><td>Your name, email address, chosen track and experience level, the page you signed up on and whether you used a phone or a computer.</td></tr>
       <tr><td>You arrive from an ad, email or another website</td><td>The campaign details in the link (such as utm_source, utm_campaign, or an ad click ID like gclid or fbclid), the website that sent you and the first page you saw. We attach these to your signup so we know which channels bring students.</td></tr>
-      <tr><td>You use the site</td><td>If we switch on analytics tools (listed below), they record pages viewed, clicks, approximate location, device and browser details.</td></tr>
+      <tr><td>You use the site</td><td>The Meta Pixel (see "Advertising and analytics tools" below) records the pages you view, actions such as opening the signup form or signing up, the ad that brought you, and device and browser details.</td></tr>
       <tr><td>You email us</td><td>Your email address and whatever you choose to write.</td></tr>
     </tbody>
   </table>
@@ -781,10 +782,12 @@ def page_privacy() -> dict:
 
   <h2>Where it is stored and who can see it</h2>
   <p>Signups are stored in Google Sheets in our Google Workspace account, and confirmation emails are sent through Google (Gmail). Only Optimizer Step can see your details. We share data only with the service providers that run these tools for us, or when the law requires it.</p>
-  <p>If we switch on analytics or advertising tools, these providers may also receive usage data from the site: Google Analytics and Google Ads (Google), the Meta Pixel (Meta, for Instagram and Facebook ads) and Microsoft Clarity (Microsoft). They process that data under their own privacy policies.</p>
+  <h2>Advertising and analytics tools</h2>
+  <p>We use the <strong>Meta Pixel</strong> (Meta Platforms, which runs Instagram and Facebook) to measure our Instagram and Facebook ads and show them to people likely to be interested. It receives the pages you view and actions such as signing up, together with your browser and device details. When you sign up, it also receives a scrambled (hashed) copy of your email address and name, so Meta can match the signup to its ads without us sending the plain details. Meta processes this data under its own privacy policy. You can limit ad tracking in your Meta ad preferences and in your browser's privacy settings.</p>
+  <p>Google Analytics, Google Ads and Microsoft Clarity are not switched on. If we add them, we will list them here first.</p>
 
   <h2>Cookies and local storage</h2>
-  <p>The site stores a few small items in your browser: your light/dark theme choice, the campaign that brought you (for up to 90 days), which signup notices you have already seen or closed (for the current visit only) and, after you sign up, your first name and seat number so the site can recognise you. Analytics tools, if switched on, set their own cookies. You can clear all of this at any time in your browser settings.</p>
+  <p>The site stores a few small items in your browser: your light/dark theme choice, the campaign that brought you (for up to 90 days), which signup notices you have already seen or closed (for the current visit only) and, after you sign up, your first name and seat number so the site can recognise you. The Meta Pixel sets its own cookie (_fbp) to recognise your browser between visits. You can clear or block all of this at any time in your browser settings.</p>
 
   <h2>How long we keep it</h2>
   <p>We keep your signup details while the founding cohort and the courses you signed up for are running. We delete them sooner if you ask.</p>

@@ -31,7 +31,7 @@ window.OS_CONFIG = {
   todayAfter: 3,
   tracking: {
     ga4MeasurementId: "",
-    metaPixelId: "",
+    metaPixelId: "1131433136148670", // dataset "Optimizer Step website" in the Optimizer Step business portfolio
     googleAdsId: "",
     googleAdsLeadLabel: "",
     clarityProjectId: ""
