@@ -4,7 +4,7 @@ A responsive AI and machine learning course site with a browser-only ML Playgrou
 
 ## Public preview on GitHub Pages
 
-GitHub Pages publishes the `/docs` folder from `codex/ai-course-platform` at https://optimizer-step.github.io/optimizer-step-website/. The playground is available at https://optimizer-step.github.io/optimizer-step-website/#playground. To update the published files after editing the root frontend files, run `python scripts/build_pages.py`, then commit and push the changed `/docs` files. The public `www` domain still points to the offline Railway service until its GoDaddy DNS record is changed.
+GitHub Pages publishes the `/docs` folder from `codex/ai-course-platform` at https://www.optimizerstep.com/. The playground is at https://www.optimizerstep.com/#playground. To update the published files after editing the root frontend files, run `python scripts/build_pages.py`, then commit and push the changed `/docs` files. Keep `docs/CNAME` in place so GitHub Pages retains the custom domain.
 
 GitHub Pages serves only static files. The Founding 100 form is still a browser-local demonstration; it does not collect real enrollments, share a seat count, or send emails. A separate enrollment service is needed before using it for a live campaign.
 
@@ -53,4 +53,4 @@ The previous production website is connected to `optimizer-step/optimizer-step-w
 
 ## Domain cutover
 
-See [the domain diagnosis](docs/domain-diagnosis.md) for the existing GoDaddy records. No GoDaddy DNS change has been made. The apex already forwards permanently to `www`. The current `www` CNAME points to the offline Railway service. To use GitHub Pages at `www.optimizerstep.com`, add that custom domain in GitHub Pages settings and replace the GoDaddy `www` CNAME target with `optimizer-step.github.io`. Ask the domain owner for approval before changing the live DNS record; then verify DNS, GitHub Pages domain status, and HTTPS.
+The GoDaddy `www` CNAME now points to `optimizer-step.github.io`, and `www.optimizerstep.com` is the GitHub Pages custom domain. The apex continues to forward to `www`. See [the earlier domain diagnosis](docs/domain-diagnosis.md) for the former Railway record. Check DNS resolution and HTTPS after future domain changes; GitHub Pages may take time to provision a certificate for a new custom domain.
